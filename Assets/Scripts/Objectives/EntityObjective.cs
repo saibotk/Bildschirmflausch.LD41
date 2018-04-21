@@ -19,7 +19,7 @@ public class EntityObjective : Objective{
 	{
 		Random newRand = new Random ();
 
-		foreach(Entity i : entityList)
+		foreach (Entity i in entityList)
 			i.Spawn(spawnPointList[Random.Range(0, spawnPointList.Count)]);
 
 		objectiveCaller.Lock();
