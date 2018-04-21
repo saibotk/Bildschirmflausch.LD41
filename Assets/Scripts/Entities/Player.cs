@@ -9,7 +9,7 @@ public class Player : Mob {
                 
     }
 
-	private void OnCollisionEnter(Collision collision)
+	private void OnCollisionEnter2D(Collision2D collision)
 	{
         Debug.Log("Collision");
         if (collision.collider.tag == "wall") {
@@ -17,7 +17,7 @@ public class Player : Mob {
         }
 	}
 
-	private void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter2D(Collider2D other)
 	{
         if (other.tag == "door") {
             Debug.Log("Open door");
