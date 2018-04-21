@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour {
 	public float turnSpeed = 2;
 	[SerializeField]
 	public float drift = 1f;
+	[SerializeField]
+	public float brake = 2f;
 
     Rigidbody2D rigidbody2D;
 
@@ -27,6 +29,8 @@ public class PlayerMovement : MonoBehaviour {
         }
         {// Drag
 			Vector3 drag = speedVec.normalized * speed * speed * friction * -1;
+			if (Input.GetKey(KeyCode.S))
+				drag *= brake;
             rigidbody2D.AddForce(drag);
             Debug.DrawLine(transform.position, transform.position + drag, Color.cyan, 0.01f, false);
         }
@@ -38,12 +42,10 @@ public class PlayerMovement : MonoBehaviour {
 			//Debug.Log(br);
 			Debug.DrawLine(transform.position, transform.position + br, Color.red, 0.01f, false);
         }
-        if (Input.GetKey(KeyCode.A)){
+        if (Input.GetKey(KeyCode.A))
             transform.Rotate(Vector3.forward * turnSpeed);
-        }
-        if (Input.GetKey(KeyCode.D)) {
+        if (Input.GetKey(KeyCode.D))
             transform.Rotate(Vector3.forward * -turnSpeed);
-        }
         // Debug lines
         Debug.DrawLine(transform.position, transform.position + speedVec, Color.magenta, 0.01f, false);
         Debug.DrawLine(transform.position, transform.position + transform.localRotation * Vector3.up, Color.yellow, 0.01f, false);
