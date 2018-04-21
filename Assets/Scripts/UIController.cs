@@ -13,4 +13,21 @@ public class UIController : MonoBehaviour {
 	void Update () {
 		
 	}
+    public static UIController instance;
+
+    private GameObject score;
+    private GameObject pauseMenu;
+    private GameObject GameOverPanel;
+
+    public UIController()
+    {
+        UIController.instance = this;
+    }
+    public void quitGame()
+    {
+        Application.Quit();
+    }
+ 
+    
 }
+
