@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
-    [SerializeField]
-    int width, height;  // Gridsize for Generation
+	public enum TileType {
+		GROUND, WALL, DOOR
+	}
+
+	Vector2 position;
+	Map<Vector2, TileType> tiles;
 
     List<Door> doors;
     List<Transform> spawnpoints;
