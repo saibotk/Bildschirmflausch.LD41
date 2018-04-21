@@ -19,10 +19,6 @@ public class UIController : MonoBehaviour {
 	}
     public static UIController instance;
 
-    public void quitGame()
-    {
-        Application.Quit();
-    }
     public void ShowPauseMenu()
     {
         pauseMenu.SetActive(true);
@@ -32,7 +28,15 @@ public class UIController : MonoBehaviour {
         pauseMenu.SetActive(false);
     }
 
+    public void LoadSceneByIndex(int index)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(index);
+    }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
 }
 
