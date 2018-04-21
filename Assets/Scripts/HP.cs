@@ -8,9 +8,16 @@ public class HP : MonoBehaviour {
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
+    // Update is called once per frame
 	void Update () {
-		
+	
 	}
+    public void SetHP(){
+}
+	
+	
+
+    public void RotateHpBar(){
+        
+}
 }
