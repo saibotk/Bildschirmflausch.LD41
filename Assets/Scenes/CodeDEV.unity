@@ -152,36 +152,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114795477922050694, guid: 212457bb2a8fabb44b1000b6d61dde66,
-        type: 2}
-      propertyPath: spawnpointRootObject
-      value: 
-      objectReference: {fileID: 893869449}
-    - target: {fileID: 61365825193936666, guid: 212457bb2a8fabb44b1000b6d61dde66,
-        type: 2}
-      propertyPath: m_UsedByEffector
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 61466659272242130, guid: 212457bb2a8fabb44b1000b6d61dde66,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: -7.5491962
-      objectReference: {fileID: 0}
-    - target: {fileID: 61466659272242130, guid: 212457bb2a8fabb44b1000b6d61dde66,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 12.126068
-      objectReference: {fileID: 0}
-    - target: {fileID: 61990218022873102, guid: 212457bb2a8fabb44b1000b6d61dde66,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: 6.907359
-      objectReference: {fileID: 0}
-    - target: {fileID: 61990218022873102, guid: 212457bb2a8fabb44b1000b6d61dde66,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 10.851339
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 212457bb2a8fabb44b1000b6d61dde66, type: 2}
   m_IsPrefabParent: 0
@@ -272,11 +242,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &893869449 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1560863483719772, guid: 212457bb2a8fabb44b1000b6d61dde66,
-    type: 2}
-  m_PrefabInternal: {fileID: 81960866}
 --- !u!1 &2063368131
 GameObject:
   m_ObjectHideFlags: 0
