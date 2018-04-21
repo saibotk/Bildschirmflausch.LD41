@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UIController : MonoBehaviour {
-    public UIController()
-    {
-        UIController.instance = this;
-    }
-
+    
     private GameObject score;
     private GameObject pauseMenu;
-    private GameObject GameOverPanel;
+
+    [SerializeField]
+    private GameObject gameOverPanel;
     // Use this for initialization
     void Start () {
 	}
@@ -30,13 +28,30 @@ public class UIController : MonoBehaviour {
 
     public void LoadSceneByIndex(int index)
     {
+        Debug.Log("Loaded scene " + index);
         UnityEngine.SceneManagement.SceneManager.LoadScene(index);
     }
 
     public void QuitGame()
     {
+        Debug.Log("Quit game");
         Application.Quit();
     }
 
+    public void ShowGameOverUI() {
+        if (gameOverPanel != null) {
+            Canvas gameOverCanvas = gameOverPanel.GetComponent<Canvas>();
+            Debug.Log("Loading Canvas");
+
+            if (gameOverCanvas != null) {
+                Debug.Log("Loaded Canvas");
+                gameOverCanvas.enabled = true;   
+            } else {
+                Debug.Log("Gameover panel has no Canvas");
+            }
+        } else {
+            Debug.Log("No game over panel assigned");
+        }
+    }
 }
 
