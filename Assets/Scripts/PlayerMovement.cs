@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour {
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate() {
+    void Update() {
 		Vector3 speedVec = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y, 0);
 		float speed = speedVec.magnitude;
 
