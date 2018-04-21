@@ -10,7 +10,6 @@ public class EntityObjective : Objective{
 	public EntityObjective(Room objectiveCaller, List<Entity> entityList) : base(objectiveCaller)
 	{
 		this.entityList = entityList;
-		this.spawnPointList = spawnPointList;
 		spawnPointList = objectiveCaller.GetSpawnpoints ();
 	}
 
