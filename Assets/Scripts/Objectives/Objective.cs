@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Objective : MonoBehaviour {
+public abstract class Objective {
+	protected Room objectiveCaller;
 
-	// Use this for initialization
-	void Start () {
-		
+	// Constructor
+	public Objective(Room objectiveCaller)
+	{
+		this.objectiveCaller = objectiveCaller;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+	// Activates the objective to start progresstracking
+	public virtual void Activate(){}
 }
