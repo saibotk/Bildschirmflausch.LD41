@@ -15,12 +15,13 @@ public class EntityObjective : Objective{
 	}
 
 	// Activates the objective to start progresstracking
-	public void Activate()
+	public override void Activate()
 	{
 		Random newRand = new Random ();
-
+        Debug.Log("Activate");
 		foreach (GameObject i in prefabList) 
 		{
+            Debug.Log("Instantiating Prefab");
 			GameObject tempObject = GameObject.Instantiate (i);
 			tempObject.transform.position = spawnPointList [Random.Range (0, spawnPointList.Count)].position;
 		}
