@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity {
+public abstract class Entity {
 	EntityObjective referringObjective;
 	GameObject entityPrefab;
 	GameObject instance;
@@ -17,8 +17,8 @@ public class Entity {
 	// spawns the entity
 	public void Spawn(Transform spawnPoint)
 	{
-		instance = GameObject.Instantiate (entityPrefab);
-		instance.transform = spawnPoint;
+		// instance = GameObject.Instantiate (entityPrefab);
+		// instance.transform = spawnPoint;
 	}
 
 	// kills the entity
