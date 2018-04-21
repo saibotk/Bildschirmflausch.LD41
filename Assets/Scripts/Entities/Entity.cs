@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity {
+public abstract class Entity {
 	EntityObjective referringObjective;
 	GameObject entityPrefab;
 	GameObject instance;
