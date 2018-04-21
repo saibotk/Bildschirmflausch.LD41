@@ -6,10 +6,15 @@ public class Room : MonoBehaviour {
 
     [SerializeField]
     int Width, Height;  // Gridsize for Generation
+
     List<Door> doors;
+    List<Transform> spawnpoints;
 
     [SerializeField]
     GameObject doorsRootObject;
+
+    [SerializeField]
+    GameObject spawnpointRootObject;
 
     [SerializeField]
     private Objective objective; 
@@ -21,10 +26,15 @@ public class Room : MonoBehaviour {
         {
             doors.Add(d);
         }
-	}
+        spawnpoints = new List<Transform>();
+        foreach (Transform t in spawnpointRootObject.GetComponentsInChildren<Transform>())
+        {
+            spawnpoints.Add(t);
+        }
+    }
 	
 
-    void Lock()
+    public void Lock()
     {
         foreach (Door d in doors)
         {
@@ -32,7 +42,7 @@ public class Room : MonoBehaviour {
         }
     }
 
-    void Unlock()
+    public void Unlock()
     {
         foreach (Door d in doors)
         {
@@ -40,5 +50,8 @@ public class Room : MonoBehaviour {
         }
     }
 
-
+    public List<Transform> GetSpawnpoints()
+    {
+        return spawnpoints;
+    }
 }

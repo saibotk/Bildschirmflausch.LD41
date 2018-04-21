@@ -71,8 +71,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4576663487368228}
-  - component: {fileID: 61347333512881174}
   - component: {fileID: 114777089437464196}
+  - component: {fileID: 61347333512881174}
   m_Layer: 0
   m_Name: UpperDoor
   m_TagString: Untagged
@@ -282,7 +282,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: -0.63960123, y: -7.9419603}
   m_SpriteTilingProperty:
@@ -396,6 +396,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Width: 0
   Height: 0
+  doorsRootObject: {fileID: 1394898907781064}
+  objective: {fileID: 0}
 --- !u!212 &212881422167649272
 SpriteRenderer:
   m_ObjectHideFlags: 1
