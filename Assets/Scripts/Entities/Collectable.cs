@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Collectable : Entity{
 
-	public Collectable (EntityObjective referringObjective, GameObject entityPrefab) : base(referringObjective, entityPrefab) {}
+	public Collectable (EntityObjective referringObjective) : base(referringObjective) {}
 }

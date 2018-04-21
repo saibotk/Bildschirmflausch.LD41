@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityObjective : Objective{
-	List<Entity> entityList;
+	List<GameObject> prefabList;
+	List<GameObject> entityList;
 	List<Transform> spawnPointList;
 
 	// Constructor
-	public EntityObjective(Room objectiveCaller, List<Entity> entityList) : base(objectiveCaller)
+	public EntityObjective(Room objectiveCaller, List<GameObject> prefabList) : base(objectiveCaller)
 	{
-		this.entityList = entityList;
-		this.spawnPointList = spawnPointList;
+		this.prefabList = prefabList;
 		spawnPointList = objectiveCaller.GetSpawnpoints ();
 	}
 
@@ -19,14 +19,17 @@ public class EntityObjective : Objective{
 	{
 		Random newRand = new Random ();
 
-		foreach (Entity i in entityList)
-			i.Spawn(spawnPointList[Random.Range(0, spawnPointList.Count)]);
+		foreach (GameObject i in prefabList) 
+		{
+			GameObject tempObject = GameObject.Instantiate (i);
+			tempObject.transform.position = spawnPointList [Random.Range (0, spawnPointList.Count)].position;
+		}
 
 		objectiveCaller.Lock();
 	}
 
 	// Removes the entity from the list and completes the objective, if the list is empty
-	public void Remove(Entity inputEntity)
+	public void Remove(GameObject inputEntity)
 	{
 		entityList.Remove (inputEntity);
 		if (entityList.Count == 0)

@@ -169,6 +169,31 @@ Prefab:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114874769993434856, guid: 3d1911457c1e44f53b6b4044334db52f,
+        type: 2}
+      propertyPath: curveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114874769993434856, guid: 3d1911457c1e44f53b6b4044334db52f,
+        type: 2}
+      propertyPath: turnSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114874769993434856, guid: 3d1911457c1e44f53b6b4044334db52f,
+        type: 2}
+      propertyPath: drift
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114874769993434856, guid: 3d1911457c1e44f53b6b4044334db52f,
+        type: 2}
+      propertyPath: friction
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114874769993434856, guid: 3d1911457c1e44f53b6b4044334db52f,
+        type: 2}
+      propertyPath: acceleration
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
   m_IsPrefabParent: 0
