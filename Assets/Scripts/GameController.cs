@@ -3,20 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
-    
+
+    [SerializeField]
+    GameObject playerPrefab;
+
+    [SerializeField]
+    private Room start;
+    private Room finish;
+
+    private bool engineInitDone;
+
+    public static GameController instance;
+    public GameController()
+    {
+        instance = this;
+    }
+
     public enum GameState { UNSET, INIT, STARTING, RUNNING, ENDED };
 
     private GameState state = GameState.UNSET;
 
 	// Use this for initialization
 	void Start () {
-        ChangeState(GameState.INIT);
+        //ChangeState(GameState.INIT);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (!engineInitDone)
+        {
+            engineInitDone = true;
+            Debug.Log("First Frame");
+            ChangeState(GameState.INIT);
+        }
+    }
 
     void ChangeState(GameState nextState) {
         if(nextState != state) {
@@ -30,9 +50,11 @@ public class GameController : MonoBehaviour {
         {
             case GameState.INIT:
                 Init();
+                ChangeState(GameState.STARTING);
                 break;
             case GameState.STARTING:
                 Starting();
+                ChangeState(GameState.RUNNING);
                 break;
             case GameState.RUNNING:
                 Running();
@@ -49,12 +71,17 @@ public class GameController : MonoBehaviour {
 
     private void Init()
     {
-        ChangeState(GameState.STARTING);
+        List<GameObject> tmp = new List<GameObject>
+        {
+            playerPrefab
+        };
+        start.SetObjective(new EntityObjective(start, tmp));
+        start.OnPlayerEnter();
     }
 
     private void Starting()
     {
-        ChangeState(GameState.RUNNING);
+        
     }
 
     private void Running()

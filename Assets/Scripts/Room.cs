@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour {
 
     [SerializeField]
-    int Width, Height;  // Gridsize for Generation
+    int width, height;  // Gridsize for Generation
 
     List<Door> doors;
     List<Transform> spawnpoints;
@@ -26,13 +26,23 @@ public class Room : MonoBehaviour {
         {
             doors.Add(d);
         }
+        Debug.Log("Doors in Room: " + doors.Count);
         spawnpoints = new List<Transform>();
         foreach (Transform t in spawnpointRootObject.GetComponentsInChildren<Transform>())
         {
-            spawnpoints.Add(t);
+            if( t.gameObject != spawnpointRootObject)
+            {
+                spawnpoints.Add(t);
+            }
+                
         }
+        Debug.Log("Spawnpoints in Room: " + spawnpoints.Count);
     }
 	
+    public void SetObjective(Objective o)
+    {
+        objective = o;
+    }
 
     public void Lock()
     {
@@ -48,6 +58,11 @@ public class Room : MonoBehaviour {
         {
             d.Unlock();
         }
+    }
+
+    public void OnPlayerEnter()
+    {
+        objective.Activate();
     }
 
     public List<Transform> GetSpawnpoints()

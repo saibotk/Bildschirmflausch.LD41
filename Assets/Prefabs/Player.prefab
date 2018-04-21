@@ -36,6 +36,8 @@ GameObject:
   - component: {fileID: 4079161515917916}
   - component: {fileID: 50783223838863924}
   - component: {fileID: 114874769993434856}
+  - component: {fileID: 114835806183609276}
+  - component: {fileID: 61988607887166464}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -120,6 +122,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &61988607887166464
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679161327080020}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.30773532, y: -2.1199532}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.3082895, y: 6.402458}
+  m_EdgeRadius: 0
+--- !u!114 &114835806183609276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1679161327080020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1319c82afce6e47b9ec0980f156e39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114874769993434856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,9 +169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf81aa4a8d45468f8184f8d5862d7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 3.5
-  turnpower: 2.5
-  curveSpeed: 0.45
+  acceleration: 3
+  friction: 0.1
+  turnSpeed: 2
+  drift: 1
+  brake: 2
 --- !u!212 &212241819326847048
 SpriteRenderer:
   m_ObjectHideFlags: 1
