@@ -28,5 +28,6 @@ public class Player : Mob {
     {
         base.Kill();
         Destroy(this.gameObject);
+        GameController.instance.ChangeState(GameController.GameState.ENDED);
     } 
 }

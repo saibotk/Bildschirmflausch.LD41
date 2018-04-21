@@ -11,6 +11,9 @@ public class GameController : MonoBehaviour {
     private Room start;
     private Room finish;
 
+    [SerializeField]
+    private GameObject ui;
+
     private bool engineInitDone;
 
     public static GameController instance;
@@ -38,7 +41,7 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    void ChangeState(GameState nextState) {
+    public void ChangeState(GameState nextState) {
         if(nextState != state) {
             state = nextState;
             StateLogic(nextState);
@@ -91,7 +94,14 @@ public class GameController : MonoBehaviour {
 
     private void Ended()
     {
-
+        Debug.Log("Game ended");
+        //Time.timeScale = 0;
+        if (ui != null) {
+            Debug.Log("show gameover UI");
+            ui.GetComponent<UIController>().ShowGameOverUI();
+        } else {
+            Debug.Log("No ui specified");
+        }
     }
 
 }

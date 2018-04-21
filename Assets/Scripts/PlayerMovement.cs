@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour {
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    void Update() {
+    void FixedUpdate() {
 		Vector3 speedVec = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y, 0);
 		float speed = speedVec.magnitude;
 
@@ -43,9 +43,11 @@ public class PlayerMovement : MonoBehaviour {
 			Debug.DrawLine(transform.position, transform.position + br, Color.red, 0.01f, false);
         }
         if (Input.GetKey(KeyCode.A))
-            transform.Rotate(Vector3.forward * turnSpeed);
+            rigidbody2D.MoveRotation(rigidbody2D.rotation + turnSpeed);
+        //transform.Rotate(Vector3.forward * turnSpeed);
         if (Input.GetKey(KeyCode.D))
-            transform.Rotate(Vector3.forward * -turnSpeed);
+            rigidbody2D.MoveRotation(rigidbody2D.rotation - turnSpeed);
+            //transform.Rotate(Vector3.forward * -turnSpeed);
         // Debug lines
         Debug.DrawLine(transform.position, transform.position + speedVec, Color.magenta, 0.01f, false);
         Debug.DrawLine(transform.position, transform.position + transform.localRotation * Vector3.up, Color.yellow, 0.01f, false);
