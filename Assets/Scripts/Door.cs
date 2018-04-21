@@ -6,9 +6,17 @@ public class Door : MonoBehaviour {
     private bool locked = false;
 
     BoxCollider2D boundingBox;
+    BoxCollider2D triggerBox;
 	// Use this for initialization
 	void Start () {
-        boundingBox = GetComponent<BoxCollider2D>();
+        BoxCollider2D[] colliders = GetComponents<BoxCollider2D>();
+        foreach (BoxCollider2D collider in colliders) {
+            if (collider.isTrigger) {
+                triggerBox = collider;
+            } else {
+                boundingBox = collider;
+            }
+        }
         Unlock();
 	}
 	
@@ -16,12 +24,14 @@ public class Door : MonoBehaviour {
     {
         locked = true;
         boundingBox.enabled = true;
+        triggerBox.enabled = false;
     }
 
     public void Unlock()
     {
         locked = false;
         boundingBox.enabled = false;
+        triggerBox.enabled = true;
     }
 
     public bool IsLocked()
