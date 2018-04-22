@@ -138,6 +138,8 @@ public class DungeonGenerator {
                                 path.tiles.Add(new Vector2Int(x2, y2), Room.TileType.WALL);
                         }
                 }
+			if (r.AllDoors().Count > 0)
+				throw new NotSupportedException("Paths should not have any doors");
         }
         foreach ( GenRoom r in rooms ) {
             for ( int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++ )
@@ -157,9 +159,9 @@ public class DungeonGenerator {
             }
         }
 
-        foreach ( GenRoom r in rooms ) {
-            generateInterior(r);
-        }
+		//foreach (GenRoom r in rooms) {
+		//	generateInterior (r);
+		//}
 
         start = root.r;
         end = null; foreach ( GenRoom r in rooms ) {
@@ -319,7 +321,8 @@ public class DungeonGenerator {
             if ( lower == lefter )
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     lower.doorsRight.Add(new Vector2Int(horizontalLower.bounds.x - 1, horizontalLower.bounds.y + i));
-                } else
+                }
+			else
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     lower.doorsLeft.Add(new Vector2Int(horizontalLower.bounds.x + horizontalLower.bounds.width, horizontalLower.bounds.y + i));
                 }
@@ -329,7 +332,8 @@ public class DungeonGenerator {
             if ( lower == righter )
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     higher.doorsRight.Add(new Vector2Int(horizontalHigher.bounds.x - 1, horizontalHigher.bounds.y + i));
-                } else
+                }
+			else
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     higher.doorsLeft.Add(new Vector2Int(horizontalHigher.bounds.x + horizontalHigher.bounds.width, horizontalHigher.bounds.y + i));
                 }
@@ -339,7 +343,8 @@ public class DungeonGenerator {
             if ( lower == lefter )
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     lower.doorsDown.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y - 1));
-                } else
+                }
+			else
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     higher.doorsUp.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y + verticalLefter.bounds.height));
                 }
@@ -349,7 +354,8 @@ public class DungeonGenerator {
             if ( lower == righter )
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     lower.doorsDown.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y - 1));
-                } else
+                }
+			else
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     higher.doorsUp.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y + verticalRighter.bounds.height));
                 }
