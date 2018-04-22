@@ -11,36 +11,36 @@ public class GenerationProcessor {
         this.prefabs = prefabs;
     }
 
-    public GameObject ProcessRoom(Dictionary<Vector2, Room.TileType> d) {
+    public GameObject ProcessRoom(Dictionary<Vector2Int, Room.TileType> d) {
         GameObject root = new GameObject {
             name = "Room"
         };
-        foreach ( Vector2 v in d.Keys ) {
+        foreach ( Vector2Int v in d.Keys ) {
             bool left = false;
             bool top = false;
             bool right = false;
             bool bottom = false;
             // left bound
-            if ( d.ContainsKey(v + new Vector2(-1, 0)) ) {
-                if ( d[v + new Vector2(-1, 0)] == d[v] ) {
+            if ( d.ContainsKey(v + new Vector2Int(-1, 0)) ) {
+                if ( d[v + new Vector2Int(-1, 0)] == d[v] ) {
                     left = true;
                 }
             }
             // top bound
-            if ( d.ContainsKey(v + new Vector2(0, 1)) ) {
-                if ( d[v + new Vector2(0, 1)] == d[v] ) {
+            if ( d.ContainsKey(v + new Vector2Int(0, 1)) ) {
+                if ( d[v + new Vector2Int(0, 1)] == d[v] ) {
                     top = true;
                 }
             }
             // right bound
-            if ( d.ContainsKey(v + new Vector2(1, 0)) ) {
-                if ( d[v + new Vector2(1, 0)] == d[v] ) {
+            if ( d.ContainsKey(v + new Vector2Int(1, 0)) ) {
+                if ( d[v + new Vector2Int(1, 0)] == d[v] ) {
                     right = true;
                 }
             }
             // bottom bound
-            if ( d.ContainsKey(v + new Vector2(0, -1)) ) {
-                if ( d[v + new Vector2(0, -1)] == d[v] ) {
+            if ( d.ContainsKey(v + new Vector2Int(0, -1)) ) {
+                if ( d[v + new Vector2Int(0, -1)] == d[v] ) {
                     bottom = true;
                 }
             }
@@ -58,7 +58,7 @@ public class GenerationProcessor {
             switch ( d[v] ) {
                 case Room.TileType.WALL:
                     type = ExtendedTileType.BorderSingle;
-                    if ( top && left && d.ContainsKey(v + new Vector2(-1, -1)) || top && right && d.ContainsKey(v + new Vector2(1, -1)) || right && bottom && d.ContainsKey(v + new Vector2(1, 1)) || left && bottom && d.ContainsKey(v + new Vector2(-1, 1)) ) {
+                    if ( top && left && d.ContainsKey(v + new Vector2Int(-1, -1)) || top && right && d.ContainsKey(v + new Vector2Int(1, -1)) || right && bottom && d.ContainsKey(v + new Vector2Int(1, 1)) || left && bottom && d.ContainsKey(v + new Vector2Int(-1, 1)) ) {
                         type = ExtendedTileType.BorderOuter;
                     } else if ( top && left || top && right || right && bottom || left && bottom ) {
                         type = ExtendedTileType.BorderInner;

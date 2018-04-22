@@ -71,7 +71,7 @@ public class DungeonGenerator {
                         goto outer;
                 E.Add(new GenEdge(r1, r2));
 			}
-            outer:
+        outer:;
         }
         F.Add(root);
         Q.Remove(root);
