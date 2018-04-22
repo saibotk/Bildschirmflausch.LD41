@@ -202,6 +202,8 @@ public class DungeonGenerator {
             GenerateInterior(r);
         }
 
+		start.spawnpoints.Add(start.GetCenter());
+
 		foreach (Vector2Int v in allDoors) {
 			foreach (GenRoom r in rooms) {
 				for (int x = -TUNNEL_THICKNESS; x < TUNNEL_THICKNESS; x++)
