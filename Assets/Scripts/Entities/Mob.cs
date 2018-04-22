@@ -6,6 +6,7 @@ public abstract class Mob : Entity {
 	readonly int maxHP;
 	int currentHP;
 	bool isDead;
+    int damage;
 
 	// Constructor
 	public Mob(EntityObjective referringObjective, int maxHP) : base(referringObjective)
@@ -33,4 +34,18 @@ public abstract class Mob : Entity {
 		if (!isDead)
 			currentHP = (currentHP + healAmount > currentHP) ? maxHP : currentHP + healAmount;
 	}
+
+    public void SetDamage(int dmg)
+    {
+        damage = dmg;
+    }
+
+    public int GetDamage()
+    {
+        return damage;
+    }
+
+    public int getHealth() {
+        return currentHP;
+    }
 }

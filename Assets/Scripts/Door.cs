@@ -5,6 +5,12 @@ using UnityEngine;
 public class Door : MonoBehaviour {
     private bool locked = false;
 
+    [SerializeField]
+    GameObject graphics;
+
+    [SerializeField]
+    Room parent; 
+
     BoxCollider2D boundingBox;
     BoxCollider2D triggerBox;
 	// Use this for initialization
@@ -13,8 +19,10 @@ public class Door : MonoBehaviour {
         foreach (BoxCollider2D collider in colliders) {
             if (collider.isTrigger) {
                 triggerBox = collider;
+                Debug.Log("Found Door trigger");
             } else {
                 boundingBox = collider;
+                Debug.Log("Found Door collider");
             }
         }
         Unlock();
@@ -25,6 +33,7 @@ public class Door : MonoBehaviour {
         locked = true;
         boundingBox.enabled = true;
         triggerBox.enabled = false;
+        graphics.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void Unlock()
@@ -32,10 +41,20 @@ public class Door : MonoBehaviour {
         locked = false;
         boundingBox.enabled = false;
         triggerBox.enabled = true;
+        graphics.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public bool IsLocked()
     {
         return locked;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            Debug.Log("Leavin Trigger");
+            parent.OnPlayerEnter();
+        }
     }
 }

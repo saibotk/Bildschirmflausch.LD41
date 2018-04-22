@@ -61,8 +61,11 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject ui;
 
-    private bool engineInitDone;
+    [SerializeField]
+    private GameObject cam;
 
+    private bool engineInitDone;
+    private Player player;
     public static GameController instance;
     public GameController()
     {
@@ -150,6 +153,9 @@ public class GameController : MonoBehaviour {
         };
         start.SetObjective(new EntityObjective(start, tmp));
         start.OnPlayerEnter();
+        player = ((EntityObjective) start.GetObjective()).GetEntities()[0].GetComponent<Player>();
+        cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
+        ((EntityObjective)start.GetObjective()).Remove(player.gameObject);
     }
 
     private void Starting()
@@ -172,6 +178,10 @@ public class GameController : MonoBehaviour {
         } else {
             Debug.Log("No ui specified");
         }
+    }
+
+    public Player GetPlayer() {
+        return player;
     }
 
 }

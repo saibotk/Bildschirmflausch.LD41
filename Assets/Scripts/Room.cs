@@ -7,6 +7,7 @@ public class Room : MonoBehaviour {
 	public enum TileType {
 		GROUND, WALL, DOOR, ROCK
 	}
+    private bool activated;
 
 	Vector2 position;
 	Dictionary<Vector2, TileType> tiles;
@@ -22,6 +23,12 @@ public class Room : MonoBehaviour {
 
     [SerializeField]
     private Objective objective; 
+
+    enum ObjectiveType { EntityObjective }
+    // Params for testing
+    [SerializeField]
+    GameObject[] enemys;
+
 
 	// Use this for initialization
 	void Start () {
@@ -41,6 +48,9 @@ public class Room : MonoBehaviour {
                 
         }
         Debug.Log("Spawnpoints in Room: " + spawnpoints.Count);
+        if (enemys.Length != 0)
+            objective = new EntityObjective(this, new List<GameObject> (enemys));
+        //Unlock();
     }
 	
     public void SetObjective(Objective o)
@@ -64,13 +74,28 @@ public class Room : MonoBehaviour {
         }
     }
 
+    public Objective GetObjective()
+    {
+        return objective;
+    }
+
     public void OnPlayerEnter()
     {
-        objective.Activate();
+        if (activated)
+            return;
+        if(objective != null)
+            objective.Activate();
+        activated = true;
     }
 
     public List<Transform> GetSpawnpoints()
     {
         return spawnpoints;
     }
+
+    public bool GetActivated()
+    {
+        return activated;
+    }
+
 }
