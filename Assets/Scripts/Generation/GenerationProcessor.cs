@@ -68,6 +68,22 @@ public class GenerationProcessor {
                         type = ExtendedTileType.BorderInner;
 					} else {
 						// BorderSingle
+						if (tiles[v].position != null) {
+							switch (tiles[v].position) {
+								case GenTile.Position.BOTTOM: 
+									rotation = 0;
+									break;
+								case GenTile.Position.LEFT:
+									rotation = 90;
+									break;
+                                case GenTile.Position.TOP:
+                                    rotation = 180;
+									break;
+                                case GenTile.Position.RIGHT:
+                                    rotation = 270;
+                                    break;
+							}
+						}
 					}
                     break;
                 case Room.TileType.GROUND:

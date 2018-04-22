@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenRoom {
 	// ---Internal for generation only---
-    // TODO make them package protcted please
+    // TODO make them package protected please
     
 	public RectInt bounds = new RectInt();
 	public HashSet<Vector2Int> doorsUp = new HashSet<Vector2Int>();
