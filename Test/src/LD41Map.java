@@ -17,8 +17,8 @@ import org.joml.Vector2i;
 import javafx.util.Pair;
 
 public class LD41Map {
-
 	public static class Vertex {
+
 
 		public final Room	r;
 		public float		value;
@@ -30,8 +30,8 @@ public class LD41Map {
 			parent = null;
 		}
 	}
-
 	public static class Edge {
+
 
 		public final Vertex	r1, r2;
 		public double		dist;
@@ -42,13 +42,13 @@ public class LD41Map {
 			dist = r1.r.distance(r2.r);
 		}
 	}
-
 	public static class Room {
+
 
 		Rectangle				bounds	= new Rectangle();
 		// int width = 0, height = 0;
-		// Vector2i pos = new Vector2i();
 		Map<Vector2i, TileType>	tiles;
+		// Vector2i pos = new Vector2i();
 
 		public float distance(Room r) {
 			// Vector2i center1 = new Vector2i(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
@@ -57,9 +57,9 @@ public class LD41Map {
 			return (float) Point.distance(bounds.x, bounds.y, r.bounds.x, r.bounds.y);
 		}
 	}
-
 	public static enum TileType {
 		GROUND, WALL, DOOR;
+
 	}
 
 	public static void main(String[] args) {
@@ -187,6 +187,115 @@ public class LD41Map {
 				start.r1.value = (float) (start.r2.value + start.dist);
 			}
 		}
+
+		// G list of edges
+		// rooms list of rooms
+
+		for(Edge ed : G)
+		{
+			// horizontal
+			float diff1 = ed.r1.r.bounds.y - ed.r2.r.bounds.y - ed.r2.r.bounds.height + constants.tunnelThickness;
+			float diff2 = ed.r2.r.bounds.y - ed.r1.r.bounds.y - ed.r1.r.bounds.height + constants.tunnelThickness;
+
+			// vertical
+			float diff3 = ed.r1.r.bounds.x - ed.r2.r.bounds.x - ed.r2.r.bounds.width + constants.tunnelThickness;
+			float diff4 = ed.r2.r.bounds.x - ed.r1.r.bounds.x - ed.r1.r.bounds.width + constants.tunnelThickness;
+
+			if(diff1 < 0 && diff2 < 0)
+			{
+				addStraightHorizontal(rooms,ed);
+			}
+			else if(diff3 < 0 && diff4 < 0)
+			{
+				addStraightVertical(rooms,ed);
+			}
+			else
+				addCurve(rooms,ed);
+
+		}
+
 		return new Pair<>(rooms, new Pair<>(root, G));
+	}
+
+	public static void addStraightHorizontal(Set<Room> rooms, Edge ed)
+	{
+		Room tunnel = new Room();
+		boolean multiBitX = (ed.r1.r.bounds.x < ed.r2.r.bounds.x);
+		boolean multiBitY = (ed.r1.r.bounds.y < ed.r2.r.bounds.y);
+
+		tunnel.bounds.x = (multiBitX)? ed.r1.r.bounds.x + ed.r1.r.bounds.width : ed.r2.r.bounds.x + ed.r2.r.bounds.width;
+		tunnel.bounds.y = (multiBitY)? ed.r2.r.bounds.y : ed.r1.r.bounds.y;
+
+		tunnel.bounds.width = Math.abs(ed.r1.r.bounds.x - ed.r2.r.bounds.x) - ((multiBitX)? ed.r1.r.bounds.width : ed.r2.r.bounds.width);
+		tunnel.bounds.height = constants.tunnelThickness;
+
+		rooms.add(tunnel);
+	}
+
+	public static void addStraightVertical(Set<Room> rooms, Edge ed)
+	{
+		Room tunnel = new Room();
+		boolean multiBitX = (ed.r1.r.bounds.x < ed.r2.r.bounds.x);
+		boolean multiBitY = (ed.r1.r.bounds.y < ed.r2.r.bounds.y);
+
+		tunnel.bounds.x = (multiBitX)? ed.r2.r.bounds.x : ed.r1.r.bounds.x;
+		tunnel.bounds.y = (multiBitY)? ed.r1.r.bounds.y + ed.r1.r.bounds.height : ed.r2.r.bounds.y + ed.r2.r.bounds.height;
+
+		tunnel.bounds.width = constants.tunnelThickness;
+		tunnel.bounds.height = Math.abs(ed.r1.r.bounds.y - ed.r2.r.bounds.y) - ((multiBitY)? ed.r1.r.bounds.height: ed.r2.r.bounds.height);
+
+		rooms.add(tunnel);
+	}
+
+	public static void addCurve(Set<Room> rooms, Edge ed)
+	{
+		Vector2i directionVec = new Vector2i(ed.r2.r.bounds.x - ed.r1.r.bounds.x, ed.r2.r.bounds.y - ed.r1.r.bounds.y);
+		boolean bigAngle = directionVec.x < 0;
+		double angle = Math.acos((directionVec.x + directionVec.y) / (directionVec.length()) + ((bigAngle)? 180 : 0));
+
+		if(angle < 90)
+		{
+			Room tunnel = new Room();
+			tunnel.bounds.x = ed.r1.r.bounds.x + ed.r1.r.bounds.width - constants.tunnelThickness;
+			tunnel.bounds.y = ed.r2.r.bounds.y;
+
+			tunnel.bounds.width = ed.r1.r.bounds.x - ed.r2.r.bounds.x;
+			tunnel.bounds.height = ed.r2.r.bounds.y - ed.r1.r.bounds.y;
+
+			// add tiles to room
+		}
+		else if(angle < 180)
+		{
+			Room tunnel = new Room();
+			tunnel.bounds.x = ed.r1.r.bounds.x + ed.r1.r.bounds.width - constants.tunnelThickness;
+			tunnel.bounds.y = ed.r1.r.bounds.y + ed.r1.r.bounds.height;
+
+			tunnel.bounds.width = ed.r1.r.bounds.x - ed.r2.r.bounds.x;
+			tunnel.bounds.height = ed.r1.r.bounds.y - ed.r2.r.bounds.y;
+
+			// add tiles to room
+		}
+		else if(angle < 270)
+		{
+			Room tunnel = new Room();
+			tunnel.bounds.x = ed.r2.r.bounds.x + ed.r2.r.bounds.width;
+			tunnel.bounds.y = ed.r1.r.bounds.y + ed.r1.r.bounds.height;
+
+			tunnel.bounds.width = ed.r1.r.bounds.x - ed.r2.r.bounds.x + constants.tunnelThickness;
+			tunnel.bounds.height = ed.r1.r.bounds.y - ed.r2.r.bounds.y + constants.tunnelThickness;
+
+			// add tiles to room
+		}
+		else //(angle < 360)
+		{
+			Room tunnel = new Room();
+			tunnel.bounds.x = ed.r2.r.bounds.x + ed.r2.r.bounds.width;
+			tunnel.bounds.y = ed.r2.r.bounds.y - ed.r2.r.bounds.height;
+
+			tunnel.bounds.width = ed.r1.r.bounds.x - ed.r2.r.bounds.x + constants.tunnelThickness;
+			tunnel.bounds.height = ed.r2.r.bounds.y - ed.r2.r.bounds.height - ed.r1.r.bounds.y + constants.tunnelThickness;
+
+			// add tiles to room
+		}
 	}
 }
