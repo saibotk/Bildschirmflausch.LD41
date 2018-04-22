@@ -12,7 +12,7 @@ public abstract class Entity : MonoBehaviour{
 	}
 
 	// kills the entity
-	public void Kill()
+    public virtual void Kill()
 	{
 		if(referringObjective != null)
 			referringObjective.Remove (this.gameObject);
