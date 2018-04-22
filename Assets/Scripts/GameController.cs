@@ -115,4 +115,8 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    public Player GetPlayer() {
+        return player;
+    }
+
 }

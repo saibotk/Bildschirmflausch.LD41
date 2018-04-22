@@ -44,4 +44,8 @@ public abstract class Mob : Entity {
     {
         return damage;
     }
+
+    public int getHealth() {
+        return currentHP;
+    }
 }
