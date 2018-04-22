@@ -68,7 +68,7 @@ public class DungeonGenerator {
         foreach ( GenVertex r1 in Q ) {
             foreach ( GenVertex r2 in Q ) {
                 if ( r1 == r2 )
-                    continue;
+                    goto outer;
                 foreach ( GenEdge e in E )
                     if ( e.r2 == r1 && e.r1 == r2 )
                         goto outer;
@@ -134,29 +134,33 @@ public class DungeonGenerator {
 						path.tiles.Add(pos1, Room.TileType.GROUND);
                     for ( int x2 = x1 - 1; x2 <= x1 + 1; x2++ )
                         for ( int y2 = y1 - 1; y2 <= y1 + 1; y2++ ) {
-                            if ( !path.tiles.ContainsKey(new Vector2Int(x2, y2)) )
-                                path.tiles.Add(new Vector2Int(x2, y2), Room.TileType.WALL);
+							if (!path.tiles.ContainsKey(new Vector2Int(x2, y2)))
+								path.tiles.Add(new Vector2Int(x2, y2), Room.TileType.WALL);
                         }
                 }
         }
         foreach ( GenRoom r in rooms ) {
             for ( int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++ )
                 for ( int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++ ) {
-                    r.tiles.Add(new Vector2Int(x1, y1), Room.TileType.WALL);
+					r.tiles.Add(new Vector2Int(x1, y1), Room.TileType.WALL);
                 }
             for ( int x1 = r.bounds.x + 1; x1 < r.bounds.x + r.bounds.width - 1; x1++ )
                 for ( int y1 = r.bounds.y + 1; y1 < r.bounds.y + r.bounds.height - 1; y1++ ) {
 					r.tiles[new Vector2Int(x1, y1)] = Room.TileType.GROUND;
                 }
-            foreach ( Vector2Int v in r.AllDoors() )
-                r.tiles[v] = Room.TileType.DOOR;
+			foreach (Vector2Int v in r.AllDoors())
+			{
+				Debug.Log("Door: " + v);
+				if (!r.bounds.Contains(v))
+					throw new NotSupportedException("This is a bug where doors land in the wrong room. It should have been fixed.");
+				else
+					r.tiles[v] = Room.TileType.DOOR;
+			}
         }
 
 		foreach (GenRoom r in rooms) {
 			generateInterior (r);
 		}
-
-        rooms.Add(path);
 
         start = root.r;
         end = null; foreach ( GenRoom r in rooms ) {
@@ -218,8 +222,8 @@ public class DungeonGenerator {
         rooms.Add(tunnel);
 
         for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
-            lower.doorsUp.Add(new Vector2Int(tunnel.bounds.x + i, tunnel.bounds.y + tunnel.bounds.height));
-            higher.doorsDown.Add(new Vector2Int(tunnel.bounds.x + i, tunnel.bounds.y - 1));
+            higher.doorsUp.Add(new Vector2Int(tunnel.bounds.x + i, tunnel.bounds.y + tunnel.bounds.height));
+            lower.doorsDown.Add(new Vector2Int(tunnel.bounds.x + i, tunnel.bounds.y - 1));
         }
     }
 
@@ -338,14 +342,14 @@ public class DungeonGenerator {
                     lower.doorsDown.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y - 1));
                 } else
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
-                    lower.doorsUp.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y + verticalLefter.bounds.height));
+                    higher.doorsUp.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y + verticalLefter.bounds.height));
                 }
         }
         if ( addVertical2 ) {
             rooms.Add(verticalRighter);
             if ( lower == righter )
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
-                    higher.doorsDown.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y - 1));
+                    lower.doorsDown.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y - 1));
                 } else
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
                     higher.doorsUp.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y + verticalRighter.bounds.height));
