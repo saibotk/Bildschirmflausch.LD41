@@ -6,6 +6,10 @@ using Assets.Scripts.Entities.Attack;
 namespace Assets.Scripts.Entities {
     class Scorpion : Enemy {
         public Scorpion() : base(30) {
+            
+        }
+
+        private void Start() {
             SetAttack(new MeleeAttack(this.gameObject));
         }
     }
