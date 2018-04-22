@@ -10,20 +10,16 @@ namespace Assets.Scripts.Entities {
         private float speed = 1;
         [SerializeField]
         private float rotationSpeed = 1;
-
+        [SerializeField]
         protected GameObject victim;
+        [SerializeField]
         private Rigidbody2D body;
+        private float nextAttackTime;
 
         public Enemy(int mHP) : base(mHP) {
             
         }
 
-        private void Start() {
-            body = gameObject.GetComponent<Rigidbody2D>();
-            
-        }
-
-        private float nextAttackTime;
         void Update() {
             if ( victim == null || attack == null ) {
                 return;

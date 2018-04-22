@@ -5,9 +5,9 @@ namespace Assets.Scripts.Entities.Attack {
     [Serializable]
     class MeleeAttack : IAttack {
 
-        int damage = 12;
+        int damage = 10;
         float cooldown = 1;
-        float range = 1.5f;
+        float range = 2f;
         GameObject owner;
 
         public MeleeAttack(GameObject owner) {
