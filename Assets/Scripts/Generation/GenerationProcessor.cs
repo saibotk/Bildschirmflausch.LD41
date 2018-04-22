@@ -27,13 +27,13 @@ public class GenerationProcessor {
 							switch (tiles[v].position)
 							{
 								case GenTile.Position.BOTTOM:
-									rotation = 0;
+									rotation = 180;
 									break;
 								case GenTile.Position.LEFT:
 									rotation = 90;
 									break;
 								case GenTile.Position.TOP:
-									rotation = 180;
+									rotation = 0;
 									break;
 								case GenTile.Position.RIGHT:
 									rotation = 270;
@@ -44,16 +44,16 @@ public class GenerationProcessor {
 							switch (tiles[v].position)
 							{
                                 case GenTile.Position.BOTTOM_LEFT:
-                                    rotation = 0;
-                                    break;
-                                case GenTile.Position.TOP_LEFT:
                                     rotation = 90;
                                     break;
+                                case GenTile.Position.TOP_LEFT:
+                                    rotation = 0;
+                                    break;
 								case GenTile.Position.TOP_RIGHT:
-									rotation = 180;
+									rotation = 270;
 									break;
 								case GenTile.Position.BOTTOM_RIGHT:
-									rotation = 270;
+									rotation = 180;
 									break;
 							}
 							break;
@@ -78,6 +78,8 @@ public class GenerationProcessor {
 
     private GameObject CreateGOFromType(Vector2 v, int rotation, ExtendedTileType t, GameObject root) {
         GameObject tmp = null;
+		//if (t == ExtendedTileType.BorderInner || t == ExtendedTileType.BorderOuter || t == ExtendedTileType.BorderInner)
+		//	CreateGOFromType(v, rotation, ExtendedTileType.Ground, root);
         if ( prefabs.ContainsKey(t) && root != null ) {
             tmp = Object.Instantiate(prefabs[t], root.transform);
             tmp.transform.position = v;
@@ -104,7 +106,7 @@ public class GenerationProcessor {
 	}
 
 	private ExtendedTileType getCorrectWallType(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position){
-		int groundNumber = CountSpecificNeighbours(tiles, position, Room.TileType.GROUND);
+		int groundNumber = CountSpecificNeighbours(tiles, position, Room.TileType.GROUND) + CountSpecificNeighbours(tiles, position, Room.TileType.ROCK);
 		switch(groundNumber){
 			case 0:
 				return ExtendedTileType.BorderInner;
@@ -116,14 +118,14 @@ public class GenerationProcessor {
 	}
 
 	private ExtendedTileType getCorrectRockType(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position){
-		
+
 		ExtendedTileType type = ExtendedTileType.Rock;
 
 		bool left = false;
         bool top = false;
         bool right = false;
         bool bottom = false;
-        
+
 		Vector2Int toCheck = position + new Vector2Int(0, -1);
 		if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.ROCK)
 			bottom = true;
@@ -176,7 +178,7 @@ public class GenerationProcessor {
         if (right && bottom && !top && !left)
         {
 			return ExtendedTileType.RockRD;
-        }      
+        }
         if (left && top && bottom && !right)
         {
 			return ExtendedTileType.RockLUD;
