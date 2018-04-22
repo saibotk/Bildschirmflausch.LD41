@@ -19,7 +19,8 @@ public class StartObjective : Objective {
     /// Handle activation code for a goal.
     /// </summary>
     /// <param name="ply">Player is ignored </param>
-    public override void ActivateGoal(Player player=null) {
+    public override void ActivateGoal(Player player) {
+        Debug.Log(room == null);
         if ( room.GetSpawnpoints().Count > 0 ) {
             GameObject ply = GameObject.Instantiate(playerPrefab);
             ply.transform.position = room.GetSpawnpoints()[0].position;
@@ -33,6 +34,7 @@ public class StartObjective : Objective {
     /// </summary>
     /// <returns>Player</returns>
     public Player GetPlayer() {
+        Debug.Log(player == null);
         return player;
     }
 

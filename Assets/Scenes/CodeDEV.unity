@@ -1178,7 +1178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 354516592}
-  healthcontroller: {fileID: 0}
+  healthcontroller: {fileID: 623293249}
 --- !u!4 &1487324258
 Transform:
   m_ObjectHideFlags: 0
@@ -1353,3 +1353,4 @@ MonoBehaviour:
   cam: {fileID: 881384367}
   playerPrefab: {fileID: 1679161327080020, guid: 3d1911457c1e44f53b6b4044334db52f,
     type: 2}
+  mapRoot: {fileID: 1624368723}

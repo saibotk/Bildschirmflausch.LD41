@@ -22,17 +22,61 @@ public class Room : MonoBehaviour {
     // Use this for initialization
     void Start() {
         doors = new List<Door>();
-        foreach ( Door d in doorsRootObject.GetComponentsInChildren<Door>() ) {
-            doors.Add(d);
-        }
-        Debug.Log("[ROOMS] Doors: " + doors.Count);
-        spawnpoints = new List<Transform>();
-        foreach ( Transform t in spawnpointRootObject.GetComponentsInChildren<Transform>() ) {
-            if ( t.gameObject != spawnpointRootObject ) {
-                spawnpoints.Add(t);
+        if ( doorsRootObject != null ) {
+            foreach ( Door d in doorsRootObject.GetComponentsInChildren<Door>() ) {
+                doors.Add(d);
             }
+            Debug.Log("[ROOMS] Doors: " + doors.Count);
         }
-        Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
+        
+        spawnpoints = new List<Transform>();
+        if ( spawnpointRootObject != null ) {
+            foreach ( Transform t in spawnpointRootObject.GetComponentsInChildren<Transform>() ) {
+                if ( t.gameObject != spawnpointRootObject ) {
+                    spawnpoints.Add(t);
+                }
+            }
+            Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
+        }
+    }
+
+    /// <summary>
+    /// Reloads the spawnpoints and doors.
+    /// </summary>
+    public void Reload() {
+        doors = new List<Door>();
+        if ( doorsRootObject != null ) {
+            foreach ( Door d in doorsRootObject.GetComponentsInChildren<Door>() ) {
+                doors.Add(d);
+            }
+            Debug.Log("[ROOMS] Doors: " + doors.Count);
+        }
+
+        spawnpoints = new List<Transform>();
+        if ( spawnpointRootObject != null ) {
+            foreach ( Transform t in spawnpointRootObject.GetComponentsInChildren<Transform>() ) {
+                if ( t.gameObject != spawnpointRootObject ) {
+                    spawnpoints.Add(t);
+                }
+            }
+            Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
+        }
+    }
+
+    /// <summary>
+    /// Sets the doors root object.
+    /// </summary>
+    /// <param name="go"></param>
+    public void SetDoorsRootObject(GameObject go) {
+        doorsRootObject = go;
+    }
+
+    /// <summary>
+    /// Sets the spawnpoints root object.
+    /// </summary>
+    /// <param name="go"></param>
+    public void SetSpawnPointsRootObject(GameObject go) {
+        spawnpointRootObject = go;
     }
 
     /// <summary>

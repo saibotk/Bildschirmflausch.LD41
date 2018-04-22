@@ -154,9 +154,13 @@ public class GameController : MonoBehaviour {
         dg.Generate();
         GameObject goStart = gp.ProcessRoom(dg.start.tiles);
         start = goStart.AddComponent<Room>();
+        //start.SetDoorsRootObject(new List<Transform>(goStart.GetComponentsInChildren<Transform>()).Find(x => x.tag == "DoorRoot").gameObject);
+        start.Reload();
         start.transform.SetParent(mapRoot.transform);
         GameObject goFinish = gp.ProcessRoom(dg.end.tiles);
         finish = goFinish.AddComponent<Room>();
+        //finish.SetDoorsRootObject(new List<Transform>(goFinish.GetComponentsInChildren<Transform>()).Find(x => x.tag == "DoorRoot").gameObject);
+        finish.Reload();
         finish.transform.SetParent(mapRoot.transform);
         foreach (GenRoom gr in dg.rooms) {
             GameObject groom = gp.ProcessRoom(gr.tiles);
@@ -170,7 +174,8 @@ public class GameController : MonoBehaviour {
         start.SetObjective(goal);
         start.OnPlayerEnter(player);
         player = goal.GetPlayer();
-        cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
+        if(player != null)
+            cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
     }
 
     private void Running() {
