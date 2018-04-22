@@ -7,7 +7,8 @@ public class BrakeBarController : MonoBehaviour {
     float currentRotation;
     int BrakeAmount = 100;
     private Player player;
-    int currentBrakeAmount;
+    float firstTime;
+    float secondTime;
 
     // Use this for initialization
     void Start () {
@@ -19,22 +20,31 @@ public class BrakeBarController : MonoBehaviour {
         // if player alive and spawned
         if (player != null)
         {
-            UpdatePointer(currentBrakeAmount);
+            UpdatePointer();
         }
         else if (currentRotation != 0)
         {
             //if player dead or not spawned
-            UpdatePointer(0);
+            UpdatePointer();
         }
 
     }
-    private void UpdatePointer(float brakeAmount)
+    private void UpdatePointer()
     {
-        if (Input.GetKey(KeyCode.S)) {
-            float offset = brakeAmount - currentRotation;
-            gameObject.transform.Rotate(Vector3.forward, offset);
-            currentRotation += offset;
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            firstTime = Time.time;
+        }
+
+            if (Input.GetKeyUp(KeyCode.S))
+            {
+                secondTime = Time.time;
+                float difference = secondTime - firstTime;
+                gameObject.transform.Rotate(Vector3.forward, difference);
+            }
+        
+       
         }
     
     }
-}
+
