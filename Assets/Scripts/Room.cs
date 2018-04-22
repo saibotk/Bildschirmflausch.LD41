@@ -26,7 +26,7 @@ public class Room : MonoBehaviour {
             foreach ( Door d in doorsRootObject.GetComponentsInChildren<Door>() ) {
                 doors.Add(d);
             }
-            Debug.Log("[ROOMS] Doors: " + doors.Count);
+            //Debug.Log("[ROOMS] Doors: " + doors.Count);
         }
         
         spawnpoints = new List<Transform>();
@@ -36,8 +36,9 @@ public class Room : MonoBehaviour {
                     spawnpoints.Add(t);
                 }
             }
-            Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
+            //Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
         }
+        //Unlock();
     }
 
     /// <summary>
@@ -49,7 +50,7 @@ public class Room : MonoBehaviour {
             foreach ( Door d in doorsRootObject.GetComponentsInChildren<Door>() ) {
                 doors.Add(d);
             }
-            Debug.Log("[ROOMS] Doors: " + doors.Count);
+            //Debug.Log("[ROOMS] Doors: " + doors.Count);
         }
 
         spawnpoints = new List<Transform>();
@@ -59,7 +60,7 @@ public class Room : MonoBehaviour {
                     spawnpoints.Add(t);
                 }
             }
-            Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
+            //Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
         }
     }
 

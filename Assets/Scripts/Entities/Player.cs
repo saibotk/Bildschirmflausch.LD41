@@ -27,6 +27,7 @@ public class Player : Mob {
     /// This is called when a Player died.
     /// </summary>
     protected override void Death() {
+        Debug.Log("Player died...");
         Destroy(this.gameObject);
         GameController.instance.ChangeState(GameController.GameState.ENDED);
     }

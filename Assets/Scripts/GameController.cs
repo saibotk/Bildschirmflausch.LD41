@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    [SerializeField]
-    GameObject playerPrefab;
 
-    [SerializeField]
+
     private Room start;
     private Room finish;
 
@@ -58,14 +56,24 @@ public class GameController : MonoBehaviour {
 
     private Dictionary<GenerationProcessor.ExtendedTileType, GameObject> genPrefabs;
 
+    [Space(10)]
+    [Header("References")]
+
+    [SerializeField]
+    private GameObject playerPrefab;
+
     [SerializeField]
     private GameObject ui;
 
     [SerializeField]
     private GameObject cam;
 
+    [SerializeField]
+    private GameObject mapRoot;
+
     private bool engineInitDone;
     private Player player;
+
     public static GameController instance;
     public GameController() {
         instance = this;
@@ -146,23 +154,67 @@ public class GameController : MonoBehaviour {
         DungeonGenerator dg = new DungeonGenerator();
         GenerationProcessor gp = new GenerationProcessor(genPrefabs);
         dg.Generate();
+
+        // Start room 
         GameObject goStart = gp.ProcessRoom(dg.start.tiles);
+        goStart.name = "Start";
+        List<Transform> lt = new List<Transform>(goStart.GetComponentsInChildren<Transform>());
+        GameObject doorRoot = new GameObject();
+        doorRoot.name = "Doors";
+        doorRoot.transform.SetParent(goStart.transform);
         start = goStart.AddComponent<Room>();
-        //start.SetDoorsRootObject(new List<Transform>(goStart.GetComponentsInChildren<Transform>()).Find(x => x.tag == "DoorRoot").gameObject);
+        lt = lt.FindAll(x => x.tag == "door");
+        lt.ForEach(x => {
+            x.SetParent(doorRoot.transform);
+            x.gameObject.GetComponent<Door>().SetParent(start);
+            });
+        start.SetDoorsRootObject(doorRoot);
+
+        // WIP
+        GameObject spawnpointRoot = new GameObject();
+        spawnpointRoot.name = "Spawnpoints";
+        spawnpointRoot.transform.SetParent(goStart.transform);
+        spawnpointRoot.transform.position = new Vector3(dg.start.roomPosition.x, dg.start.roomPosition.y, 0);
+        GameObject spawn = new GameObject();
+        spawn.transform.SetParent(spawnpointRoot.transform);
+        spawn.transform.position = new Vector3(3, 3, 0);
+        start.SetSpawnPointsRootObject(spawnpointRoot);
+
         start.Reload();
         start.transform.SetParent(mapRoot.transform);
+
+        // Finish room
         GameObject goFinish = gp.ProcessRoom(dg.end.tiles);
+        goFinish.name = "Finish";
+        List<Transform> ltf = new List<Transform>(goFinish.GetComponentsInChildren<Transform>());
+        GameObject doorRootf = new GameObject();
+        doorRootf.name = "Doors";
+        doorRootf.transform.SetParent(goFinish.transform);
+        ltf = ltf.FindAll(x => x.tag == "door");
+        ltf.ForEach(x => x.SetParent(doorRootf.transform));
         finish = goFinish.AddComponent<Room>();
-        //finish.SetDoorsRootObject(new List<Transform>(goFinish.GetComponentsInChildren<Transform>()).Find(x => x.tag == "DoorRoot").gameObject);
+        finish.SetDoorsRootObject(doorRootf);
         finish.Reload();
         finish.transform.SetParent(mapRoot.transform);
+
+        // Other Rooms
         foreach (GenRoom gr in dg.rooms) {
             GameObject groom = gp.ProcessRoom(gr.tiles);
-            groom.AddComponent<Room>();
+            List<Transform> ltg = new List<Transform>(groom.GetComponentsInChildren<Transform>());
+            GameObject doorRootg = new GameObject();
+            doorRootg.name = "Doors";
+            doorRootg.transform.SetParent(groom.transform);
+            ltg = ltg.FindAll(x => x.tag == "door");
+            ltg.ForEach(x => x.SetParent(doorRootg.transform));
+            Room grom = groom.AddComponent<Room>();
+            grom.SetDoorsRootObject(doorRootg);
+            grom.Reload();
             groom.transform.SetParent(mapRoot.transform);
         }
 
+        // Hallways
         GameObject goHallways = gp.ProcessRoom(dg.path.tiles);
+        goHallways.name = "Hallways";
         goHallways.AddComponent<Room>();
         goHallways.transform.SetParent(mapRoot.transform);
     }
@@ -172,11 +224,11 @@ public class GameController : MonoBehaviour {
         start.SetObjective(goal);
         start.OnPlayerEnter(player);
         player = goal.GetPlayer();
-        cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
-    }
-
-    private void Starting() {
-
+        if ( player != null ) {
+            cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
+        } else {
+            Debug.Log("No Player spawned!");
+        }
     }
 
     private void Running() {
@@ -187,10 +239,10 @@ public class GameController : MonoBehaviour {
         Debug.Log("Game ended");
         //Time.timeScale = 0;
         if ( ui != null ) {
-            Debug.Log("show gameover UI");
+            Debug.Log("show Gameover UI");
             ui.GetComponent<UIController>().ShowGameOverUI();
         } else {
-            Debug.Log("No ui specified");
+            Debug.Log("No UI specified");
         }
     }
 

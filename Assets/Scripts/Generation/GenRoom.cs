@@ -36,7 +36,7 @@ public class GenRoom {
         return ret;
     }
 
-	public void generateInteror()
-	{
-		b
+    public void generateInteror() {
+
+    }
 }
