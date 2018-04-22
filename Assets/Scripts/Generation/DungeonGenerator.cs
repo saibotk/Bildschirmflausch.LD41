@@ -147,24 +147,44 @@ public class DungeonGenerator {
 
         path = new GenRoom();
         foreach (GenRoom r in rooms2)
-        {
+		{
             for (int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++)
                 for (int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++)
                 {
                     Vector2Int pos1 = new Vector2Int(x1, y1);
-					if (path.tiles.ContainsKey(pos1))
-					    path.tiles[pos1].type = Room.TileType.GROUND;
-					else 
-    				    path.tiles.Add(pos1, new GenTile(Room.TileType.GROUND));
-					for (int x2 = x1 - 1; x2 <= x1 + 1; x2++)
-					{
-						for (int y2 = y1 - 1; y2 <= y1 + 1; y2++)
-						{
-							Vector2Int pos2 = new Vector2Int(x2, y2);
-							if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
-								path.tiles.Add(pos2, new GenTile(Room.TileType.WALL));
-						}
-					}
+                    if (path.tiles.ContainsKey(pos1))
+                        path.tiles[pos1].type = Room.TileType.GROUND;
+                    else
+                        path.tiles.Add(pos1, new GenTile(Room.TileType.GROUND));
+
+                    Vector2Int pos2 = new Vector2Int(x1 + 1, y1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.RIGHT));
+                    pos2 = new Vector2Int(x1 - 1, y1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.LEFT));
+                    pos2 = new Vector2Int(x1, y1 + 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.TOP));
+                    pos2 = new Vector2Int(x1, y1 - 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.BOTTOM));
+			}
+            for (int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++)
+                for (int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++)
+                {
+                    Vector2Int pos2 = new Vector2Int(x1 + 1, y1 + 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.TOP_RIGHT));
+                    pos2 = new Vector2Int(x1 - 1, y1 + 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.TOP_LEFT));
+                    pos2 = new Vector2Int(x1 + 1, y1 - 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+					    path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.BOTTOM_RIGHT));
+                    pos2 = new Vector2Int(x1 - 1, y1 - 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.BOTTOM_LEFT));
                 }
             if (r.AllDoors().Count > 0)
                 throw new NotSupportedException("Paths should not have any doors");

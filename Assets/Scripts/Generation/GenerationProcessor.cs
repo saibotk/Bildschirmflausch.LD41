@@ -27,13 +27,13 @@ public class GenerationProcessor {
 							switch (tiles[v].position)
 							{
 								case GenTile.Position.BOTTOM:
-									rotation = 0;
+									rotation = 180;
 									break;
 								case GenTile.Position.LEFT:
 									rotation = 90;
 									break;
 								case GenTile.Position.TOP:
-									rotation = 180;
+									rotation = 0;
 									break;
 								case GenTile.Position.RIGHT:
 									rotation = 270;
@@ -44,16 +44,16 @@ public class GenerationProcessor {
 							switch (tiles[v].position)
 							{
                                 case GenTile.Position.BOTTOM_LEFT:
-                                    rotation = 0;
-                                    break;
-                                case GenTile.Position.TOP_LEFT:
                                     rotation = 90;
                                     break;
+                                case GenTile.Position.TOP_LEFT:
+                                    rotation = 0;
+                                    break;
 								case GenTile.Position.TOP_RIGHT:
-									rotation = 180;
+									rotation = 270;
 									break;
 								case GenTile.Position.BOTTOM_RIGHT:
-									rotation = 270;
+									rotation = 180;
 									break;
 							}
 							break;

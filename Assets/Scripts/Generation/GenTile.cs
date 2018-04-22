@@ -6,15 +6,15 @@ public class GenTile
 {
 	public enum Position
 	{
-		TOP_LEFT = 0,
-		TOP = 1,
-		TOP_RIGHT = 2,
+        BOTTOM_LEFT = 0,
+		BOTTOM = 1,
+        BOTTOM_RIGHT = 2,
 		LEFT = 3,
 		CENTER = 4,
 		RIGHT = 5,
-		BOTTOM_LEFT = 6,
-		BOTTOM = 7,
-		BOTTOM_RIGHT = 8
+        TOP_LEFT = 6,
+        TOP = 7,
+        TOP_RIGHT = 8
 	}
 
 	public Room.TileType type;
