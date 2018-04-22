@@ -167,6 +167,10 @@ public class GameController : MonoBehaviour {
             groom.AddComponent<Room>();
             groom.transform.SetParent(mapRoot.transform);
         }
+
+        GameObject goHallways = gp.ProcessRoom(dg.path.tiles);
+        goHallways.AddComponent<Room>();
+        goHallways.transform.SetParent(mapRoot.transform);
     }
 
     private void Starting() {
