@@ -70,16 +70,16 @@ public class GenerationProcessor {
                     break;
             }
 
-            CreateGOFromType(v, rotation, type, root);
+			CreateGOFromType(v, rotation, tiles[v].type, type, root);
         }
 
         return root;
     }
 
-    private GameObject CreateGOFromType(Vector2 v, int rotation, ExtendedTileType t, GameObject root) {
+	private GameObject CreateGOFromType(Vector2 v, int rotation, Room.TileType type, ExtendedTileType t, GameObject root) {
         GameObject tmp = null;
-		//if (t == ExtendedTileType.BorderInner || t == ExtendedTileType.BorderOuter || t == ExtendedTileType.BorderInner)
-		//	CreateGOFromType(v, rotation, ExtendedTileType.Ground, root);
+		if (type == Room.TileType.ROCK || type == Room.TileType.WALL)
+			CreateGOFromType(v, 0, Room.TileType.GROUND, ExtendedTileType.Ground, root);
         if ( prefabs.ContainsKey(t) && root != null ) {
             tmp = Object.Instantiate(prefabs[t], root.transform);
             tmp.transform.position = v;
