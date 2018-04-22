@@ -7,10 +7,14 @@ public class DungeonGenerator {
     }
 
     public const int TUNNEL_THICKNESS = 4;
+    // The first and starting room
     public GenRoom start;
+    // The room with the finishing flag
     public GenRoom end;
-    public HashSet<GenRoom> rooms;
+    // The room containing all the paths connecting normal rooms
     public GenRoom path;
+    // All rooms except the three above
+	public HashSet<GenRoom> rooms;
 
     public void Generate() {
         int minRoomSize = 50;
@@ -137,13 +141,15 @@ public class DungeonGenerator {
             foreach ( Vector2Int v in r.AllDoors() )
                 r.tiles.Add(v, Room.TileType.DOOR);
         }
-        rooms.Add(path);
 
         start = root.r;
         end = null; foreach ( GenRoom r in rooms ) {
             if ( end == null || r.bounds.x > end.bounds.x )
                 end = r;
         }
+
+		rooms.Remove(start);
+		rooms.Remove(end);
     }
 
     public static void AddStraightHorizontal(HashSet<GenRoom> rooms, GenEdge ed) {
