@@ -107,7 +107,6 @@ public class GameController : MonoBehaviour {
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLRD, RockLRD);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground, Ground);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.Door, Door);
-
     }
 
     // Update is called once per frame
@@ -226,6 +225,7 @@ public class GameController : MonoBehaviour {
         player = goal.GetPlayer();
         if ( player != null ) {
             cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
+            GetUI().InitHealthController(player);
         } else {
             Debug.Log("No Player spawned!");
         }

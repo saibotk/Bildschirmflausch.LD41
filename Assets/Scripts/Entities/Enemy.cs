@@ -21,13 +21,17 @@ namespace Assets.Scripts.Entities {
         }
 
         void Update() {
+            
             if ( victim == null || attack == null ) {
                 return;
             }
 
             if ( Time.timeSinceLevelLoad >= nextAttackTime ) {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.position - victim.transform.position, attack.GetRange());
-                if ( hit.collider.gameObject == victim ) {
+                RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, transform.localRotation * Vector3.up, attack.GetRange());
+                List<RaycastHit2D> rh = new List<RaycastHit2D>(hits);
+                RaycastHit2D hit = rh.Find(x => x.fraction != 0);
+                if ( hit.collider != null && hit.collider.gameObject == victim ) {
+                    Debug.Log("Attacking Player!!!");
                     attack.Attack();
                     nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime();
                 }

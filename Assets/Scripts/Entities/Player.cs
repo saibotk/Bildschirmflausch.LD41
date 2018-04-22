@@ -40,10 +40,11 @@ public class Player : Mob {
         Debug.Log("Collision");
         if ( collision.collider.tag == "wall" ) {
             Death();
-        } else if ( collision.collider.tag == "enemy" ) {
+        } else if ( collision.collider.tag == "Enemy" ) {
             Mob m = collision.collider.GetComponent(typeof(Mob)) as Mob;
             if ( m != null ) {
-                InflictDamage(carDamage);
+                //m.InflictDamage(carDamage);
+                //InflictDamage(carDamage); // TODO
             }
         }
     }

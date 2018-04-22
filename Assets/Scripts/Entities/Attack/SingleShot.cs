@@ -34,7 +34,6 @@ namespace Assets.Scripts.Entities.Attack {
             Bullet bu = b.GetComponent<Bullet>();
             bu.SetDamage(damage);
             bu.SetOwner(owner);
-
         }
 
         public float GetCooldownTime() {
