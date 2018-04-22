@@ -10,15 +10,15 @@ public class GenRoom {
     public HashSet<Vector2Int> doorsLeft = new HashSet<Vector2Int>();
     public HashSet<Vector2Int> doorsRight = new HashSet<Vector2Int>();
 
-    public float distance(GenRoom r) {
-        return Math.Abs(getCenter().x - r.getCenter().x) + Math.Abs(getCenter().y - r.getCenter().y);
+    public float Distance(GenRoom r) {
+        return Math.Abs(GetCenter().x - r.GetCenter().x) + Math.Abs(GetCenter().y - r.GetCenter().y);
     }
 
-    public Vector2Int getCenter() {
+    public Vector2Int GetCenter() {
         return new Vector2Int(( int ) bounds.center.x, ( int ) bounds.center.y);
     }
 
-    public HashSet<Vector2Int> allDoors() {
+    public HashSet<Vector2Int> AllDoors() {
         HashSet<Vector2Int> ret = new HashSet<Vector2Int>();
         ret.UnionWith(doorsUp);
         ret.UnionWith(doorsDown);

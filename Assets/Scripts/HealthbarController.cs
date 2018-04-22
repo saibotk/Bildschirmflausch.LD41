@@ -12,7 +12,7 @@ public class HealthbarController : MonoBehaviour {
     void Update() {
         // if player alive and spawned
         if ( player != null ) {
-            UpdatePointer(player.getHealth());
+            UpdatePointer(player.GetHealth());
         } else if (currentRotation != 0) {
             //if player dead or not spawned
             UpdatePointer(0);

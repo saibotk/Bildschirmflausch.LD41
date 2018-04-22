@@ -64,7 +64,7 @@
     /// Gets the current HP.
     /// </summary>
     /// <returns></returns>
-    public int getHealth() {
+    public int GetHealth() {
         return currentHP;
     }
 
@@ -72,7 +72,7 @@
     /// Gets the maximum HP.
     /// </summary>
     /// <returns></returns>
-    public int getMaxHealth() {
+    public int GetMaxHealth() {
         return maxHP;
     }
 }

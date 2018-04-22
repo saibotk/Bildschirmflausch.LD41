@@ -12,7 +12,7 @@ public class DungeonGenerator {
     public HashSet<GenRoom> rooms;
     public GenRoom path;
 
-    public void generate() {
+    public void Generate() {
         int minRoomSize = 50;
         rooms = new HashSet<GenRoom>();
         for ( int i = 0; i < 7 + ( int ) ( UnityEngine.Random.value * 4 ); i++ ) {
@@ -104,11 +104,11 @@ public class DungeonGenerator {
             float diff4 = ed.r2.r.bounds.x - ed.r1.r.bounds.x - ed.r1.r.bounds.width + TUNNEL_THICKNESS;
 
             if ( diff1 < 0 && diff2 < 0 ) {
-                addStraightHorizontal(rooms2, ed);
+                AddStraightHorizontal(rooms2, ed);
             } else if ( diff3 < 0 && diff4 < 0 ) {
-                addStraightVertical(rooms2, ed);
+                AddStraightVertical(rooms2, ed);
             } else
-                addCurve(rooms2, ed);
+                AddCurve(rooms2, ed);
         }
 
         path = new GenRoom();
@@ -122,7 +122,7 @@ public class DungeonGenerator {
                                 path.tiles.Add(new Vector2Int(x2, y2), Room.TileType.WALL);
                         }
                 }
-            foreach ( Vector2Int v in r.allDoors() )
+            foreach ( Vector2Int v in r.AllDoors() )
                 r.tiles.Add(v, Room.TileType.DOOR);
         }
         foreach ( GenRoom r in rooms ) {
@@ -134,7 +134,7 @@ public class DungeonGenerator {
                 for ( int y1 = r.bounds.y + 1; y1 < r.bounds.y + r.bounds.height - 1; y1++ ) {
                     r.tiles.Add(new Vector2Int(x1, y1), Room.TileType.GROUND);
                 }
-            foreach ( Vector2Int v in r.allDoors() )
+            foreach ( Vector2Int v in r.AllDoors() )
                 r.tiles.Add(v, Room.TileType.DOOR);
         }
         rooms.Add(path);
@@ -146,9 +146,9 @@ public class DungeonGenerator {
         }
     }
 
-    public static void addStraightHorizontal(HashSet<GenRoom> rooms, GenEdge ed) {
-        GenRoom righter = ed.r1.r.getCenter().x > ed.r2.r.getCenter().x ? ed.r1.r : ed.r2.r;
-        GenRoom lefter = ed.r1.r.getCenter().x > ed.r2.r.getCenter().x ? ed.r2.r : ed.r1.r;
+    public static void AddStraightHorizontal(HashSet<GenRoom> rooms, GenEdge ed) {
+        GenRoom righter = ed.r1.r.GetCenter().x > ed.r2.r.GetCenter().x ? ed.r1.r : ed.r2.r;
+        GenRoom lefter = ed.r1.r.GetCenter().x > ed.r2.r.GetCenter().x ? ed.r2.r : ed.r1.r;
         GenRoom tunnel = new GenRoom();
         int minX = Math.Min(ed.r1.r.bounds.x + ed.r1.r.bounds.width, ed.r2.r.bounds.x + ed.r2.r.bounds.width);
         int minY = Math.Max(ed.r1.r.bounds.y, ed.r2.r.bounds.y);
@@ -167,9 +167,9 @@ public class DungeonGenerator {
         }
     }
 
-    public static void addStraightVertical(HashSet<GenRoom> rooms, GenEdge ed) {
-        GenRoom higher = ed.r1.r.getCenter().y > ed.r2.r.getCenter().y ? ed.r1.r : ed.r2.r;
-        GenRoom lower = ed.r1.r.getCenter().y > ed.r2.r.getCenter().y ? ed.r2.r : ed.r1.r;
+    public static void AddStraightVertical(HashSet<GenRoom> rooms, GenEdge ed) {
+        GenRoom higher = ed.r1.r.GetCenter().y > ed.r2.r.GetCenter().y ? ed.r1.r : ed.r2.r;
+        GenRoom lower = ed.r1.r.GetCenter().y > ed.r2.r.GetCenter().y ? ed.r2.r : ed.r1.r;
         GenRoom tunnel = new GenRoom();
         int minX = Math.Max(ed.r1.r.bounds.x, ed.r2.r.bounds.x);
         int minY = Math.Min(ed.r1.r.bounds.y + ed.r1.r.bounds.height, ed.r2.r.bounds.y + ed.r2.r.bounds.height);
@@ -188,13 +188,13 @@ public class DungeonGenerator {
         }
     }
 
-    public static void addCurve(HashSet<GenRoom> rooms, GenEdge ed) {
-        GenRoom higher = ed.r1.r.getCenter().y > ed.r2.r.getCenter().y ? ed.r1.r : ed.r2.r;
-        GenRoom lower = ed.r1.r.getCenter().y > ed.r2.r.getCenter().y ? ed.r2.r : ed.r1.r;
-        GenRoom righter = ed.r1.r.getCenter().x > ed.r2.r.getCenter().x ? ed.r1.r : ed.r2.r;
-        GenRoom lefter = ed.r1.r.getCenter().x > ed.r2.r.getCenter().x ? ed.r2.r : ed.r1.r;
+    public static void AddCurve(HashSet<GenRoom> rooms, GenEdge ed) {
+        GenRoom higher = ed.r1.r.GetCenter().y > ed.r2.r.GetCenter().y ? ed.r1.r : ed.r2.r;
+        GenRoom lower = ed.r1.r.GetCenter().y > ed.r2.r.GetCenter().y ? ed.r2.r : ed.r1.r;
+        GenRoom righter = ed.r1.r.GetCenter().x > ed.r2.r.GetCenter().x ? ed.r1.r : ed.r2.r;
+        GenRoom lefter = ed.r1.r.GetCenter().x > ed.r2.r.GetCenter().x ? ed.r2.r : ed.r1.r;
 
-        RectInt r = new RectInt(lefter.getCenter().x, lower.getCenter().y, righter.getCenter().x - lefter.getCenter().x, higher.getCenter().y - lower.getCenter().y);
+        RectInt r = new RectInt(lefter.GetCenter().x, lower.GetCenter().y, righter.GetCenter().x - lefter.GetCenter().x, higher.GetCenter().y - lower.GetCenter().y);
 
         GenRoom verticalLefter = new GenRoom();
         verticalLefter.bounds.x = r.x - TUNNEL_THICKNESS / 2;
@@ -240,8 +240,8 @@ public class DungeonGenerator {
         }
 
         bool flip = UnityEngine.Random.value > 0.5;
-        bool diffX = ed.r2.r.getCenter().x - ed.r1.r.getCenter().x > 0;
-        bool diffY = ed.r2.r.getCenter().y - ed.r1.r.getCenter().y > 0;
+        bool diffX = ed.r2.r.GetCenter().x - ed.r1.r.GetCenter().x > 0;
+        bool diffY = ed.r2.r.GetCenter().y - ed.r1.r.GetCenter().y > 0;
         bool addHorizontal1 = false, addHorizontal2 = false, addVertical1 = false, addVertical2 = false;
         if ( diffX && diffY ) {
             if ( flip ) {
