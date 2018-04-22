@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Door : MonoBehaviour {
     private bool locked = false;
@@ -9,15 +7,16 @@ public class Door : MonoBehaviour {
     GameObject graphics;
 
     [SerializeField]
-    Room parent; 
+    Room parent;
 
     BoxCollider2D boundingBox;
     BoxCollider2D triggerBox;
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start() {
         BoxCollider2D[] colliders = GetComponents<BoxCollider2D>();
-        foreach (BoxCollider2D collider in colliders) {
-            if (collider.isTrigger) {
+        foreach ( BoxCollider2D collider in colliders ) {
+            if ( collider.isTrigger ) {
                 triggerBox = collider;
                 Debug.Log("Found Door trigger");
             } else {
@@ -26,35 +25,45 @@ public class Door : MonoBehaviour {
             }
         }
         Unlock();
-	}
-	
-    public void Lock()
-    {
+    }
+
+    /// <summary>
+    /// Locks the door.
+    /// </summary>
+    public void Lock() {
         locked = true;
         boundingBox.enabled = true;
         triggerBox.enabled = false;
         graphics.GetComponent<SpriteRenderer>().enabled = true;
     }
 
-    public void Unlock()
-    {
+    /// <summary>
+    /// Unlocks the door.
+    /// </summary>
+    public void Unlock() {
         locked = false;
         boundingBox.enabled = false;
         triggerBox.enabled = true;
         graphics.GetComponent<SpriteRenderer>().enabled = false;
     }
 
-    public bool IsLocked()
-    {
+    /// <summary>
+    /// Returns if the door is locked.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsLocked() {
         return locked;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            Debug.Log("Leavin Trigger");
-            parent.OnPlayerEnter();
+    /// <summary>
+    /// Check if a player moved inside of a room and notify the room.
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerExit2D(Collider2D collision) {
+        if ( collision.tag == "Player" ) {
+            // TODO better checks
+            Debug.Log("Leaving Trigger");
+            parent.OnPlayerEnter(collision.gameObject.GetComponent<Player>());
         }
     }
 }

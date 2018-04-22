@@ -2,45 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Objective, where the goal is to "remove" all Entitys, how is defined by the Entity itself.
+/// </summary>
 public class EntityObjective : Objective {
-	List<GameObject> prefabList;
-	List<GameObject> entityList;
-	List<Transform> spawnPointList;
+    List<GameObject> prefabList;
+    List<GameObject> entityList;
 
-	// Constructor
-	public EntityObjective(Room objectiveCaller, List<GameObject> prefabList) : base(objectiveCaller)
-	{
+    /// <summary>
+    /// Creates a new instance of an EntityObjective.
+    /// </summary>
+    /// <param name="caller"></param>
+    /// <param name="prefabList"></param>
+    public EntityObjective(Room caller, List<GameObject> prefabList) : base(caller) {
         this.entityList = new List<GameObject>();
-		this.prefabList = prefabList;
-		spawnPointList = objectiveCaller.GetSpawnpoints ();
-	}
+        this.prefabList = prefabList;
+    }
 
-	// Activates the objective to start progresstracking
-	public override void Activate()
-	{
-		Random newRand = new Random ();
-        Debug.Log("Activate");
-		foreach (GameObject i in prefabList) 
-		{
-            Debug.Log("Instantiating Prefab");
-			GameObject tempObject = GameObject.Instantiate (i);
-			tempObject.transform.position = spawnPointList [Random.Range (0, spawnPointList.Count)].position;
+    /// <summary>
+    /// Handle activation code for a goal.
+    /// </summary>
+    /// <param name="ply">Player</param>
+    public override void ActivateGoal(Player ply) {
+        base.ActivateGoal(ply);
+        foreach ( GameObject i in prefabList ) {
+            Debug.Log("[ROOMS] Spawning Entity...");
+            GameObject tempObject = GameObject.Instantiate(i);
+            List<Transform> spawnPointList = room.GetSpawnpoints();
+            tempObject.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].position;
             entityList.Add(tempObject);
-		}
+        }
 
-		objectiveCaller.Lock();
-	}
+        room.Lock();
+    }
 
-	// Removes the entity from the list and completes the objective, if the list is empty
-	public void Remove(GameObject inputEntity)
-	{
-		entityList.Remove (inputEntity);
-		if (entityList.Count == 0)
-			objectiveCaller.Unlock ();
-	}
+    /// <summary>
+    /// Removes an Entity from the list. And checks if the goal was reached.
+    /// </summary>
+    /// <param name="e">Entity</param>
+    public void RemoveEntity(Entity e) {
+        if ( e == null )
+            return;
+        entityList.Remove(e.gameObject);
+        UpdateGoal();
+    }
 
-    public List<GameObject> GetEntities()
-    {
-        return entityList;
+    /// <summary>
+    /// Tracks / Updates the progess of a goal.
+    /// </summary>
+    public override void UpdateGoal() {
+        // Goal:
+        if ( entityList.Count == 0 )
+            ReachedGoal();
     }
 }

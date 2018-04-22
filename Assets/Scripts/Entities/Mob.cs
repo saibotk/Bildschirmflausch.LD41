@@ -1,54 +1,77 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public abstract class Mob : Entity {
-	readonly int maxHP;
-	int currentHP;
-	bool isDead;
+﻿public abstract class Mob : Entity {
+    readonly int maxHP;
+    int currentHP;
+    bool isDead;
     int damage;
 
-	// Constructor
-	public Mob(EntityObjective referringObjective, int maxHP) : base(referringObjective)
-	{
-		this.maxHP = maxHP;
-		currentHP = maxHP;
+    /// <summary>
+    /// Creates a new Mob instance with the given HP.
+    /// </summary>
+    /// <param name="maxHP"></param>
+    public Mob(int maxHP) {
+        this.maxHP = maxHP;
+        currentHP = maxHP;
+        isDead = false;
+    }
 
-		isDead = false;
-	}
+    /// <summary>
+    /// Inflicts damage to this mob.
+    /// </summary>
+    /// <param name="damage"></param>
+    public void InflictDamage(int damage) {
+        currentHP -= damage;
+        if ( !isDead && currentHP <= 0 ) {
+            isDead = true;
+            Death();
+        }
+    }
 
-	// inflicts damage to this mob
-	public void InflictDamage(int damage)
-	{
-		currentHP -= damage;
-		if (!isDead && currentHP <= 0) 
-		{
-			base.Kill ();
-			isDead = true;
-		}
-	}
+    /// <summary>
+    /// This is called when a mob dies.
+    /// </summary>
+    protected virtual void Death() {
+        if ( objective != null )
+            objective.RemoveEntity(this);
+        Destroy(gameObject);
+    }
 
-	// Heals the mob
-	public void Heal(int healAmount)
-	{
-		if (!isDead)
-			currentHP = (currentHP + healAmount > currentHP) ? maxHP : currentHP + healAmount;
-	}
+    /// <summary>
+    /// Heals the mob.
+    /// </summary>
+    /// <param name="healAmount"></param>
+    public void Heal(int healAmount) {
+        if ( !isDead )
+            currentHP = ( currentHP + healAmount > currentHP ) ? maxHP : currentHP + healAmount;
+    }
 
-    public void SetDamage(int dmg)
-    {
+    /// <summary>
+    /// Sets the damage value of a mobs attack.
+    /// </summary>
+    /// <param name="dmg"></param>
+    public void SetDamage(int dmg) {
         damage = dmg;
     }
 
-    public int GetDamage()
-    {
+    /// <summary>
+    /// Gets the damage value og a mobs attack.
+    /// </summary>
+    /// <returns></returns>
+    public int GetDamage() {
         return damage;
     }
 
+    /// <summary>
+    /// Gets the current HP.
+    /// </summary>
+    /// <returns></returns>
     public int getHealth() {
         return currentHP;
     }
 
+    /// <summary>
+    /// Gets the maximum HP.
+    /// </summary>
+    /// <returns></returns>
     public int getMaxHealth() {
         return maxHP;
     }

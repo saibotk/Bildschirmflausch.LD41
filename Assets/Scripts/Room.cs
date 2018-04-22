@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
-    private bool activated;
-
     List<Door> doors;
     List<Transform> spawnpoints;
 
@@ -15,81 +13,73 @@ public class Room : MonoBehaviour {
     [SerializeField]
     GameObject spawnpointRootObject;
 
-    [SerializeField]
-    private Objective objective; 
+    private Objective objective;
 
-    enum ObjectiveType { EntityObjective }
-    // Params for testing
-    [SerializeField]
-    GameObject[] enemys;
-
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         doors = new List<Door>();
-        foreach (Door d in doorsRootObject.GetComponentsInChildren<Door>())
-        {
+        foreach ( Door d in doorsRootObject.GetComponentsInChildren<Door>() ) {
             doors.Add(d);
         }
-        Debug.Log("Doors in Room: " + doors.Count);
+        Debug.Log("[ROOMS] Doors: " + doors.Count);
         spawnpoints = new List<Transform>();
-        foreach (Transform t in spawnpointRootObject.GetComponentsInChildren<Transform>())
-        {
-            if( t.gameObject != spawnpointRootObject)
-            {
+        foreach ( Transform t in spawnpointRootObject.GetComponentsInChildren<Transform>() ) {
+            if ( t.gameObject != spawnpointRootObject ) {
                 spawnpoints.Add(t);
             }
-                
         }
-        Debug.Log("Spawnpoints in Room: " + spawnpoints.Count);
-        if (enemys.Length != 0)
-            objective = new EntityObjective(this, new List<GameObject> (enemys));
-        //Unlock();
-    }
-	
-    public void SetObjective(Objective o)
-    {
-        objective = o;
+        Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
     }
 
-    public void Lock()
-    {
-        foreach (Door d in doors)
-        {
+    /// <summary>
+    /// Locks all doors associated with this room.
+    /// </summary>
+    public void Lock() {
+        foreach ( Door d in doors ) {
             d.Lock();
         }
+        Debug.Log("[ROOMS] Locked all doors...");
     }
 
-    public void Unlock()
-    {
-        foreach (Door d in doors)
-        {
+    /// <summary>
+    /// Unlocks all doors associated with this room.
+    /// </summary>
+    public void Unlock() {
+        foreach ( Door d in doors ) {
             d.Unlock();
+        }
+        Debug.Log("[ROOMS] Unlocked all doors...");
+    }
+
+    /// <summary>
+    /// Sets the rooms Objective.
+    /// </summary>
+    /// <param name="obj">Objective</param>
+    public void SetObjective(Objective obj) {
+        objective = obj;
+    }
+
+    /// <summary>
+    /// Informs the objective / activates it and ensures that a cleared room is not going to be activated again.
+    /// </summary>
+    /// <param name="player"></param>
+    public void OnPlayerEnter(Player player) {
+        if ( objective != null && objective.GetFinished() ) {
+            Debug.Log("[ROOMS] This room has been cleared already.");
+            return;
+        }
+        if ( objective != null ) {
+            Debug.Log("[ROOMS] Player activated Objective");
+            objective.ActivateGoal(player);
         }
     }
 
-    public Objective GetObjective()
-    {
-        return objective;
-    }
-
-    public void OnPlayerEnter()
-    {
-        if (activated)
-            return;
-        if(objective != null)
-            objective.Activate();
-        activated = true;
-    }
-
-    public List<Transform> GetSpawnpoints()
-    {
+    /// <summary>
+    /// Returns the Spawnpoints a room has.
+    /// </summary>
+    /// <returns></returns>
+    public List<Transform> GetSpawnpoints() {
         return spawnpoints;
-    }
-
-    public bool GetActivated()
-    {
-        return activated;
     }
 
 }

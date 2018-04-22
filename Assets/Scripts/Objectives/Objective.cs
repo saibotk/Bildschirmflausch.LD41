@@ -1,16 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public abstract class Objective {
+    protected Room room;
+    protected Player player;
+    bool activated;
+    bool finished;
 
-public abstract class Objective {
-	protected Room objectiveCaller;
+    /// <summary>
+    /// Constructs a new Objective instance.
+    /// </summary>
+    /// <param name="caller"></param>
+    public Objective(Room caller) {
+        this.room = caller;
+    }
 
-	// Constructor
-	public Objective(Room objectiveCaller)
-	{
-		this.objectiveCaller = objectiveCaller;
-	}
+    /// <summary>
+    /// Handle activation code for a goal.
+    /// </summary>
+    /// <param name="ply">Player</param>
+    public virtual void ActivateGoal(Player ply) {
+        if ( activated )
+            return;
+        activated = true;
+        player = ply;
+    }
 
-	// Activates the objective to start progresstracking
-	public virtual void Activate(){}
+    /// <summary>
+    /// Tracks / Updates the progess of a goal.
+    /// </summary>
+    public abstract void UpdateGoal();
+
+    /// <summary>
+    /// Code executed if the goal is reached eg. opening doors.
+    /// </summary>
+    protected virtual void ReachedGoal() {
+        finished = true;
+        room.Unlock();
+    }
+
+    /// <summary>
+    /// Returns wether the goal was reached or not.
+    /// </summary>
+    /// <returns></returns>
+    public bool GetFinished() {
+        return finished;
+    }
+
+
 }

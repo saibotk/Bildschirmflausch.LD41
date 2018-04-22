@@ -20,8 +20,7 @@ public class GameController : MonoBehaviour {
     private bool engineInitDone;
     private Player player;
     public static GameController instance;
-    public GameController()
-    {
+    public GameController() {
         instance = this;
     }
 
@@ -29,15 +28,14 @@ public class GameController : MonoBehaviour {
 
     private GameState state = GameState.UNSET;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (!engineInitDone)
-        {
+    }
+
+    // Update is called once per frame
+    void Update() {
+        if ( !engineInitDone ) {
             engineInitDone = true;
             Debug.Log("First Frame");
             ChangeState(GameState.INIT);
@@ -45,15 +43,14 @@ public class GameController : MonoBehaviour {
     }
 
     public void ChangeState(GameState nextState) {
-        if(nextState != state) {
+        if ( nextState != state ) {
             state = nextState;
             StateLogic(nextState);
         }
     }
 
     void StateLogic(GameState nstate) {
-        switch (nstate)
-        {
+        switch ( nstate ) {
             case GameState.INIT:
                 Init();
                 ChangeState(GameState.STARTING);
@@ -75,43 +72,31 @@ public class GameController : MonoBehaviour {
 
     }
 
-    private void Init()
-    {
-        List<GameObject> tmp = new List<GameObject>
-        {
-            playerPrefab
-        };
-        start.SetObjective(new EntityObjective(start, tmp));
-        start.OnPlayerEnter();
-        player = ((EntityObjective) start.GetObjective()).GetEntities()[0].GetComponent<Player>();
+    private void Init() {
+        StartObjective goal = new StartObjective(start, playerPrefab);
+        start.SetObjective(goal);
+        start.OnPlayerEnter(player);
+        player = goal.GetPlayer();
         cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
-        ((EntityObjective)start.GetObjective()).Remove(player.gameObject);
     }
 
-    private void Starting()
-    {
-        
+    private void Starting() {
+
     }
 
-    private void Running()
-    {
-        
+    private void Running() {
+
     }
 
-    private void Ended()
-    {
+    private void Ended() {
         Debug.Log("Game ended");
         //Time.timeScale = 0;
-        if (ui != null) {
+        if ( ui != null ) {
             Debug.Log("show gameover UI");
             ui.GetComponent<UIController>().ShowGameOverUI();
         } else {
             Debug.Log("No ui specified");
         }
-    }
-
-    public Player GetPlayer() {
-        return player;
     }
 
 }

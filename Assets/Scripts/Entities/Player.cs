@@ -4,38 +4,30 @@ using UnityEngine;
 
 public class Player : Mob {
 
-    public Player() : base(null, 100 )
-    {
-                
-    }
+    public Player() : base(100) { }
 
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
+    /// <summary>
+    /// Collision checking. Player is going to die on any collision with a wall.
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnCollisionEnter2D(Collision2D collision) {
         Debug.Log("Collision");
-        if (collision.collider.tag == "wall") {
-            Kill();
-        } else if (collision.collider.tag == "enemy")
-        {
+        if ( collision.collider.tag == "wall" ) {
+            Death();
+        } else if ( collision.collider.tag == "enemy" ) {
             Mob m = collision.collider.GetComponent(typeof(Mob)) as Mob;
-            if(m != null)
-            {
+            if ( m != null ) {
                 InflictDamage(m.GetDamage()); // TODO think about Mob attac mechanic
             }
-            
-        }
-	}
 
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-        if (other.tag == "door") {
-            //Debug.Log("Open door");
         }
-	}
+    }
 
-    public override void Kill()
-    {
-        base.Kill();
+    /// <summary>
+    /// This is called when a Player died.
+    /// </summary>
+    protected override void Death() {
         Destroy(this.gameObject);
         GameController.instance.ChangeState(GameController.GameState.ENDED);
-    } 
+    }
 }

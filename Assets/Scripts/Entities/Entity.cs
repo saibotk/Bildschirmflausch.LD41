@@ -2,19 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour{
-	EntityObjective referringObjective;
+public abstract class Entity : MonoBehaviour {
+    protected EntityObjective objective;
 
-	// Constructor
-	public Entity(EntityObjective referringObjective)
-	{
-		this.referringObjective = referringObjective;
-	}
-
-	// kills the entity
-    public virtual void Kill()
-	{
-		if(referringObjective != null)
-			referringObjective.Remove (this.gameObject);
-	}
+    /// <summary>
+    /// Sets the Objective this Entity is associated with.
+    /// </summary>
+    /// <param name="obj">Objective</param>
+    public void SetObjective(EntityObjective obj) {
+        objective = obj;
+    }
 }
