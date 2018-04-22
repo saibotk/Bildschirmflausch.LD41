@@ -150,7 +150,20 @@ public class DungeonGenerator {
 
 		rooms.Remove(start);
 		rooms.Remove(end);
+
+		foreach (GenRoom r in rooms)
+			makeRoomRelative(r);
+		makeRoomRelative(start);
+		makeRoomRelative(end);
+		makeRoomRelative(path);
     }
+
+	public void makeRoomRelative(GenRoom room) {
+		room.roomPosition = room.bounds.position;
+		foreach (Vector2Int v in room.tiles.Keys) {
+			v.Set((v - room.roomPosition).x, (v-room.roomPosition).y);
+		}
+	}
 
     public static void AddStraightHorizontal(HashSet<GenRoom> rooms, GenEdge ed) {
         GenRoom righter = ed.r1.r.GetCenter().x > ed.r2.r.GetCenter().x ? ed.r1.r : ed.r2.r;
