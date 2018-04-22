@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    
+    [SerializeField]
+    GameObject playerPrefab;
 
+    [SerializeField]
     private Room start;
     private Room finish;
 
@@ -55,19 +57,12 @@ public class GameController : MonoBehaviour {
     GameObject RockLRD;
 
     private Dictionary<GenerationProcessor.ExtendedTileType, GameObject> genPrefabs;
-    [Space(10)]
-    [Header("References")]
+
     [SerializeField]
     private GameObject ui;
 
     [SerializeField]
     private GameObject cam;
-
-    [SerializeField]
-    GameObject playerPrefab;
-
-    [SerializeField]
-    GameObject mapRoot;
 
     private bool engineInitDone;
     private Player player;
@@ -82,29 +77,28 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        genPrefabs = new Dictionary<GenerationProcessor.ExtendedTileType, GameObject> {
-            { GenerationProcessor.ExtendedTileType.BorderOuter, BorderOuter },
-            { GenerationProcessor.ExtendedTileType.BorderInner, BorderInner },
-            { GenerationProcessor.ExtendedTileType.BorderSingle, BorderSingle },
-            { GenerationProcessor.ExtendedTileType.Rock, Rock },
-            { GenerationProcessor.ExtendedTileType.RockL, RockL },
-            { GenerationProcessor.ExtendedTileType.RockU, RockU },
-            { GenerationProcessor.ExtendedTileType.RockR, RockR },
-            { GenerationProcessor.ExtendedTileType.RockD, RockD },
-            { GenerationProcessor.ExtendedTileType.RockLU, RockLU },
-            { GenerationProcessor.ExtendedTileType.RockLR, RockLR },
-            { GenerationProcessor.ExtendedTileType.RockLD, RockLD },
-            { GenerationProcessor.ExtendedTileType.RockLURD, RockLURD },
-            { GenerationProcessor.ExtendedTileType.RockRD, RockRD },
-            { GenerationProcessor.ExtendedTileType.RockUR, RockUR },
-            { GenerationProcessor.ExtendedTileType.RockUD, RockUD },
-            { GenerationProcessor.ExtendedTileType.RockLUD, RockLUD },
-            { GenerationProcessor.ExtendedTileType.RockLUR, RockLUR },
-            { GenerationProcessor.ExtendedTileType.RockURD, RockURD },
-            { GenerationProcessor.ExtendedTileType.RockLRD, RockLRD },
-            { GenerationProcessor.ExtendedTileType.Ground, Ground },
-            { GenerationProcessor.ExtendedTileType.Door, Door }
-        };
+        genPrefabs = new Dictionary<GenerationProcessor.ExtendedTileType, GameObject>();
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.BorderOuter, BorderOuter);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.BorderInner, BorderInner);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.BorderSingle, BorderSingle);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Rock, Rock);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockL, RockL);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockU, RockU);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockR, RockR);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockD, RockD);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLU, RockLU);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLR, RockLR);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLD, RockLD);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLURD, RockLURD);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockRD, RockRD);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockUR, RockUR);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockUD, RockUD);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLUD, RockLUD);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLUR, RockLUR);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockURD, RockURD);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLRD, RockLRD);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground, Ground);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Door, Door);
 
     }
 
@@ -178,8 +172,11 @@ public class GameController : MonoBehaviour {
         start.SetObjective(goal);
         start.OnPlayerEnter(player);
         player = goal.GetPlayer();
-        if(player != null)
-            cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
+        cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
+    }
+
+    private void Starting() {
+
     }
 
     private void Running() {
@@ -197,4 +194,8 @@ public class GameController : MonoBehaviour {
         }
     }
 
+
+    public UIController GetUI() {
+        return ui.GetComponent<UIController>();
+    }
 }

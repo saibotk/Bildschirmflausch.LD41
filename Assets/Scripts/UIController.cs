@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour {
 
-    private GameObject score;
-    private GameObject pauseMenu;
+    GameObject score;
+    GameObject pauseMenu;
 
     [SerializeField]
-    private GameObject gameOverPanel;
+    GameObject gameOverPanel;
 
     [SerializeField]
     private HealthbarController healthcontroller;
