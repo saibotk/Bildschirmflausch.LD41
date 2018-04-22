@@ -78,6 +78,8 @@ public class GenerationProcessor {
 
     private GameObject CreateGOFromType(Vector2 v, int rotation, ExtendedTileType t, GameObject root) {
         GameObject tmp = null;
+		//if (t == ExtendedTileType.BorderInner || t == ExtendedTileType.BorderOuter || t == ExtendedTileType.BorderInner)
+		//	CreateGOFromType(v, rotation, ExtendedTileType.Ground, root);
         if ( prefabs.ContainsKey(t) && root != null ) {
             tmp = Object.Instantiate(prefabs[t], root.transform);
             tmp.transform.position = v;
