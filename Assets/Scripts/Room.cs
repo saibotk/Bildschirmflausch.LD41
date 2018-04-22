@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
+    public enum TileType {
+        GROUND, WALL, DOOR, ROCK
+    }
+
     List<Door> doors;
     List<Transform> spawnpoints;
 
