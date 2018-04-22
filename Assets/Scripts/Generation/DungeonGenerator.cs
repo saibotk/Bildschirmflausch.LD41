@@ -7,6 +7,7 @@ public class DungeonGenerator {
     }
 
     public const int TUNNEL_THICKNESS = 4;
+
     // The first and starting room
     public GenRoom start;
     // The room with the finishing flag
@@ -27,7 +28,7 @@ public class DungeonGenerator {
         }
 
         while ( true ) {
-        outest:
+			bool changed = false;
             foreach ( GenRoom r1 in rooms ) {
                 foreach ( GenRoom r2 in rooms ) {
                     if ( r1 == r2 )
@@ -37,11 +38,15 @@ public class DungeonGenerator {
                     if ( Math.Pow(Vector2Int.Distance(p1, p2), 2) < 2 * minRoomSize * minRoomSize + 2 ) {
                         r2.bounds.x += ( int ) ( ( UnityEngine.Random.value - 0.5 ) * 5 );
                         r2.bounds.y += ( int ) ( ( UnityEngine.Random.value - 0.5 ) * 2.5 );
-                        goto outest;
+						changed = true;
+						break;
                     }
                 }
+				if (changed)
+					break;
             }
-            break;
+			if (!changed)
+                break;
         }
 
         HashSet<GenVertex> Q = new HashSet<GenVertex>();
@@ -59,14 +64,14 @@ public class DungeonGenerator {
         HashSet<GenVertex> F = new HashSet<GenVertex>();
         foreach ( GenVertex r1 in Q ) {
             foreach ( GenVertex r2 in Q ) {
-            outer:
                 if ( r1 == r2 )
-                    goto outer;
+                    continue;
                 foreach ( GenEdge e in E )
                     if ( e.r2 == r1 && e.r1 == r2 )
                         goto outer;
                 E.Add(new GenEdge(r1, r2));
-            }
+			}
+            outer:
         }
         F.Add(root);
         Q.Remove(root);
