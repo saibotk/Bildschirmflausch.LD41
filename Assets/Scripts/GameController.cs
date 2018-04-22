@@ -29,11 +29,6 @@ public class GameController : MonoBehaviour {
 
     private GameState state = GameState.UNSET;
 
-    public Player GetPlayer() // TODO Remove just comfort
-    {
-        return player;
-    }
-
 	// Use this for initialization
 	void Start () {
 
