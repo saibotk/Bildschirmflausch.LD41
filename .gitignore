@@ -34,3 +34,5 @@ sysinfo.txt
 *.unitypackage
 
 Assets/graphics/textures/tmp/Thumbs\.db
+
+Thumbs\.db
