@@ -14,8 +14,11 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject ui;
 
-    private bool engineInitDone;
+    [SerializeField]
+    private GameObject cam;
 
+    private bool engineInitDone;
+    private Player player;
     public static GameController instance;
     public GameController()
     {
@@ -28,7 +31,7 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //ChangeState(GameState.INIT);
+
 	}
 	
 	// Update is called once per frame
@@ -79,7 +82,10 @@ public class GameController : MonoBehaviour {
             playerPrefab
         };
         start.SetObjective(new EntityObjective(start, tmp));
-        start.OnPlayerEnter();
+        start.GetObjective().Activate();
+        player = ((EntityObjective) start.GetObjective()).GetEntities()[0].GetComponent<Player>();
+        cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
+        ((EntityObjective)start.GetObjective()).Remove(player.gameObject);
     }
 
     private void Starting()
