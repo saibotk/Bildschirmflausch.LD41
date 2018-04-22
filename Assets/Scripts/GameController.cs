@@ -29,6 +29,11 @@ public class GameController : MonoBehaviour {
 
     private GameState state = GameState.UNSET;
 
+    public Player GetPlayer() // TODO Remove just comfort
+    {
+        return player;
+    }
+
 	// Use this for initialization
 	void Start () {
 
@@ -82,7 +87,7 @@ public class GameController : MonoBehaviour {
             playerPrefab
         };
         start.SetObjective(new EntityObjective(start, tmp));
-        start.GetObjective().Activate();
+        start.OnPlayerEnter();
         player = ((EntityObjective) start.GetObjective()).GetEntities()[0].GetComponent<Player>();
         cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
         ((EntityObjective)start.GetObjective()).Remove(player.gameObject);

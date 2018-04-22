@@ -28,7 +28,7 @@ public class Player : Mob {
 	private void OnTriggerEnter2D(Collider2D other)
 	{
         if (other.tag == "door") {
-            Debug.Log("Open door");
+            //Debug.Log("Open door");
         }
 	}
 

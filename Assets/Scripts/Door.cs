@@ -8,6 +8,9 @@ public class Door : MonoBehaviour {
     [SerializeField]
     GameObject graphics;
 
+    [SerializeField]
+    Room parent; 
+
     BoxCollider2D boundingBox;
     BoxCollider2D triggerBox;
 	// Use this for initialization
@@ -44,5 +47,14 @@ public class Door : MonoBehaviour {
     public bool IsLocked()
     {
         return locked;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            Debug.Log("Leavin Trigger");
+            parent.OnPlayerEnter();
+        }
     }
 }

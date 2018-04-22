@@ -25,6 +25,11 @@ public class EnemyAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+        if(victim == null)
+        {
+            victim = GameController.instance.GetPlayer().gameObject; // TODO testing purpose only!
+            return;
+        }
 		// movement
 		agressor.transform.Translate (Vector3.Scale ((victim.transform.position - agressor.transform.position).normalized, new Vector2 (speed, speed)));
 
@@ -32,5 +37,8 @@ public class EnemyAI : MonoBehaviour {
 		agressor.transform.Rotate(agressor.transform.forward, Vector3.Angle(victim.transform.position - agressor.transform.position, agressor.transform.rotation * new Vector3(1, 1, 1)));
 	}
 
-
+    public void SetVictim(GameObject g)
+    {
+        victim = g;
+    }
 }

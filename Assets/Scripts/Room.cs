@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
-    [SerializeField]
-    int width, height;  // Gridsize for Generation
+    private bool activated;
 
     List<Door> doors;
     List<Transform> spawnpoints;
@@ -18,6 +17,12 @@ public class Room : MonoBehaviour {
 
     [SerializeField]
     private Objective objective; 
+
+    enum ObjectiveType { EntityObjective }
+    // Params for testing
+    [SerializeField]
+    GameObject[] enemys;
+
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +42,8 @@ public class Room : MonoBehaviour {
                 
         }
         Debug.Log("Spawnpoints in Room: " + spawnpoints.Count);
-        
+        if (enemys.Length != 0)
+            objective = new EntityObjective(this, new List<GameObject> (enemys));
         //Unlock();
     }
 	
@@ -69,8 +75,11 @@ public class Room : MonoBehaviour {
 
     public void OnPlayerEnter()
     {
+        if (activated)
+            return;
         if(objective != null)
             objective.Activate();
+        activated = true;
     }
 
     public List<Transform> GetSpawnpoints()
@@ -78,5 +87,9 @@ public class Room : MonoBehaviour {
         return spawnpoints;
     }
 
+    public bool GetActivated()
+    {
+        return activated;
+    }
 
 }
