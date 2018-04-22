@@ -124,15 +124,17 @@ public class DungeonGenerator {
         foreach ( GenRoom r in rooms2 ) {
             for ( int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++ )
                 for ( int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++ ) {
-                    path.tiles.Add(new Vector2Int(x1, y1), Room.TileType.GROUND);
+					Vector2Int pos1 = new Vector2Int(x1, y1);
+					if (path.tiles.ContainsKey(pos1))
+						path.tiles[pos1] = Room.TileType.GROUND;
+					else
+						path.tiles.Add(pos1, Room.TileType.GROUND);
                     for ( int x2 = x1 - 1; x2 <= x1 + 1; x2++ )
                         for ( int y2 = y1 - 1; y2 <= y1 + 1; y2++ ) {
                             if ( !path.tiles.ContainsKey(new Vector2Int(x2, y2)) )
                                 path.tiles.Add(new Vector2Int(x2, y2), Room.TileType.WALL);
                         }
                 }
-            foreach ( Vector2Int v in r.AllDoors() )
-                r.tiles.Add(v, Room.TileType.DOOR);
         }
         foreach ( GenRoom r in rooms ) {
             for ( int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++ )
@@ -141,10 +143,10 @@ public class DungeonGenerator {
                 }
             for ( int x1 = r.bounds.x + 1; x1 < r.bounds.x + r.bounds.width - 1; x1++ )
                 for ( int y1 = r.bounds.y + 1; y1 < r.bounds.y + r.bounds.height - 1; y1++ ) {
-                    r.tiles.Add(new Vector2Int(x1, y1), Room.TileType.GROUND);
+					r.tiles[new Vector2Int(x1, y1)] = Room.TileType.GROUND;
                 }
             foreach ( Vector2Int v in r.AllDoors() )
-                r.tiles.Add(v, Room.TileType.DOOR);
+                r.tiles[v] = Room.TileType.DOOR;
         }
 
         start = root.r;
