@@ -21,6 +21,13 @@ public class GenRoom {
 
     public float Distance(GenRoom r) {
         return Math.Abs(GetCenter().x - r.GetCenter().x) + Math.Abs(GetCenter().y - r.GetCenter().y);
+		//float power = 2;
+		//float dist = (float) Math.Pow(
+		//	Math.Pow(GetCenter().x - r.GetCenter().x, power)
+		//	+ Math.Pow(GetCenter().y - r.GetCenter().y, power),
+		//	1 / power);
+		//Debug.Log(bounds.center + " " + bounds + " " + dist);
+        //return dist;
     }
 
     public Vector2Int GetCenter() {

@@ -986,6 +986,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 833134303}
+--- !u!1001 &865504979
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4079161515917916, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079161515917916, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079161515917916, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079161515917916, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079161515917916, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079161515917916, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079161515917916, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079161515917916, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &881384367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9a051e822e2cf4ea3ca01c5a4df37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followThis: {fileID: 0}
+  followThis: {fileID: 1239288696}
 --- !u!1 &1001682580
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,7 +1370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1487324257
 MonoBehaviour:
   m_ObjectHideFlags: 0

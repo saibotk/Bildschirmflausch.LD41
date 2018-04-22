@@ -32,19 +32,19 @@ public class NotificationManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         delay = 0;
-        showingMessage = false;
         messages = new List<Notification>();
         text = GetComponent<Text>();
+        hide();
     }
 
     void Update() {
         if ( showingMessage ) {
             if ( Time.time > delay ) {
-                if ( messages.Count == 1 ) {
-                    GetComponentInParent<Image>().enabled = false;
-                    messages.Remove(messages[0]);
-                    showingMessage = false;
+                if (messages.Count <= 1) {
+					messages.Remove(messages[0]);
+                    hide();
                 } else {
+                    messages.Remove(messages[0]);
                     text.text = messages[0].getText();
                     delay = Time.time + messages[0].getDuration();
                 }
@@ -60,7 +60,19 @@ public class NotificationManager : MonoBehaviour {
 
             GetComponent<Text>().text = text;
             delay = Time.time + duration;
-            GetComponentInParent<Image>().enabled = true;
+            show();
         }
+    }
+
+    void show() {
+        GetComponentInParent<Image>().enabled = true;
+        text.enabled = true;
+        showingMessage = true;
+    }
+
+    void hide() {
+        GetComponentInParent<Image>().enabled = false;
+        text.enabled = false;
+        showingMessage = false;
     }
 }
