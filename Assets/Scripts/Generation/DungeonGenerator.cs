@@ -7,11 +7,15 @@ using System.Collections.Generic;
     	}
 
         public const int TUNNEL_THICKNESS = 4;
+	public GenRoom start;
+	public GenRoom end;
+	public HashSet<GenRoom> rooms;
+	public GenRoom path;
 
     	public void generate()
     {
         int minRoomSize = 50;
-    		HashSet<GenRoom> rooms = new HashSet<GenRoom>();
+    		rooms = new HashSet<GenRoom>();
 		for (int i = 0; i < 7 + (int)(UnityEngine.Random.value * 4); i++)
         {
     			GenRoom room = new GenRoom();
@@ -20,8 +24,8 @@ using System.Collections.Generic;
 			rooms.Add(room);
         }
 
-    outest: while (true)
-        {
+     while (true)
+		{outest:
     			foreach (GenRoom r1 in rooms)
             {
 				foreach (GenRoom r2 in rooms)
@@ -34,7 +38,7 @@ using System.Collections.Generic;
                     {
 						r2.bounds.x += (int)((UnityEngine.Random.value - 0.5) * 5);
 						r2.bounds.y += (int)((UnityEngine.Random.value - 0.5) * 2.5);
-                        continue outest;
+                        goto outest;
                     }
                 }
             }
@@ -44,7 +48,11 @@ using System.Collections.Generic;
 		HashSet<GenVertex> Q = new HashSet<GenVertex>();
 		foreach (GenRoom r in rooms)
 			Q.Add(new GenVertex(r));
-		GenVertex root = Q.stream().min(Comparator.comparing(v->v.r.bounds.x)).get();
+		GenVertex root = null;
+		foreach (GenVertex v in Q) {
+			if (root == null || v.r.bounds.x < root.r.bounds.x)
+				root = v;
+		}
         root.value = 0;
 
 		HashSet<GenEdge> E = new HashSet<GenEdge>();
@@ -52,13 +60,13 @@ using System.Collections.Generic;
 		HashSet<GenVertex> F = new HashSet<GenVertex>();
 		foreach (GenVertex r1 in Q)
         {
-			outer: foreach (GenVertex r2 in Q)
-            {
+		foreach (GenVertex r2 in Q)
+			{   outer: 
                 if (r1 == r2)
-                    continue outer;
+					goto outer;
 				foreach (GenEdge e in E)
                     if (e.r2 == r1 && e.r1 == r2)
-                        continue outer;
+						goto outer;
 				E.Add(new GenEdge(r1, r2));
             }
         }
@@ -67,22 +75,28 @@ using System.Collections.Generic;
 
 		while (Q.Count > 0)
         {
-			GenEdge start = E.stream()
-                    .filter(e-> (F.Contains(e.r1) ^ F.Contains(e.r2)))
-                    .min(Comparator.comparing(e->e.dist)).get();
-			Q.Remove(start.r2);
-			Q.Remove(start.r1);
-			F.Add(start.r2);
-			F.Add(start.r1);
-			E.Remove(start);
-			G.Add(start);
-            if (start.r1.value < start.r2.value)
+			GenEdge start2 = null;
+			foreach (GenEdge e in E)
             {
-                start.r2.value = (float)(start.r1.value + start.dist);
+				if (F.Contains(e.r1) ^ F.Contains(e.r2)) {
+					if (start2 == null || e.dist < start2.dist) {
+						start2 = e;
+					}
+				}
+            }
+			Q.Remove(start2.r2);
+			Q.Remove(start2.r1);
+			F.Add(start2.r2);
+			F.Add(start2.r1);
+			E.Remove(start2);
+			G.Add(start2);
+			if (start2.r1.value < start2.r2.value)
+            {
+				start2.r2.value = (float)(start2.r1.value + start2.dist);
             }
             else
             {
-                start.r1.value = (float)(start.r2.value + start.dist);
+				start2.r1.value = (float)(start2.r2.value + start2.dist);
             }
         }
 
@@ -113,7 +127,7 @@ using System.Collections.Generic;
                 addCurve(rooms2, ed);
         }
 
-    		GenRoom path = new GenRoom();
+    	path = new GenRoom();
 		foreach (GenRoom r in rooms2)
         {
             for (int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++)
@@ -146,6 +160,13 @@ using System.Collections.Generic;
 				r.tiles.Add(v, Room.TileType.DOOR);
         }
 		rooms.Add(path);
+
+		start = root.r;
+		end = null;        foreach (GenRoom r in rooms)
+        {
+            if (end== null || r.bounds.x > end.bounds.x)
+                end = r;
+        }
     }
 
 	public static void addStraightHorizontal(HashSet<GenRoom> rooms, GenEdge ed)
