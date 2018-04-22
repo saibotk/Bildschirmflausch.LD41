@@ -39,7 +39,7 @@ public class Door : MonoBehaviour {
         locked = true;
         boundingBox.enabled = true;
         triggerBox.enabled = false;
-        GetComponent<SpriteRenderer>().enabled = true;
+        //GetComponent<SpriteRenderer>().enabled = true;
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class Door : MonoBehaviour {
         locked = false;
         boundingBox.enabled = false;
         triggerBox.enabled = true;
-        GetComponent<SpriteRenderer>().enabled = false;
+        //GetComponent<SpriteRenderer>().enabled = false;
     }
 
     /// <summary>
