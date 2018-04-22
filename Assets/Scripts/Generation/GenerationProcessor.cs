@@ -16,74 +16,47 @@ public class GenerationProcessor {
             name = "Room"
         };
 		foreach ( Vector2Int v in tiles.Keys ) {
-            bool left = false;
-            bool top = false;
-            bool right = false;
-            bool bottom = false;
-            // left bound
-            if ( tiles.ContainsKey(v + new Vector2Int(-1, 0)) ) {
-                if ( tiles[v + new Vector2Int(-1, 0)] == tiles[v] ) {
-                    left = true;
-                }
-            }
-            // top bound
-            if ( tiles.ContainsKey(v + new Vector2Int(0, 1)) ) {
-                if ( tiles[v + new Vector2Int(0, 1)] == tiles[v] ) {
-                    top = true;
-                }
-            }
-            // right bound
-            if ( tiles.ContainsKey(v + new Vector2Int(1, 0)) ) {
-                if ( tiles[v + new Vector2Int(1, 0)] == tiles[v] ) {
-                    right = true;
-                }
-            }
-            // bottom bound
-            if ( tiles.ContainsKey(v + new Vector2Int(0, -1)) ) {
-                if ( tiles[v + new Vector2Int(0, -1)] == tiles[v] ) {
-                    bottom = true;
-                }
-            }
-            ExtendedTileType type = ExtendedTileType.Ground;
+			ExtendedTileType type = ExtendedTileType.Ground;
 			int rotation = 0;
-            // ---------------------------------------------------------------------------------------------------------------------------------------------
-            //  ^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~
-            //  
-            //                   ***        W A R N I N G    B A D    C O D E    A H E A D   !  !  !         ***
-            //                      __________________________________________________________________________
-            //
-            //                                  DON'T WATCH, UNLESS YOU WANT TO GET TRAUMATIZED!
-            //  
-            //  ^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~
-            // ---------------------------------------------------------------------------------------------------------------------------------------------
-			switch ( tiles[v].type ) {
+            switch ( tiles[v].type ) {
                 case Room.TileType.WALL:
-                    type = ExtendedTileType.BorderSingle;
-                    if ( top && left && tiles.ContainsKey(v + new Vector2Int(-1, -1)) 
-					    || top && right && tiles.ContainsKey(v + new Vector2Int(1, -1)) 
-					    || right && bottom && tiles.ContainsKey(v + new Vector2Int(1, 1))
-					    || left && bottom && tiles.ContainsKey(v + new Vector2Int(-1, 1)) ) {
-                        type = ExtendedTileType.BorderOuter;
-                    } else if ( top && left || top && right || right && bottom || left && bottom ) {
-                        type = ExtendedTileType.BorderInner;
-					} else {
-						// BorderSingle
-						if (tiles[v].position != null) {
-							switch (tiles[v].position) {
-								case GenTile.Position.BOTTOM: 
+					type = getCorrectWallType(tiles, v);
+					switch (type)
+					{
+						case ExtendedTileType.BorderSingle:
+							switch (tiles[v].position)
+							{
+								case GenTile.Position.BOTTOM:
 									rotation = 0;
 									break;
 								case GenTile.Position.LEFT:
 									rotation = 90;
 									break;
-                                case GenTile.Position.TOP:
-                                    rotation = 180;
+								case GenTile.Position.TOP:
+									rotation = 180;
 									break;
-                                case GenTile.Position.RIGHT:
-                                    rotation = 270;
-                                    break;
+								case GenTile.Position.RIGHT:
+									rotation = 270;
+									break;
 							}
-						}
+							break;
+						case ExtendedTileType.BorderInner:
+							switch (tiles[v].position)
+							{
+                                case GenTile.Position.BOTTOM_LEFT:
+                                    rotation = 0;
+                                    break;
+                                case GenTile.Position.TOP_LEFT:
+                                    rotation = 90;
+                                    break;
+								case GenTile.Position.TOP_RIGHT:
+									rotation = 180;
+									break;
+								case GenTile.Position.BOTTOM_RIGHT:
+									rotation = 270;
+									break;
+							}
+							break;
 					}
                     break;
                 case Room.TileType.GROUND:
@@ -93,53 +66,7 @@ public class GenerationProcessor {
                     type = ExtendedTileType.Door;
                     break;
                 case Room.TileType.ROCK:
-                    type = ExtendedTileType.Rock;
-                    if ( top && !right && !left && !bottom ) {
-                        type = ExtendedTileType.RockU;
-                    }
-                    if ( left && !right && !bottom && !top ) {
-                        type = ExtendedTileType.RockL;
-                    }
-                    if ( right && !bottom && !left && !top ) {
-                        type = ExtendedTileType.RockR;
-                    }
-                    if ( bottom && !right && !left && !top ) {
-                        type = ExtendedTileType.RockD;
-                    }
-                    if ( left && top && !bottom && !right ) {
-                        type = ExtendedTileType.RockLU;
-                    }
-                    if ( left && right && !top && !bottom ) {
-                        type = ExtendedTileType.RockLR;
-                    }
-                    if ( left && bottom && !right && !top ) {
-                        type = ExtendedTileType.RockLD;
-                    }
-                    if ( top && right && !left && !bottom ) {
-                        type = ExtendedTileType.RockUR;
-                    }
-                    if ( top && bottom && !left && !right ) {
-                        type = ExtendedTileType.RockUD;
-                    }
-                    if ( right && bottom && !top && !left ) {
-                        type = ExtendedTileType.RockRD;
-                    }
-
-                    if ( left && top && bottom && !right ) {
-                        type = ExtendedTileType.RockLUD;
-                    }
-                    if ( left && top && right && !bottom ) {
-                        type = ExtendedTileType.RockLUR;
-                    }
-                    if ( top && right && bottom && !left ) {
-                        type = ExtendedTileType.RockURD;
-                    }
-                    if ( left && right && bottom && !top ) {
-                        type = ExtendedTileType.RockLRD;
-                    }
-                    if ( left && top && right && bottom ) {
-                        type = ExtendedTileType.RockLURD;
-                    }
+					type = getCorrectRockType(tiles, v);
                     break;
             }
 
@@ -158,4 +85,118 @@ public class GenerationProcessor {
         }
         return tmp;
     }
+
+	private int CountSpecificNeighbours(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position, Room.TileType type) {
+		int counter = 0;
+		Vector2Int toCheck = position + new Vector2Int(0, -1);
+		if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == type)
+			counter++;
+		toCheck = position + new Vector2Int(-1, 0);
+        if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == type)
+            counter++;
+		toCheck = position + new Vector2Int(0, 1);
+        if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == type)
+            counter++;
+		toCheck = position + new Vector2Int(1, 0);
+        if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == type)
+            counter++;
+		return counter;
+	}
+
+	private ExtendedTileType getCorrectWallType(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position){
+		int groundNumber = CountSpecificNeighbours(tiles, position, Room.TileType.GROUND);
+		switch(groundNumber){
+			case 0:
+				return ExtendedTileType.BorderInner;
+			case 2:
+                return ExtendedTileType.BorderOuter;
+			default:
+				return ExtendedTileType.BorderSingle;
+		}
+	}
+
+	private ExtendedTileType getCorrectRockType(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position){
+		
+		ExtendedTileType type = ExtendedTileType.Rock;
+
+		bool left = false;
+        bool top = false;
+        bool right = false;
+        bool bottom = false;
+        
+		Vector2Int toCheck = position + new Vector2Int(0, -1);
+		if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.ROCK)
+			bottom = true;
+        toCheck = position + new Vector2Int(-1, 0);
+		if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.ROCK)
+			left = true;
+        toCheck = position + new Vector2Int(0, 1);
+		if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.ROCK)
+			top = true;
+        toCheck = position + new Vector2Int(1, 0);
+		if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.ROCK)
+            right = true;
+
+		if (top && !right && !left && !bottom)
+        {
+            return ExtendedTileType.RockU;
+        }
+        if (left && !right && !bottom && !top)
+        {
+			return ExtendedTileType.RockL;
+        }
+        if (right && !bottom && !left && !top)
+        {
+			return ExtendedTileType.RockR;
+        }
+        if (bottom && !right && !left && !top)
+        {
+			return ExtendedTileType.RockD;
+        }
+        if (left && top && !bottom && !right)
+        {
+			return ExtendedTileType.RockLU;
+        }
+        if (left && right && !top && !bottom)
+        {
+			return ExtendedTileType.RockLR;
+        }
+        if (left && bottom && !right && !top)
+        {
+			return ExtendedTileType.RockLD;
+        }
+        if (top && right && !left && !bottom)
+        {
+			return ExtendedTileType.RockUR;
+        }
+        if (top && bottom && !left && !right)
+        {
+			return ExtendedTileType.RockUD;
+        }
+        if (right && bottom && !top && !left)
+        {
+			return ExtendedTileType.RockRD;
+        }      
+        if (left && top && bottom && !right)
+        {
+			return ExtendedTileType.RockLUD;
+        }
+        if (left && top && right && !bottom)
+        {
+			return ExtendedTileType.RockLUR;
+        }
+        if (top && right && bottom && !left)
+        {
+			return ExtendedTileType.RockURD;
+        }
+        if (left && right && bottom && !top)
+        {
+			return ExtendedTileType.RockLRD;
+        }
+        if (left && top && right && bottom)
+        {
+			return ExtendedTileType.RockLURD;
+        }
+		return type;
+	}
 }
