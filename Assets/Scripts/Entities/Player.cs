@@ -1,10 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Entities.Attack;
 using UnityEngine;
 
 public class Player : Mob {
+    
+    [SerializeField]
+    private GameObject bulletPrefab;
+    [SerializeField]
+    Transform bulletSpawn;
+    [SerializeField]
+    private int carDamage = 5;
+
+    private float nextAttackTime;
 
     public Player() : base(100) { }
+
+    private void Start() {
+        SingleShot s = new SingleShot(this.gameObject);
+        s.SetPrefab(bulletPrefab);
+        s.SetSpawn(bulletSpawn);
+        SetAttack(s);
+    }
+
+    void Update() {
+        if ( Time.timeSinceLevelLoad >= nextAttackTime && attack != null) {
+            if ( Input.GetKey(KeyCode.Space) ) {
+                Debug.Log("Attack pressed!");
+                attack.Attack();
+                nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime();
+            }
+        }
+    }
+
 
     /// <summary>
     /// Collision checking. Player is going to die on any collision with a wall.
@@ -17,9 +43,8 @@ public class Player : Mob {
         } else if ( collision.collider.tag == "enemy" ) {
             Mob m = collision.collider.GetComponent(typeof(Mob)) as Mob;
             if ( m != null ) {
-                InflictDamage(m.GetDamage()); // TODO think about Mob attac mechanic
+                InflictDamage(carDamage);
             }
-
         }
     }
 

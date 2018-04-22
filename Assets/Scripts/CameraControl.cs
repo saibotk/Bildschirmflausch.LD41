@@ -18,7 +18,7 @@ public class CameraControl : MonoBehaviour {
     void LateUpdate() {
         if ( followThis == null )
             return;
-        var target = followThis.transform.position + offset;
+        var target = followThis.transform.position; // + offset;
         var targetVec = target - transform.position;
         targetVec.Scale(new Vector3(0.05f, 0.05f, 0));
 
