@@ -34,13 +34,18 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 speedVec = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         float speed = speedVec.magnitude;
 
-        { // Forward
-            rb.AddForce(transform.up * acceleration);
+		{ // Forward
+			Vector3 acc = transform.up * acceleration;
+            if (Input.GetKey(KeyCode.S))
+                acc *= 0;
+            rb.AddForce(acc);
         }
-        {// Drag
-            Vector3 drag = speedVec.normalized * speed * speed * friction * -1;
-            if ( Input.GetKey(KeyCode.S) )
-                drag *= brake;
+		{// Drag
+			Vector3 drag = speedVec.normalized * speed * speed * friction * -1;
+			if (Input.GetKey(KeyCode.S)) {
+				drag *= brake;
+				drag *= speed;
+     		}
             rb.AddForce(drag);
             Debug.DrawLine(transform.position, transform.position + drag, Color.cyan, 0.01f, false);
         }
