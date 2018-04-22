@@ -34,18 +34,18 @@ namespace Assets.Scripts.Entities {
             }
 
             Vector3 distanceToEnemy = victim.transform.position - gameObject.transform.position;
-
-            if(distanceToEnemy.magnitude < attack.GetRange()) {
-                return;
-            }
-
-            // movement
-            body.velocity = new Vector2(distanceToEnemy.normalized.x, distanceToEnemy.normalized.y) * speed;
-
             //rotation
             Vector3 localRotation = gameObject.transform.localRotation * Vector3.up;
             float angleToRotate = Mathf.Round(Vector3.SignedAngle(localRotation, distanceToEnemy.normalized, Vector3.forward));
             gameObject.transform.Rotate(0, 0, angleToRotate * rotationSpeed);
+
+            if ( distanceToEnemy.magnitude < attack.GetRange() ) {
+                return;
+            }
+            // movement
+            body.velocity = new Vector2(distanceToEnemy.normalized.x, distanceToEnemy.normalized.y) * speed;
+
+            
         }
 
         public void SetVictim(GameObject g) {
