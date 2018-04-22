@@ -11,40 +11,41 @@ public class GenerationProcessor {
         this.prefabs = prefabs;
     }
 
-    public GameObject ProcessRoom(Dictionary<Vector2Int, Room.TileType> d) {
+    public GameObject ProcessRoom(Dictionary<Vector2Int, Room.TileType> tiles) {
         GameObject root = new GameObject {
             name = "Room"
         };
-        foreach ( Vector2Int v in d.Keys ) {
+		foreach ( Vector2Int v in tiles.Keys ) {
             bool left = false;
             bool top = false;
             bool right = false;
             bool bottom = false;
             // left bound
-            if ( d.ContainsKey(v + new Vector2Int(-1, 0)) ) {
-                if ( d[v + new Vector2Int(-1, 0)] == d[v] ) {
+            if ( tiles.ContainsKey(v + new Vector2Int(-1, 0)) ) {
+                if ( tiles[v + new Vector2Int(-1, 0)] == tiles[v] ) {
                     left = true;
                 }
             }
             // top bound
-            if ( d.ContainsKey(v + new Vector2Int(0, 1)) ) {
-                if ( d[v + new Vector2Int(0, 1)] == d[v] ) {
+            if ( tiles.ContainsKey(v + new Vector2Int(0, 1)) ) {
+                if ( tiles[v + new Vector2Int(0, 1)] == tiles[v] ) {
                     top = true;
                 }
             }
             // right bound
-            if ( d.ContainsKey(v + new Vector2Int(1, 0)) ) {
-                if ( d[v + new Vector2Int(1, 0)] == d[v] ) {
+            if ( tiles.ContainsKey(v + new Vector2Int(1, 0)) ) {
+                if ( tiles[v + new Vector2Int(1, 0)] == tiles[v] ) {
                     right = true;
                 }
             }
             // bottom bound
-            if ( d.ContainsKey(v + new Vector2Int(0, -1)) ) {
-                if ( d[v + new Vector2Int(0, -1)] == d[v] ) {
+            if ( tiles.ContainsKey(v + new Vector2Int(0, -1)) ) {
+                if ( tiles[v + new Vector2Int(0, -1)] == tiles[v] ) {
                     bottom = true;
                 }
             }
             ExtendedTileType type = ExtendedTileType.Ground;
+			int rotation = 0;
             // ---------------------------------------------------------------------------------------------------------------------------------------------
             //  ^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~
             //  
@@ -55,10 +56,13 @@ public class GenerationProcessor {
             //  
             //  ^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~
             // ---------------------------------------------------------------------------------------------------------------------------------------------
-            switch ( d[v] ) {
+            switch ( tiles[v] ) {
                 case Room.TileType.WALL:
                     type = ExtendedTileType.BorderSingle;
-                    if ( top && left && d.ContainsKey(v + new Vector2Int(-1, -1)) || top && right && d.ContainsKey(v + new Vector2Int(1, -1)) || right && bottom && d.ContainsKey(v + new Vector2Int(1, 1)) || left && bottom && d.ContainsKey(v + new Vector2Int(-1, 1)) ) {
+                    if ( top && left && tiles.ContainsKey(v + new Vector2Int(-1, -1)) 
+					    || top && right && tiles.ContainsKey(v + new Vector2Int(1, -1)) 
+					    || right && bottom && tiles.ContainsKey(v + new Vector2Int(1, 1))
+					    || left && bottom && tiles.ContainsKey(v + new Vector2Int(-1, 1)) ) {
                         type = ExtendedTileType.BorderOuter;
                     } else if ( top && left || top && right || right && bottom || left && bottom ) {
                         type = ExtendedTileType.BorderInner;
@@ -121,17 +125,18 @@ public class GenerationProcessor {
                     break;
             }
 
-            CreateGOFromType(v, type, root);
+            CreateGOFromType(v, rotation, type, root);
         }
 
         return root;
     }
 
-    private GameObject CreateGOFromType(Vector2 v, ExtendedTileType t, GameObject root) {
+    private GameObject CreateGOFromType(Vector2 v, int rotation, ExtendedTileType t, GameObject root) {
         GameObject tmp = null;
         if ( prefabs.ContainsKey(t) && root != null ) {
-            tmp = GameObject.Instantiate(prefabs[t], root.transform);
+            tmp = Object.Instantiate(prefabs[t], root.transform);
             tmp.transform.position = v;
+			tmp.transform.Rotate(new Vector3(0, 0, rotation));
         }
         return tmp;
     }
