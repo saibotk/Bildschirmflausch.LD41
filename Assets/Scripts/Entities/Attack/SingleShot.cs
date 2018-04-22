@@ -27,13 +27,13 @@ namespace Assets.Scripts.Entities.Attack {
         public void Attack() {
             if ( bulletPrefab == null )
                 return;
-            Debug.Log("Instantiate Bullet");
             GameObject b = GameObject.Instantiate(bulletPrefab);
             b.transform.rotation = spawn.rotation;
             b.transform.position = spawn.position;
             Bullet bu = b.GetComponent<Bullet>();
             bu.SetDamage(damage);
             bu.SetOwner(owner);
+            GameController.instance.GetAudioControl().SfxPlay(0);
         }
 
         public float GetCooldownTime() {

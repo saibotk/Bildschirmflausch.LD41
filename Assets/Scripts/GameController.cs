@@ -240,12 +240,16 @@ public class GameController : MonoBehaviour {
         //Time.timeScale = 0;
         if ( ui != null ) {
             Debug.Log("show Gameover UI");
+            cam.GetComponent<AudioControl>().SfxPlay(2);
             ui.GetComponent<UIController>().ShowGameOverUI();
         } else {
             Debug.Log("No UI specified");
         }
     }
 
+    public AudioControl GetAudioControl() {
+        return cam.GetComponent<AudioControl>();
+    }
 
     public UIController GetUI() {
         return ui.GetComponent<UIController>();
