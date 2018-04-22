@@ -25,7 +25,7 @@ public class EnemyAI : MonoBehaviour {
 	void Update ()
 	{
         if(victim == null) {
-            victim = GameController.instance.GetPlayer().gameObject; // TODO testing purpose only!
+            //victim = GameController.instance.GetPlayer().gameObject; // TODO testing purpose only!
             return;
         }
 
