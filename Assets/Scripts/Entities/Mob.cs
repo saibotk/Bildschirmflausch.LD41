@@ -1,8 +1,10 @@
-﻿public abstract class Mob : Entity {
-    readonly int maxHP;
-    int currentHP;
-    bool isDead;
-    int damage;
+﻿using Assets.Scripts.Entities.Attack;
+
+public abstract class Mob : Entity {
+    protected readonly int maxHP;
+    protected int currentHP;
+    protected bool isDead;
+    protected IAttack attack;
 
     /// <summary>
     /// Creates a new Mob instance with the given HP.
@@ -12,6 +14,10 @@
         this.maxHP = maxHP;
         currentHP = maxHP;
         isDead = false;
+    }
+
+    public void SetAttack(IAttack attack) {
+        this.attack = attack;
     }
 
     /// <summary>
@@ -42,22 +48,6 @@
     public void Heal(int healAmount) {
         if ( !isDead )
             currentHP = ( currentHP + healAmount > currentHP ) ? maxHP : currentHP + healAmount;
-    }
-
-    /// <summary>
-    /// Sets the damage value of a mobs attack.
-    /// </summary>
-    /// <param name="dmg"></param>
-    public void SetDamage(int dmg) {
-        damage = dmg;
-    }
-
-    /// <summary>
-    /// Gets the damage value og a mobs attack.
-    /// </summary>
-    /// <returns></returns>
-    public int GetDamage() {
-        return damage;
     }
 
     /// <summary>

@@ -42,23 +42,11 @@ public class UIController : MonoBehaviour
 
     public void ShowGameOverUI()
     {
-        if (gameOverPanel != null)
-        {
-            Canvas gameOverCanvas = gameOverPanel.GetComponent<Canvas>();
-            Debug.Log("Loading Canvas");
+        if (gameOverPanel != null) {
+            Debug.Log("Loaded Canvas");
+            gameOverPanel.SetActive(true);
 
-            if (gameOverCanvas != null)
-            {
-                Debug.Log("Loaded Canvas");
-                gameOverCanvas.enabled = true;
-            }
-            else
-            {
-                Debug.Log("Gameover panel has no Canvas");
-            }
-        }
-        else
-        {
+        } else {
             Debug.Log("No game over panel assigned");
         }
     }
