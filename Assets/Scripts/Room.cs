@@ -37,6 +37,8 @@ public class Room : MonoBehaviour {
                 
         }
         Debug.Log("Spawnpoints in Room: " + spawnpoints.Count);
+        
+        //Unlock();
     }
 	
     public void SetObjective(Objective o)
@@ -60,13 +62,21 @@ public class Room : MonoBehaviour {
         }
     }
 
+    public Objective GetObjective()
+    {
+        return objective;
+    }
+
     public void OnPlayerEnter()
     {
-        objective.Activate();
+        if(objective != null)
+            objective.Activate();
     }
 
     public List<Transform> GetSpawnpoints()
     {
         return spawnpoints;
     }
+
+
 }

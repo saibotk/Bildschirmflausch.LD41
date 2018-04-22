@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
+    private bool firstKeyPressed; 
 
 	[SerializeField]
 	public float acceleration = 3;
@@ -20,7 +21,18 @@ public class PlayerMovement : MonoBehaviour {
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
+    void Update()
+    {
+        if(!firstKeyPressed && Input.anyKey)
+        {
+            firstKeyPressed = true;
+        }    
+    }
+
     void FixedUpdate() {
+        if (!firstKeyPressed)
+            return;
+
 		Vector3 speedVec = new Vector3(rigidbody2D.velocity.x, rigidbody2D.velocity.y, 0);
 		float speed = speedVec.magnitude;
 
