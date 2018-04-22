@@ -48,4 +48,8 @@ public abstract class Mob : Entity {
     public int getHealth() {
         return currentHP;
     }
+
+    public int getMaxHealth() {
+        return maxHP;
+    }
 }
