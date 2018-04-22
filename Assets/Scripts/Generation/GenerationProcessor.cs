@@ -11,7 +11,7 @@ public class GenerationProcessor {
         this.prefabs = prefabs;
     }
 
-    public GameObject ProcessRoom(Dictionary<Vector2Int, Room.TileType> tiles) {
+    public GameObject ProcessRoom(Dictionary<Vector2Int, GenTile> tiles) {
         GameObject root = new GameObject {
             name = "Room"
         };
@@ -56,7 +56,7 @@ public class GenerationProcessor {
             //  
             //  ^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~^~!~
             // ---------------------------------------------------------------------------------------------------------------------------------------------
-            switch ( tiles[v] ) {
+			switch ( tiles[v].type ) {
                 case Room.TileType.WALL:
                     type = ExtendedTileType.BorderSingle;
                     if ( top && left && tiles.ContainsKey(v + new Vector2Int(-1, -1)) 
@@ -66,7 +66,9 @@ public class GenerationProcessor {
                         type = ExtendedTileType.BorderOuter;
                     } else if ( top && left || top && right || right && bottom || left && bottom ) {
                         type = ExtendedTileType.BorderInner;
-                    }
+					} else {
+						// BorderSingle
+					}
                     break;
                 case Room.TileType.GROUND:
                     type = ExtendedTileType.Ground;
