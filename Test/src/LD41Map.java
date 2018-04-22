@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -17,18 +18,16 @@ import javafx.util.Pair;
 
 public class LD41Map {
 
-	static final int TUNNEL_THICKNESS = 3;
+	static final int TUNNEL_THICKNESS = 4;
 
 	public static class Vertex {
 
 		public final Room	r;
 		public float		value;
-		public Vertex		parent;
 
 		public Vertex(Room r) {
 			this.r = r;
 			value = Float.POSITIVE_INFINITY;
-			parent = null;
 		}
 	}
 
@@ -46,11 +45,12 @@ public class LD41Map {
 
 	public static class Room {
 
-		Rectangle				bounds	= new Rectangle();
-		// int width = 0, height = 0;
-		Map<Vector2i, TileType>	tiles;
-		// Vector2i pos = new Vector2i();
-		Set<Vector2i>			doors;
+		Rectangle				bounds		= new Rectangle();
+		Map<Vector2i, TileType>	tiles		= new HashMap<>();
+		Set<Vector2i>			doorsUp		= new HashSet<>();
+		Set<Vector2i>			doorsDown	= new HashSet<>();
+		Set<Vector2i>			doorsLeft	= new HashSet<>();
+		Set<Vector2i>			doorsRight	= new HashSet<>();
 
 		public float distance(Room r) {
 			return Math.abs(getCenter().x - r.getCenter().x) + Math.abs(getCenter().y - r.getCenter().y);
@@ -59,11 +59,19 @@ public class LD41Map {
 		public Point getCenter() {
 			return new Point((int) bounds.getCenterX(), (int) bounds.getCenterY());
 		}
+
+		public Set<Vector2i> allDoors() {
+			Set<Vector2i> ret = new HashSet<>();
+			ret.addAll(doorsUp);
+			ret.addAll(doorsDown);
+			ret.addAll(doorsLeft);
+			ret.addAll(doorsRight);
+			return ret;
+		}
 	}
 
 	public static enum TileType {
 		GROUND, WALL, DOOR;
-
 	}
 
 	public static void main(String[] args) {
@@ -84,9 +92,26 @@ public class LD41Map {
 					Graphics2D g = (Graphics2D) h;
 					g.translate(getWidth() / 2, getHeight() / 2);
 					g.scale(4, 4);
+					g.setColor(new Color(1f - (float) Math.random() * 0.3f, 0f, 0f, 0.8f));
 					for (Room room : graph.getKey()) {
-						g.setColor(new Color(1f, 0f, 0f, 0.5f));
-						g.fill(room.bounds);
+						room.tiles.forEach((v, type) -> {
+							if (type == TileType.GROUND)
+								g.fillRect(v.x, v.y, 1, 1);
+						});
+					}
+					g.setColor(new Color(0f, 0f, 1f, 0.8f));
+					for (Room room : graph.getKey()) {
+						room.tiles.forEach((v, type) -> {
+							if (type == TileType.WALL)
+								g.fillRect(v.x, v.y, 1, 1);
+						});
+					}
+					g.setColor(new Color(0f, 1f, 0f, 0.8f));
+					for (Room room : graph.getKey()) {
+						room.tiles.forEach((v, type) -> {
+							if (type == TileType.DOOR)
+								g.fillRect(v.x, v.y, 1, 1);
+						});
 					}
 				}
 			};
@@ -123,8 +148,8 @@ public class LD41Map {
 		Set<Room> rooms = new HashSet<>();
 		for (int i = 0; i < 7 + (int) (Math.random() * 4); i++) {
 			Room room = new Room();
-			room.bounds.width = 15 + (int) (Math.random() * 20);
-			room.bounds.height = 15 + (int) (Math.random() * 20);
+			room.bounds.width = ((15 + (int) (Math.random() * 20)) / 2) * 2;
+			room.bounds.height = ((15 + (int) (Math.random() * 20)) / 2) * 2;
 			rooms.add(room);
 		}
 
@@ -187,6 +212,8 @@ public class LD41Map {
 		// G list of edges
 		// rooms list of rooms
 
+		Set<Room> rooms2 = new HashSet<>();
+
 		for (Edge ed : G) {
 			// horizontal
 			float diff1 = ed.r1.r.bounds.y - ed.r2.r.bounds.y - ed.r2.r.bounds.height + TUNNEL_THICKNESS;
@@ -197,18 +224,45 @@ public class LD41Map {
 			float diff4 = ed.r2.r.bounds.x - ed.r1.r.bounds.x - ed.r1.r.bounds.width + TUNNEL_THICKNESS;
 
 			if (diff1 < 0 && diff2 < 0) {
-				addStraightHorizontal(rooms, ed);
+				addStraightHorizontal(rooms2, ed);
 			} else if (diff3 < 0 && diff4 < 0) {
-				addStraightVertical(rooms, ed);
+				addStraightVertical(rooms2, ed);
 			} else
-				addCurve(rooms, ed);
-
+				addCurve(rooms2, ed);
 		}
 
+		Room path = new Room();
+		for (Room r : rooms2) {
+			for (int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++)
+				for (int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++) {
+					path.tiles.put(new Vector2i(x1, y1), TileType.GROUND);
+					for (int x2 = x1 - 1; x2 <= x1 + 1; x2++)
+						for (int y2 = y1 - 1; y2 <= y1 + 1; y2++) {
+							path.tiles.putIfAbsent(new Vector2i(x2, y2), TileType.WALL);
+						}
+				}
+			for (Vector2i v : r.allDoors())
+				r.tiles.put(v, TileType.DOOR);
+		}
+		for (Room r : rooms) {
+			for (int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++)
+				for (int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++) {
+					r.tiles.put(new Vector2i(x1, y1), TileType.WALL);
+				}
+			for (int x1 = r.bounds.x + 1; x1 < r.bounds.x + r.bounds.width - 1; x1++)
+				for (int y1 = r.bounds.y + 1; y1 < r.bounds.y + r.bounds.height - 1; y1++) {
+					r.tiles.put(new Vector2i(x1, y1), TileType.GROUND);
+				}
+			for (Vector2i v : r.allDoors())
+				r.tiles.put(v, TileType.DOOR);
+		}
+		rooms.add(path);
 		return new Pair<>(rooms, new Pair<>(root, G));
 	}
 
 	public static void addStraightHorizontal(Set<Room> rooms, Edge ed) {
+		Room righter = ed.r1.r.getCenter().x > ed.r2.r.getCenter().x ? ed.r1.r : ed.r2.r;
+		Room lefter = ed.r1.r.getCenter().x > ed.r2.r.getCenter().x ? ed.r2.r : ed.r1.r;
 		Room tunnel = new Room();
 		int minX = Math.min(ed.r1.r.bounds.x + ed.r1.r.bounds.width, ed.r2.r.bounds.x + ed.r2.r.bounds.width);
 		int minY = Math.max(ed.r1.r.bounds.y, ed.r2.r.bounds.y);
@@ -220,9 +274,16 @@ public class LD41Map {
 		tunnel.bounds.height = TUNNEL_THICKNESS;
 
 		rooms.add(tunnel);
+
+		for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+			lefter.doorsRight.add(new Vector2i(tunnel.bounds.x - 1, tunnel.bounds.y + i));
+			righter.doorsLeft.add(new Vector2i(tunnel.bounds.x + tunnel.bounds.width, tunnel.bounds.y + i));
+		}
 	}
 
 	public static void addStraightVertical(Set<Room> rooms, Edge ed) {
+		Room higher = ed.r1.r.getCenter().y > ed.r2.r.getCenter().y ? ed.r1.r : ed.r2.r;
+		Room lower = ed.r1.r.getCenter().y > ed.r2.r.getCenter().y ? ed.r2.r : ed.r1.r;
 		Room tunnel = new Room();
 		int minX = Math.max(ed.r1.r.bounds.x, ed.r2.r.bounds.x);
 		int minY = Math.min(ed.r1.r.bounds.y + ed.r1.r.bounds.height, ed.r2.r.bounds.y + ed.r2.r.bounds.height);
@@ -234,6 +295,11 @@ public class LD41Map {
 		tunnel.bounds.height = (maxY - minY);
 
 		rooms.add(tunnel);
+
+		for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+			lower.doorsUp.add(new Vector2i(tunnel.bounds.x + i, tunnel.bounds.y + tunnel.bounds.height));
+			higher.doorsDown.add(new Vector2i(tunnel.bounds.x + i, tunnel.bounds.y - 1));
+		}
 	}
 
 	public static void addCurve(Set<Room> rooms, Edge ed) {
@@ -244,65 +310,129 @@ public class LD41Map {
 
 		Rectangle r = new Rectangle(lefter.getCenter().x, lower.getCenter().y, righter.getCenter().x - lefter.getCenter().x, higher.getCenter().y - lower.getCenter().y);
 
-		Room vertical1 = new Room();
-		vertical1.bounds.x = r.x - TUNNEL_THICKNESS / 2;
-		vertical1.bounds.y = r.y - TUNNEL_THICKNESS / 2;
-		vertical1.bounds.width = TUNNEL_THICKNESS;
-		vertical1.bounds.height = r.height + TUNNEL_THICKNESS;
+		Room verticalLefter = new Room();
+		verticalLefter.bounds.x = r.x - TUNNEL_THICKNESS / 2;
+		verticalLefter.bounds.y = r.y - TUNNEL_THICKNESS / 2;
+		verticalLefter.bounds.width = TUNNEL_THICKNESS;
+		verticalLefter.bounds.height = r.height + TUNNEL_THICKNESS;
 
-		Room horizontal1 = new Room();
-		horizontal1.bounds.x = r.x - TUNNEL_THICKNESS / 2;
-		horizontal1.bounds.y = r.y - TUNNEL_THICKNESS / 2;
-		horizontal1.bounds.width = r.width + TUNNEL_THICKNESS;
-		horizontal1.bounds.height = TUNNEL_THICKNESS;
+		Room horizontalLower = new Room();
+		horizontalLower.bounds.x = r.x - TUNNEL_THICKNESS / 2;
+		horizontalLower.bounds.y = r.y - TUNNEL_THICKNESS / 2;
+		horizontalLower.bounds.width = r.width + TUNNEL_THICKNESS;
+		horizontalLower.bounds.height = TUNNEL_THICKNESS;
 
-		Room vertical2 = new Room();
-		vertical2.bounds.x = r.x + r.width - TUNNEL_THICKNESS / 2;
-		vertical2.bounds.y = r.y - TUNNEL_THICKNESS / 2;
-		vertical2.bounds.width = TUNNEL_THICKNESS;
-		vertical2.bounds.height = r.height + TUNNEL_THICKNESS;
+		Room verticalRighter = new Room();
+		verticalRighter.bounds.x = r.x + r.width - TUNNEL_THICKNESS / 2;
+		verticalRighter.bounds.y = r.y - TUNNEL_THICKNESS / 2;
+		verticalRighter.bounds.width = TUNNEL_THICKNESS;
+		verticalRighter.bounds.height = r.height + TUNNEL_THICKNESS;
 
-		Room horizontal2 = new Room();
-		horizontal2.bounds.x = r.x - TUNNEL_THICKNESS / 2;
-		horizontal2.bounds.y = r.y + r.height - TUNNEL_THICKNESS / 2;
-		horizontal2.bounds.width = r.width + TUNNEL_THICKNESS;
-		horizontal2.bounds.height = TUNNEL_THICKNESS;
+		Room horizontalHigher = new Room();
+		horizontalHigher.bounds.x = r.x - TUNNEL_THICKNESS / 2;
+		horizontalHigher.bounds.y = r.y + r.height - TUNNEL_THICKNESS / 2;
+		horizontalHigher.bounds.width = r.width + TUNNEL_THICKNESS;
+		horizontalHigher.bounds.height = TUNNEL_THICKNESS;
+
+		if (lower == lefter) {
+			horizontalLower.bounds.x = r.x + lower.bounds.width / 2;
+			horizontalLower.bounds.width = r.width - lower.bounds.width / 2 + TUNNEL_THICKNESS / 2;
+			horizontalHigher.bounds.width = r.width - higher.bounds.width / 2 + TUNNEL_THICKNESS / 2;
+
+			verticalLefter.bounds.y = r.y + lower.bounds.height / 2;
+			verticalLefter.bounds.height = r.height - lower.bounds.height / 2 + TUNNEL_THICKNESS / 2;
+			verticalRighter.bounds.height = r.height - higher.bounds.height / 2 + TUNNEL_THICKNESS / 2;
+		}
+		if (lower == righter) {
+			horizontalHigher.bounds.x = r.x + higher.bounds.width / 2;
+			horizontalHigher.bounds.width = r.width - higher.bounds.width / 2 + TUNNEL_THICKNESS / 2;
+			horizontalLower.bounds.width = r.width - lower.bounds.width / 2 + TUNNEL_THICKNESS / 2;
+
+			verticalRighter.bounds.y = r.y + lower.bounds.height / 2;
+			verticalRighter.bounds.height = r.height - lower.bounds.height / 2 + TUNNEL_THICKNESS / 2;
+			verticalLefter.bounds.height = r.height - higher.bounds.height / 2 + TUNNEL_THICKNESS / 2;
+		}
 
 		boolean flip = Math.random() > 0.5;
 		boolean diffX = ed.r2.r.getCenter().x - ed.r1.r.getCenter().x > 0;
 		boolean diffY = ed.r2.r.getCenter().y - ed.r1.r.getCenter().y > 0;
+		boolean addHorizontal1 = false, addHorizontal2 = false, addVertical1 = false, addVertical2 = false;
 		if (diffX && diffY) {
 			if (flip) {
-				rooms.add(vertical1);
-				rooms.add(horizontal2);
+				addVertical1 = true;
+				addHorizontal2 = true;
 			} else {
-				rooms.add(vertical2);
-				rooms.add(horizontal1);
+				addVertical2 = true;
+				addHorizontal1 = true;
 			}
 		} else if (diffX && !diffY) {
 			if (flip) {
-				rooms.add(vertical2);
-				rooms.add(horizontal2);
+				addVertical2 = true;
+				addHorizontal2 = true;
 			} else {
-				rooms.add(vertical1);
-				rooms.add(horizontal1);
+				addVertical1 = true;
+				addHorizontal1 = true;
 			}
 		} else if (!diffX && diffY) {
 			if (flip) {
-				rooms.add(vertical1);
-				rooms.add(horizontal1);
+				addVertical1 = true;
+				addHorizontal1 = true;
 			} else {
-				rooms.add(vertical2);
-				rooms.add(horizontal2);
+				addVertical2 = true;
+				addHorizontal2 = true;
 			}
 		} else if (!diffX && !diffY) {
 			if (flip) {
-				rooms.add(vertical2);
-				rooms.add(horizontal1);
+				addVertical2 = true;
+				addHorizontal1 = true;
 			} else {
-				rooms.add(vertical1);
-				rooms.add(horizontal2);
+				addVertical1 = true;
+				addHorizontal2 = true;
 			}
+		}
+		if (addHorizontal1) {
+			rooms.add(horizontalLower);
+			if (lower == lefter)
+				for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+					lower.doorsRight.add(new Vector2i(horizontalLower.bounds.x - 1, horizontalLower.bounds.y + i));
+				}
+			else
+				for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+					lower.doorsLeft.add(new Vector2i(horizontalLower.bounds.x + horizontalLower.bounds.width, horizontalLower.bounds.y + i));
+				}
+		}
+		if (addHorizontal2) {
+			rooms.add(horizontalHigher);
+			if (lower == righter)
+				for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+					higher.doorsRight.add(new Vector2i(horizontalHigher.bounds.x - 1, horizontalHigher.bounds.y + i));
+				}
+			else
+				for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+					higher.doorsLeft.add(new Vector2i(horizontalHigher.bounds.x + horizontalHigher.bounds.width, horizontalHigher.bounds.y + i));
+				}
+		}
+		if (addVertical1) {
+			rooms.add(verticalLefter);
+			if (lower == lefter)
+				for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+					lower.doorsDown.add(new Vector2i(verticalLefter.bounds.x + i, verticalLefter.bounds.y - 1));
+				}
+			else
+				for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+					lower.doorsUp.add(new Vector2i(verticalLefter.bounds.x + i, verticalLefter.bounds.y + verticalLefter.bounds.height));
+				}
+		}
+		if (addVertical2) {
+			rooms.add(verticalRighter);
+			if (lower == righter)
+				for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+					higher.doorsDown.add(new Vector2i(verticalRighter.bounds.x + i, verticalRighter.bounds.y - 1));
+				}
+			else
+				for (int i = 0; i < TUNNEL_THICKNESS; i++) {
+					higher.doorsUp.add(new Vector2i(verticalRighter.bounds.x + i, verticalRighter.bounds.y + verticalRighter.bounds.height));
+				}
 		}
 	}
 }
