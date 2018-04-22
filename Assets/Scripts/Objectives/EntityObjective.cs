@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityObjective : Objective{
+public class EntityObjective : Objective {
 	List<GameObject> prefabList;
 	List<GameObject> entityList;
 	List<Transform> spawnPointList;
@@ -10,6 +10,7 @@ public class EntityObjective : Objective{
 	// Constructor
 	public EntityObjective(Room objectiveCaller, List<GameObject> prefabList) : base(objectiveCaller)
 	{
+        this.entityList = new List<GameObject>();
 		this.prefabList = prefabList;
 		spawnPointList = objectiveCaller.GetSpawnpoints ();
 	}
@@ -24,6 +25,7 @@ public class EntityObjective : Objective{
             Debug.Log("Instantiating Prefab");
 			GameObject tempObject = GameObject.Instantiate (i);
 			tempObject.transform.position = spawnPointList [Random.Range (0, spawnPointList.Count)].position;
+            entityList.Add(tempObject);
 		}
 
 		objectiveCaller.Lock();
@@ -36,4 +38,9 @@ public class EntityObjective : Objective{
 		if (entityList.Count == 0)
 			objectiveCaller.Unlock ();
 	}
+
+    public List<GameObject> GetEntities()
+    {
+        return entityList;
+    }
 }
