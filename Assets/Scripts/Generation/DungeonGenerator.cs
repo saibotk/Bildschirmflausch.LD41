@@ -17,6 +17,9 @@ public class DungeonGenerator {
     // All rooms except the three above
 	public HashSet<GenRoom> rooms;
 
+	private const float percentageRocks = 0.03;
+	private const int maxRockCluster = 5;
+
     public void Generate() {
         int minRoomSize = 50;
         rooms = new HashSet<GenRoom>();
@@ -148,6 +151,12 @@ public class DungeonGenerator {
             foreach ( Vector2Int v in r.AllDoors() )
                 r.tiles[v] = Room.TileType.DOOR;
         }
+
+		foreach (GenRoom r in rooms) {
+			generateInterior (r);
+		}
+
+        rooms.Add(path);
 
         start = root.r;
         end = null; foreach ( GenRoom r in rooms ) {
@@ -344,4 +353,38 @@ public class DungeonGenerator {
         }
     }
 
+	public static void generateInterior(GenRoom r)
+	{
+		int width = r.bounds.width;
+		int height = r.bounds.height;
+
+		Vector2Int root = new Vector2Int (1, 1);
+		Random rand = new Random (System.DateTime.Now);
+
+		for(int x = 0; i != width; ++x)
+		{
+			for(int y = 0; y != width; ++y)
+			{
+				Room.TileType tempTile;
+				r.tiles.TryGetValue (root + new Vector2Int (x, y), tempTile);
+
+				if(rand.NextDouble() <= percentageRocks && tempTile.Equals(Room.TileType.GROUND)
+				{
+					int clusterSize = rand.Next (1, maxRockCluster + 1);
+					r.tiles.Add (root + new Vector2Int (x, y), Room.TileType.ROCK);
+
+					for(int i = 0; i != clusterSize; ++i)
+					{
+						Vector2Int newRock = root + new Vector2Int(x + rand.Next(0, 2), y + rand.Next(0, 2));
+						r.tiles.TryGetValue (newRock, tempTile);
+						if(!tempTile.Equals(Room.TileType.GROUND))
+							break;
+						
+						
+
+
+
+
+
+	}
 }

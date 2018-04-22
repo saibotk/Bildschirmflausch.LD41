@@ -35,4 +35,8 @@ public class GenRoom {
         ret.UnionWith(doorsRight);
         return ret;
     }
+
+	public void generateInteror()
+	{
+		b
 }
