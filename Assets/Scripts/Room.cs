@@ -5,11 +5,11 @@ using UnityEngine;
 public class Room : MonoBehaviour {
 
 	public enum TileType {
-		GROUND, WALL, DOOR
+		GROUND, WALL, DOOR, ROCK
 	}
 
 	Vector2 position;
-	Map<Vector2, TileType> tiles;
+	Dictionary<Vector2, TileType> tiles;
 
     List<Door> doors;
     List<Transform> spawnpoints;
