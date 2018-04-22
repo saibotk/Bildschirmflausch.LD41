@@ -1025,6 +1025,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1679161327080020, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
   m_IsPrefabParent: 0
@@ -1121,7 +1125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9a051e822e2cf4ea3ca01c5a4df37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followThis: {fileID: 1239288696}
+  followThis: {fileID: 0}
 --- !u!1 &1001682580
 GameObject:
   m_ObjectHideFlags: 0
@@ -1370,7 +1374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1487324257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,6 +1386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f52f2b666c1ec64195aad9936df2d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notifications: {fileID: 0}
   gameOverPanel: {fileID: 354516592}
   healthcontroller: {fileID: 623293249}
 --- !u!4 &1487324258
@@ -1629,8 +1634,8 @@ MonoBehaviour:
   RockLUR: {fileID: 1938166751346222, guid: 6b83a6a46c57a634fa5085684bad0085, type: 2}
   RockURD: {fileID: 1437035058628240, guid: 30338afac8ce7054fbff8de89db815e8, type: 2}
   RockLRD: {fileID: 1251219893662246, guid: e37e0c5d4b013304cbcb32b223264452, type: 2}
-  ui: {fileID: 1487324256}
-  cam: {fileID: 881384367}
   playerPrefab: {fileID: 1679161327080020, guid: 3d1911457c1e44f53b6b4044334db52f,
     type: 2}
+  ui: {fileID: 1487324256}
+  cam: {fileID: 881384367}
   mapRoot: {fileID: 1624368723}

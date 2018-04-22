@@ -15,10 +15,10 @@ public class DungeonGenerator {
     // The room containing all the paths connecting normal rooms
     public GenRoom path;
     // All rooms except the three above
-	public HashSet<GenRoom> rooms;
+    public HashSet<GenRoom> rooms;
 
-	private const float percentageRocks = 0.03f;
-	private const int maxRockCluster = 5;
+    private const float percentageRocks = 0.03f;
+    private const int maxRockCluster = 5;
 
     public void Generate() {
         int minRoomSize = 50;
@@ -31,7 +31,7 @@ public class DungeonGenerator {
         }
 
         while ( true ) {
-			bool changed = false;
+            bool changed = false;
             foreach ( GenRoom r1 in rooms ) {
                 foreach ( GenRoom r2 in rooms ) {
                     if ( r1 == r2 )
@@ -41,14 +41,14 @@ public class DungeonGenerator {
                     if ( Math.Pow(Vector2Int.Distance(p1, p2), 2) < 2 * minRoomSize * minRoomSize + 2 ) {
                         r2.bounds.x += ( int ) ( ( UnityEngine.Random.value - 0.5 ) * 5 );
                         r2.bounds.y += ( int ) ( ( UnityEngine.Random.value - 0.5 ) * 2.5 );
-						changed = true;
-						break;
+                        changed = true;
+                        break;
                     }
                 }
-				if (changed)
-					break;
+                if ( changed )
+                    break;
             }
-			if (!changed)
+            if ( !changed )
                 break;
         }
 
@@ -73,7 +73,7 @@ public class DungeonGenerator {
                     if ( e.r2 == r1 && e.r1 == r2 )
                         goto outer;
                 E.Add(new GenEdge(r1, r2));
-			}
+            }
         outer:;
         }
         F.Add(root);
@@ -127,40 +127,39 @@ public class DungeonGenerator {
         foreach ( GenRoom r in rooms2 ) {
             for ( int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++ )
                 for ( int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++ ) {
-					Vector2Int pos1 = new Vector2Int(x1, y1);
-					if (path.tiles.ContainsKey(pos1))
-						path.tiles[pos1] = Room.TileType.GROUND;
-					else
-						path.tiles.Add(pos1, Room.TileType.GROUND);
+                    Vector2Int pos1 = new Vector2Int(x1, y1);
+                    if ( path.tiles.ContainsKey(pos1) )
+                        path.tiles[pos1] = Room.TileType.GROUND;
+                    else
+                        path.tiles.Add(pos1, Room.TileType.GROUND);
                     for ( int x2 = x1 - 1; x2 <= x1 + 1; x2++ )
                         for ( int y2 = y1 - 1; y2 <= y1 + 1; y2++ ) {
-							if (!path.tiles.ContainsKey(new Vector2Int(x2, y2)))
-								path.tiles.Add(new Vector2Int(x2, y2), Room.TileType.WALL);
+                            if ( !path.tiles.ContainsKey(new Vector2Int(x2, y2)) )
+                                path.tiles.Add(new Vector2Int(x2, y2), Room.TileType.WALL);
                         }
                 }
         }
         foreach ( GenRoom r in rooms ) {
             for ( int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++ )
                 for ( int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++ ) {
-					r.tiles.Add(new Vector2Int(x1, y1), Room.TileType.WALL);
+                    r.tiles.Add(new Vector2Int(x1, y1), Room.TileType.WALL);
                 }
             for ( int x1 = r.bounds.x + 1; x1 < r.bounds.x + r.bounds.width - 1; x1++ )
                 for ( int y1 = r.bounds.y + 1; y1 < r.bounds.y + r.bounds.height - 1; y1++ ) {
-					r.tiles[new Vector2Int(x1, y1)] = Room.TileType.GROUND;
+                    r.tiles[new Vector2Int(x1, y1)] = Room.TileType.GROUND;
                 }
-			foreach (Vector2Int v in r.AllDoors())
-			{
-				Debug.Log("Door: " + v);
-				if (!r.bounds.Contains(v))
-					throw new NotSupportedException("This is a bug where doors land in the wrong room. It should have been fixed.");
-				else
-					r.tiles[v] = Room.TileType.DOOR;
-			}
+            foreach ( Vector2Int v in r.AllDoors() ) {
+                Debug.Log("Door: " + v);
+                if ( !r.bounds.Contains(v) )
+                    throw new NotSupportedException("This is a bug where doors land in the wrong room. It should have been fixed.");
+                else
+                    r.tiles[v] = Room.TileType.DOOR;
+            }
         }
 
-		foreach (GenRoom r in rooms) {
-			generateInterior (r);
-		}
+        foreach ( GenRoom r in rooms ) {
+            generateInterior(r);
+        }
 
         start = root.r;
         end = null; foreach ( GenRoom r in rooms ) {
@@ -168,22 +167,22 @@ public class DungeonGenerator {
                 end = r;
         }
 
-		rooms.Remove(start);
-		rooms.Remove(end);
+        rooms.Remove(start);
+        rooms.Remove(end);
 
-		foreach (GenRoom r in rooms)
-			makeRoomRelative(r);
-		makeRoomRelative(start);
-		makeRoomRelative(end);
-		makeRoomRelative(path);
+        foreach ( GenRoom r in rooms )
+            makeRoomRelative(r);
+        makeRoomRelative(start);
+        makeRoomRelative(end);
+        makeRoomRelative(path);
     }
 
-	public void makeRoomRelative(GenRoom room) {
-		room.roomPosition = room.bounds.position;
-		foreach (Vector2Int v in room.tiles.Keys) {
-			v.Set((v - room.roomPosition).x, (v-room.roomPosition).y);
-		}
-	}
+    public void makeRoomRelative(GenRoom room) {
+        room.roomPosition = room.bounds.position;
+        foreach ( Vector2Int v in room.tiles.Keys ) {
+            v.Set(( v - room.roomPosition ).x, ( v - room.roomPosition ).y);
+        }
+    }
 
     public static void AddStraightHorizontal(HashSet<GenRoom> rooms, GenEdge ed) {
         GenRoom righter = ed.r1.r.GetCenter().x > ed.r2.r.GetCenter().x ? ed.r1.r : ed.r2.r;
@@ -357,38 +356,37 @@ public class DungeonGenerator {
         }
     }
 
-	public static void generateInterior(GenRoom r)
-	{
-		//int width = r.bounds.width;
-		//int height = r.bounds.height;
+    public static void generateInterior(GenRoom r) {
+        //int width = r.bounds.width;
+        //int height = r.bounds.height;
 
-		//Vector2Int root = new Vector2Int (1, 1);
-		//Random rand = new Random (System.DateTime.Now);
+        //Vector2Int root = new Vector2Int (1, 1);
+        //Random rand = new Random (System.DateTime.Now);
 
-		//for(int x = 0; i != width; ++x)
-		//{
-		//	for(int y = 0; y != width; ++y)
-		//	{
-		//		Room.TileType tempTile;
-		//		r.tiles.TryGetValue (root + new Vector2Int (x, y), tempTile);
+        //for(int x = 0; i != width; ++x)
+        //{
+        //	for(int y = 0; y != width; ++y)
+        //	{
+        //		Room.TileType tempTile;
+        //		r.tiles.TryGetValue (root + new Vector2Int (x, y), tempTile);
 
-		//		if(rand.NextDouble() <= percentageRocks && tempTile.Equals(Room.TileType.GROUND)
-		//		{
-		//			int clusterSize = rand.Next (1, maxRockCluster + 1);
-		//			r.tiles.Add (root + new Vector2Int (x, y), Room.TileType.ROCK);
+        //		if(rand.NextDouble() <= percentageRocks && tempTile.Equals(Room.TileType.GROUND)
+        //		{
+        //			int clusterSize = rand.Next (1, maxRockCluster + 1);
+        //			r.tiles.Add (root + new Vector2Int (x, y), Room.TileType.ROCK);
 
-		//			for(int i = 0; i != clusterSize; ++i)
-		//			{
-		//				Vector2Int newRock = root + new Vector2Int(x + rand.Next(0, 2), y + rand.Next(0, 2));
-		//				r.tiles.TryGetValue (newRock, tempTile);
-		//				if(!tempTile.Equals(Room.TileType.GROUND))
-		//					break;
-						
-						
+        //			for(int i = 0; i != clusterSize; ++i)
+        //			{
+        //				Vector2Int newRock = root + new Vector2Int(x + rand.Next(0, 2), y + rand.Next(0, 2));
+        //				r.tiles.TryGetValue (newRock, tempTile);
+        //				if(!tempTile.Equals(Room.TileType.GROUND))
+        //					break;
 
 
 
 
 
-	}
+
+
+    }
 }
