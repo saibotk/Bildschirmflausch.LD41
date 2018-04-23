@@ -284,6 +284,7 @@ public class GameController : MonoBehaviour {
         start.SetObjective(goal);
         start.OnPlayerEnter(player);
         player = goal.GetPlayer();
+        cam.GetComponent<AudioControl>().LevelBgm();
         if ( player != null ) {
             cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
             GetUI().InitHealthController(player);
@@ -291,8 +292,9 @@ public class GameController : MonoBehaviour {
         } else {
             Debug.Log("No Player spawned!");
         }
+        
         finish.SetObjective(new FinishObjective(finish));
-        cam.GetComponent<AudioControl>().LevelBgm();
+        
     }
 
     private void Running() {

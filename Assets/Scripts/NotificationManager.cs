@@ -40,8 +40,6 @@ public class NotificationManager : MonoBehaviour {
     void Update() {
         if ( showingMessage ) {
             if ( Time.time > delay ) {
-                Debug.Log(delay - Time.time);
-                Debug.Log(messages.Count);
                 if (messages.Count == 1) {
 					messages.Remove(messages[0]);
                     Hide();
