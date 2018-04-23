@@ -26,8 +26,10 @@ namespace Assets.Scripts.Entities.Attack {
         }
 
         public void Attack() {
-            if ( bulletPrefab == null )
+            if ( bulletPrefab == null ) {
+                Debug.Log("SingleShot: No Prefab defined for Bullet!");
                 return;
+            }
             GameObject b = GameObject.Instantiate(bulletPrefab);
             b.transform.rotation = spawn.rotation;
             b.transform.position = spawn.position;
