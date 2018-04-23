@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     public float brake = 2f;
 	[SerializeField]
-	public float maxBrakeTime = 30f;
+	public float maxBrakeTime = 5f;
 
     // The time of the acceleration/deceleration sounds in seconds
 	[SerializeField]
@@ -69,12 +69,15 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 speedVec = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         float speed = speedVec.magnitude;
 
+		maxBrakeTime = 5f;
 		bool braking = Input.GetAxis("Vertical") < 0;
-		if (brakeTime > maxBrakeTime) {
+		if (braking && brakeTime >= maxBrakeTime) {
 			brakeTime = maxBrakeTime;
 			braking = false;
+		} else if (!braking) {
+			brakeTime -= (Time.time - lastFrame) * 0.1f;
 		}
-		//Debug.Log(state + " " + braking + " " + (Time.time - changeTime) + " " + accelerationTime);
+		Debug.Log(braking + " " + brakeTime);
 		if (braking) {
 			brakeTime += Time.time - lastFrame;
             GameController.instance.GetAudioControl().SfxStop(AudioControl.Sfx.driving);
@@ -103,6 +106,8 @@ public class PlayerMovement : MonoBehaviour {
 					break;
 			}
 		} else {
+			if (brakeTime < 0)
+				brakeTime = 0;
 			GameController.instance.GetAudioControl().SfxStop(AudioControl.Sfx.slowdriving);
             switch (state)
             {
