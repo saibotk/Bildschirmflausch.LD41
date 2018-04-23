@@ -68,8 +68,7 @@ public class PlayerMovement : MonoBehaviour {
 
         Vector3 speedVec = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         float speed = speedVec.magnitude;
-
-		maxBrakeTime = 5f;
+  
 		bool braking = Input.GetAxis("Vertical") < 0;
 		if (braking && brakeTime >= maxBrakeTime) {
 			brakeTime = maxBrakeTime;
