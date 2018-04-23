@@ -13,7 +13,8 @@ public class FinishObjective : Objective {
     }
 
     public override void UpdateGoal() {
-        ReachedGoal();
+		if ((room.GetCenter() - (Vector2)player.transform.position).magnitude < 2)
+			ReachedGoal();
     }
 
     protected override void ReachedGoal() {
