@@ -67,9 +67,11 @@ public class Door : MonoBehaviour {
         if ( collision.tag == "Player") {
             // TODO better checks
             Debug.Log("Leaving Trigger");
-            if (parent != null) {
-                parent.OnPlayerEnter(collision.gameObject.GetComponent<Player>());
+            if(parent == null) {
+                Debug.Log("This door has no parent Room!");
+                return;
             }
+            parent.OnPlayerEnter(collision.gameObject.GetComponent<Player>());
         }
     }
 }

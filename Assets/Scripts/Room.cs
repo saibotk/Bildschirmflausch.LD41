@@ -114,14 +114,16 @@ public class Room : MonoBehaviour {
     /// </summary>
     /// <param name="player"></param>
     public void OnPlayerEnter(Player player) {
-        if ( objective != null && objective.GetFinished() ) {
+        if(objective == null) {
+            Debug.Log("[ROOMS] This Room has no objective!");
+            return;
+        }
+        if ( objective.GetFinished() ) {
             Debug.Log("[ROOMS] This room has been cleared already.");
             return;
         }
-        if ( objective != null ) {
-            Debug.Log("[ROOMS] Player activated Objective");
-            objective.ActivateGoal(player);
-        }
+        Debug.Log("[ROOMS] Player activated Objective");
+        objective.ActivateGoal(player);
     }
 
     /// <summary>

@@ -9,6 +9,10 @@ public class GameController : MonoBehaviour {
     private Room start;
     private Room finish;
 
+    public enum EndedCause {
+        WIN, DIED
+    }
+
     // Generation Settings
     [Header("Tile Prefabs")]
     [SerializeField]
@@ -82,7 +86,7 @@ public class GameController : MonoBehaviour {
     }
 
     public enum GameState { UNSET, INIT, STARTING, RUNNING, ENDED };
-
+    private EndedCause endCause = EndedCause.DIED;
     private GameState state = GameState.UNSET;
 
 	// Use this for initialization
@@ -193,8 +197,11 @@ public class GameController : MonoBehaviour {
         doorRootf.name = "Doors";
         doorRootf.transform.SetParent(goFinish.transform);
         ltf = ltf.FindAll(x => x.tag == "door");
-        ltf.ForEach(x => x.SetParent(doorRootf.transform));
         finish = goFinish.AddComponent<Room>();
+        ltf.ForEach(x => {
+            x.SetParent(doorRootf.transform);
+            x.gameObject.GetComponent<Door>().SetParent(finish);
+        });
         finish.SetDoorsRootObject(doorRootf);
         finish.Reload();
         finish.transform.SetParent(mapRoot.transform);
@@ -206,9 +213,13 @@ public class GameController : MonoBehaviour {
             GameObject doorRootg = new GameObject();
             doorRootg.name = "Doors";
             doorRootg.transform.SetParent(groom.transform);
-            ltg = ltg.FindAll(x => x.tag == "door");
-            ltg.ForEach(x => x.SetParent(doorRootg.transform));
             Room grom = groom.AddComponent<Room>();
+            ltg = ltg.FindAll(x => x.tag == "door");
+            ltg.ForEach(x => {
+                x.SetParent(doorRootg.transform);
+                x.gameObject.GetComponent<Door>().SetParent(grom);
+                });
+            
             grom.SetDoorsRootObject(doorRootg);
             grom.Reload();
             groom.transform.SetParent(mapRoot.transform);
@@ -232,6 +243,7 @@ public class GameController : MonoBehaviour {
         } else {
             Debug.Log("No Player spawned!");
         }
+        finish.SetObjective(new FinishObjective(finish));
     }
 
     private void Running() {
@@ -242,9 +254,15 @@ public class GameController : MonoBehaviour {
         Debug.Log("Game ended");
         //Time.timeScale = 0;
         if ( ui != null ) {
-            Debug.Log("show Gameover UI");
-            cam.GetComponent<AudioControl>().SfxPlay(2);
-            ui.GetComponent<UIController>().ShowGameOverUI();
+            Debug.Log("show end UI");
+            if(endCause == EndedCause.DIED) {
+                cam.GetComponent<AudioControl>().SfxPlay(2);
+                ui.GetComponent<UIController>().ShowGameOverUI();
+            } else if(endCause == EndedCause.WIN) {
+                //cam.GetComponent<AudioControl>().SfxPlay(2);
+                ui.GetComponent<UIController>().ShowWinUI();
+            }
+            
         } else {
             Debug.Log("No UI specified");
         }
@@ -260,5 +278,10 @@ public class GameController : MonoBehaviour {
 
     public bool GameEnded() {
         return state == GameState.ENDED;
+    }
+
+    public void EndGame(EndedCause cause) {
+        endCause = cause;
+        ChangeState(GameState.ENDED);
     }
 }

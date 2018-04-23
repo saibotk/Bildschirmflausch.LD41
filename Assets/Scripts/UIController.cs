@@ -60,7 +60,7 @@ public class UIController : MonoBehaviour
         string headerText = won ? "You won!" : "Game Over";
         if (restartUIPanel != null) {
             restartUIPanel.SetActive(true);
-            restartUIPanel.GetComponent<Text>().text = headerText;
+            restartUIPanel.GetComponentInChildren<Text>().text = headerText;
         } else {
             Debug.Log("No restart panel assigned");
         }
