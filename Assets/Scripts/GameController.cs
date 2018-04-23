@@ -229,15 +229,26 @@ public class GameController : MonoBehaviour {
         doorRootf.transform.SetParent(goFinish.transform);
         ltf = ltf.FindAll(x => x.tag == "door");
         finish = goFinish.AddComponent<Room>();
+        
         finish.SetCenter(dg.end.GetCenter());
         ltf.ForEach(x => {
             x.SetParent(doorRootf.transform);
             x.gameObject.GetComponent<Door>().SetParent(finish);
         });
         finish.SetDoorsRootObject(doorRootf);
+
+        // Spawnpoint
+        GameObject fspawnpointRoot = new GameObject();
+        fspawnpointRoot.name = "Spawnpoints";
+        fspawnpointRoot.transform.SetParent(goStart.transform);
+        fspawnpointRoot.transform.position = new Vector3(dg.end.roomPosition.x, dg.end.roomPosition.y, 0);
+        GameObject fspawn = new GameObject();
+        fspawn.transform.SetParent(fspawnpointRoot.transform);
+        fspawn.transform.position = new Vector3(dg.end.GetCenter().x, dg.end.GetCenter().y, 0);
+        finish.SetSpawnPointsRootObject(fspawnpointRoot);
+
         finish.Reload();
         finish.transform.SetParent(mapRoot.transform);
-		gp.CreateGOFromType(finish.GetCenter(), 0, Room.TileType.DOOR, GenerationProcessor.ExtendedTileType.Flag, goFinish);
 
 		// Other Rooms
 		foreach (GenRoom gr in dg.rooms) {
@@ -295,9 +306,8 @@ public class GameController : MonoBehaviour {
         } else {
             Debug.Log("No Player spawned!");
         }
-        
-        finish.SetObjective(new FinishObjective(finish));
-        
+        FinishObjective fo = new FinishObjective(finish, genPrefabs[GenerationProcessor.ExtendedTileType.Flag]);
+        finish.SetObjective(fo);
     }
 
     private void Running() {

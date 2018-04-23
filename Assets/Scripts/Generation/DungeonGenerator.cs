@@ -204,6 +204,7 @@ public class DungeonGenerator {
         }
 
 		start.spawnpoints.Add(start.GetCenter());
+        end.spawnpoints.Add(end.GetCenter());
 
 		foreach (Vector2Int v in allDoors) {
 			foreach (GenRoom r in rooms) {
