@@ -122,8 +122,11 @@ public class GameController : MonoBehaviour {
             { GenerationProcessor.ExtendedTileType.RockLUD, RockLUD },
             { GenerationProcessor.ExtendedTileType.RockLUR, RockLUR },
             { GenerationProcessor.ExtendedTileType.RockURD, RockURD },
-            { GenerationProcessor.ExtendedTileType.RockLRD, RockLRD },
-            { GenerationProcessor.ExtendedTileType.Ground, Ground },
+			{ GenerationProcessor.ExtendedTileType.RockLRD, RockLRD },
+			{ GenerationProcessor.ExtendedTileType.Ground0, Ground0 },
+			{ GenerationProcessor.ExtendedTileType.Ground1, Ground1 },
+			{ GenerationProcessor.ExtendedTileType.Ground2, Ground2 },
+			{ GenerationProcessor.ExtendedTileType.Ground3, Ground3 },
             { GenerationProcessor.ExtendedTileType.DoorInner, DoorInner },
             { GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter }
         };
