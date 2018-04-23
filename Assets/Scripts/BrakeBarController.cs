@@ -1,46 +1,31 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BrakeBarController : MonoBehaviour {
 
-
-    int BrakeAmount = 100;
+    float currentRotation;
+    float maxRotation;
     private Player player;
-    float firstTime;
-    float secondTime;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update() {
         // if player alive and spawned
-        if (player != null)
-        {
-            UpdatePointer();
+        if ( player != null ) {
+            UpdatePointer(maxRotation);
+        } else if (currentRotation != 0) {
+            //if player dead or not spawned
+            UpdatePointer(0);
         }
-        
-        }
-
-    
-    private void UpdatePointer()
-    {
-        while (Input.GetKey(KeyCode.S))
-        {
-            firstTime += 1;
-        }
-
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                
-                gameObject.transform.Rotate(Vector3.forward, firstTime);
-            }
-        
-       
-        }
-    
     }
 
+    private void UpdatePointer(float brakesLeft) {
+        float offset = brakesLeft - currentRotation;
+        gameObject.transform.Rotate(Vector3.forward, offset);
+        currentRotation += offset;
+    }
+
+    public void SetPlayer(Player ply) {
+        player = ply;
+    }
+}

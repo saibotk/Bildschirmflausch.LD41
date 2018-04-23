@@ -14,6 +14,23 @@ public class PlayerMovement : MonoBehaviour {
     public float drift = 1f;
     [SerializeField]
     public float brake = 2f;
+	[SerializeField]
+	public float maxBrakeTime = 30f;
+
+    // The time of the acceleration/deceleration sounds in seconds
+	public double accelerationTime;
+	public double decelerationTime;
+
+	public float brakeTime;
+	public float lastFrame;
+
+	public enum SpeedState
+	{
+		SLOW, FASTER, FAST, SLOWER
+	}
+
+	public SpeedState state;
+	public double changeTime;
 
     Rigidbody2D rb;
 
@@ -21,6 +38,9 @@ public class PlayerMovement : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         messagePosted = false;
+		state = SpeedState.SLOW;
+		brakeTime = 0;
+		lastFrame = Time.time;
     }
 
     void Update() {
@@ -30,6 +50,8 @@ public class PlayerMovement : MonoBehaviour {
         }
         if ( !firstKeyPressed && Input.anyKey ) {
             firstKeyPressed = true;
+			state = SpeedState.FASTER;
+			changeTime = Time.time;
         }
     }
 
@@ -40,15 +62,58 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 speedVec = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         float speed = speedVec.magnitude;
 
+		bool braking = Input.GetAxis("Vertical") < 0;
+		if (brakeTime > maxBrakeTime) {
+			brakeTime = maxBrakeTime;
+			braking = false;
+		}
+		if (braking) {
+			brakeTime += Time.time - lastFrame;
+			switch (state) {
+				case SpeedState.FASTER:
+					if (Time.time - changeTime > accelerationTime)
+						state = SpeedState.SLOWER;
+					break;
+				case SpeedState.FAST:
+					changeTime = Time.time;
+					state = SpeedState.SLOWER;
+					break;
+				case SpeedState.SLOWER:
+					if (Time.time - changeTime > decelerationTime)
+						state = SpeedState.SLOW;
+					break;
+				case SpeedState.SLOW:
+					break;
+			}
+		} else {
+            switch (state)
+            {
+                case SpeedState.FASTER:
+                    if (Time.time - changeTime > accelerationTime)
+                        state = SpeedState.FAST;
+                    break;
+                case SpeedState.FAST:
+                    break;
+                case SpeedState.SLOWER:
+                    if (Time.time - changeTime > decelerationTime)
+                        state = SpeedState.FASTER;
+                    break;
+				case SpeedState.SLOW:
+                    changeTime = Time.time;
+                    state = SpeedState.FASTER;
+					break;
+            }
+		}
+
 		{ // Forward
 			Vector3 acc = transform.up * acceleration;
-            if (Input.GetAxis("Vertical") < 0)
+            if (braking)
                 acc *= 0;
             rb.AddForce(acc);
         }
 		{// Drag
 			Vector3 drag = speedVec.normalized * speed * speed * friction * -1;
-            if (Input.GetAxis("Vertical") < 0) {
+			if (braking) {
 				drag *= brake;
 				drag *= speed;
      		}
@@ -82,8 +147,14 @@ public class PlayerMovement : MonoBehaviour {
         Debug.DrawLine(transform.position, transform.position + speedVec, Color.magenta, 0.01f, false);
         Debug.DrawLine(transform.position, transform.position + transform.localRotation * Vector3.up, Color.yellow, 0.01f, false);
 
-        //Debug.Log(transform.localRotation.eulerAngles);
-        //Debug.Log(transform.localRotation * Vector3.up);
-        //Debug.Log(curspeed);
+		//Debug.Log(transform.localRotation.eulerAngles);
+		//Debug.Log(transform.localRotation * Vector3.up);
+		//Debug.Log(curspeed);
+		lastFrame = Time.time;
     }
+
+    /// <returns>The time in seconds the player was braking</returns>
+	public float GetBrakeTime() {
+		return brakeTime;
+	}
 }
