@@ -254,4 +254,8 @@ public class GameController : MonoBehaviour {
     public UIController GetUI() {
         return ui.GetComponent<UIController>();
     }
+
+    public bool GameEnded() {
+        return state == GameState.ENDED;
+    }
 }
