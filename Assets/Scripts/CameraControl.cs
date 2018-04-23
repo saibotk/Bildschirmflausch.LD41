@@ -8,7 +8,7 @@ public class CameraControl : MonoBehaviour {
     private GameObject followThis;
 
     void Start() {
-		Camera.main.orthographicSize = 6;
+		Camera.main.orthographicSize = 5;
         if ( followThis == null )
             return;
     }
@@ -18,10 +18,8 @@ public class CameraControl : MonoBehaviour {
             return;
         var target = followThis.transform.position;
         var targetVec = target - transform.position;
-		targetVec.z = 0;
-		Camera.main.orthographicSize = 6 + targetVec.sqrMagnitude * 10;
+		targetVec.Scale(new Vector3(0.05f, 0.05f, 0));
         transform.position = transform.position + targetVec;
-        targetVec.Scale(new Vector3(0.05f, 0.05f, 0));
     }
 
     public void SetFollow(GameObject g) {
