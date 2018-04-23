@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
     [Header("Enemys")]
     [SerializeField]
     GameObject scorpion;
+    [SerializeField]
+    GameObject bug;
 
     [Space(10)]
     // Generation Settings
@@ -122,7 +124,8 @@ public class GameController : MonoBehaviour {
             { GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter }
         };
         enemyPrefabs = new Dictionary<Enemy.Enemys, GameObject> {
-            { Enemy.Enemys.SCORPION, scorpion }
+            { Enemy.Enemys.SCORPION, scorpion },
+            { Enemy.Enemys.BUG, bug }
         };
 
     }

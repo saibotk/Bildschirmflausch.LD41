@@ -443,17 +443,35 @@ public class DungeonGenerator {
 
     public static void GenerateObjective(Room r) {
         Dictionary<Enemy.Enemys, GameObject> enemyPrefabs = GameController.instance.GetEnemyPrefabs(); // TODO not so cool
-        // TODO add more types
-        Objective o;
+        
+        Objective o = null;
 
-        // ENTITYOBJECTIVE ENEMYS:
-        List<GameObject> lg = new List<GameObject>();
-        //GameObject scorp = enemyPrefabs[Enemy.Enemys.SCORPION];
-        lg.Add(enemyPrefabs[Enemy.Enemys.SCORPION]);
-        EntityObjective eo = new EntityObjective(r, lg);
-        o = eo;
-
-
+        int rand = UnityEngine.Random.Range(0, 2);
+        switch (rand) {
+            case 0: {
+                    // Scorpion Attack!!!!:
+                    List<GameObject> lg = new List<GameObject>();
+                    int count = UnityEngine.Random.Range(1, r.GetSpawnpoints().Count);
+                    for ( int c = 0; c < count; c++ ) {
+                        lg.Add(enemyPrefabs[Enemy.Enemys.SCORPION]);
+                    }
+                    EntityObjective eo = new EntityObjective(r, lg);
+                    o = eo;
+                }
+                break;
+            case 1: {
+                    // Bug Attack!!!!:
+                    List<GameObject> lg = new List<GameObject>();
+                    int count = UnityEngine.Random.Range(1, r.GetSpawnpoints().Count);
+                    for ( int c = 0; c < count; c++ ) {
+                        lg.Add(enemyPrefabs[Enemy.Enemys.BUG]);
+                    }
+                    EntityObjective eo = new EntityObjective(r, lg);
+                    o = eo;
+                }
+                break;
+        }
+        
         r.SetObjective(o);
     }
 }
