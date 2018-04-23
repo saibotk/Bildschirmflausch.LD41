@@ -135,7 +135,7 @@ public class DungeonGenerator {
                 }
 			allDoors.UnionWith(r.AllDoors());
             foreach ( Vector2Int v in r.AllDoors() ) {
-                Debug.Log("Door: " + v);
+                //Debug.Log("Door: " + v);
                 if ( !r.bounds.Contains(v) )
                     throw new NotSupportedException("This is a bug where doors land in the wrong room. It should have been fixed.");
                 else

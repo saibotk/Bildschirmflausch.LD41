@@ -194,7 +194,6 @@ public class GenerationProcessor {
           return 90;
         toCheck = position + new Vector2Int(1, 0);
         return 0;
-        break;
       case ExtendedTileType.DoorInner:
         Vector2Int toCheckD = position + new Vector2Int(0, -1);
         if(tiles.ContainsKey(toCheckD) && tiles[toCheckD].type == Room.TileType.DOOR)

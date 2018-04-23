@@ -7,8 +7,8 @@ public class Player : Mob {
     private GameObject bulletPrefab;
     [SerializeField]
     Transform bulletSpawn;
-    [SerializeField]
-    private int carDamage = 5;
+    //[SerializeField]
+    //private int carDamage = 5;
 
     private SingleShot singleShot;
     private GatlingGun ggun;
