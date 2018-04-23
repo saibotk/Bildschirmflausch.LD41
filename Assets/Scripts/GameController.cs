@@ -209,9 +209,9 @@ public class GameController : MonoBehaviour {
         spawn.transform.SetParent(spawnpointRoot.transform);
         spawn.transform.position = new Vector3(dg.start.GetCenter().x, dg.start.GetCenter().y, 0);
         start.SetSpawnPointsRootObject(spawnpointRoot);
-        
+
         start.Reload();
-        
+
         start.transform.SetParent(mapRoot.transform);
 
         // Finish room
@@ -276,7 +276,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Starting() {
-        
+
         StartObjective goal = new StartObjective(start, playerPrefab);
         start.SetObjective(goal);
         start.OnPlayerEnter(player);
@@ -284,6 +284,7 @@ public class GameController : MonoBehaviour {
         if ( player != null ) {
             cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
             GetUI().InitHealthController(player);
+            GetUI().InitBrakeController(player);
         } else {
             Debug.Log("No Player spawned!");
         }

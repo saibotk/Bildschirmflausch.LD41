@@ -20,6 +20,9 @@ public class UIController : MonoBehaviour
     HealthbarController healthcontroller;
 
     [SerializeField]
+    BrakeBarController brakeBarController;
+
+    [SerializeField]
     int mainMenuSceneIndex = 0;
     int firstSceneIndex = 1;
 
@@ -70,8 +73,11 @@ public class UIController : MonoBehaviour
         healthcontroller.SetPlayer(ply);
     }
 
+    public void InitBrakeController(Player ply) {
+        brakeBarController.SetPlayer(ply);
+    }
+
     public NotificationManager GetNotificationManager() {
         return notifications;
     }
 }
-
