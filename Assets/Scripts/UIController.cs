@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -12,47 +14,59 @@ public class UIController : MonoBehaviour
     NotificationManager notifications;
 
     [SerializeField]
-    GameObject gameOverPanel;
+    GameObject restartUIPanel;
 
     [SerializeField]
     HealthbarController healthcontroller;
 
-  
-    public void ShowPauseMenu()
-    {
+    [SerializeField]
+    int mainMenuSceneIndex = 0;
+    int firstSceneIndex = 1;
+
+
+	void Update() {
+        if (Input.GetKey(KeyCode.R) && GameController.instance.GameEnded()) {
+            LoadSceneByIndex(firstSceneIndex);
+        }
+	}
+
+    public void ShowPauseMenu() {
         pauseMenu.SetActive(true);
     }
 
-    public void ClosePauseMenu()
-    {
+    public void ClosePauseMenu() {
         pauseMenu.SetActive(false);
     }
 
-    public void LoadSceneByIndex(int index)
-    {
+    public void LoadSceneByIndex(int index) {
         Debug.Log("Loaded scene " + index);
-        UnityEngine.SceneManagement.SceneManager.LoadScene(index);
+        SceneManager.LoadScene(index);
     }
 
-    public void QuitGame()
-    {
+    public void QuitGame() {
         Debug.Log("Quit game");
         Application.Quit();
     }
 
-    public void ShowGameOverUI()
-    {
-        if (gameOverPanel != null) {
-            Debug.Log("Loaded Canvas");
-            gameOverPanel.SetActive(true);
+    public void ShowGameOverUI() {
+        ShowRestartUI(false);
+    }
 
+    public void ShowWinUI() {
+        ShowRestartUI(true);
+    }
+
+    void ShowRestartUI(bool won) {
+        string headerText = won ? "You won!" : "Game Over";
+        if (restartUIPanel != null) {
+            restartUIPanel.SetActive(true);
+            restartUIPanel.GetComponent<Text>().text = headerText;
         } else {
-            Debug.Log("No game over panel assigned");
+            Debug.Log("No restart panel assigned");
         }
     }
 
-    public void InitHealthController(Player ply)
-    {
+    public void InitHealthController(Player ply) {
         healthcontroller.SetPlayer(ply);
     }
 

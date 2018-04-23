@@ -17,9 +17,6 @@ public class DungeonGenerator {
     // All rooms except the three above
     public HashSet<GenRoom> rooms;
 
-    private const float percentageRocks = 0.03f;
-    private const int maxRockCluster = 5;
-
     public void Generate() {
         int minRoomSize = 50;
         rooms = new HashSet<GenRoom>();
@@ -127,11 +124,13 @@ public class DungeonGenerator {
         foreach ( GenRoom r in rooms ) {
             for ( int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++ )
                 for ( int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++ ) {
-                    r.tiles.Add(new Vector2Int(x1, y1), Room.TileType.WALL);
+                    int xMode = (x1 == r.bounds.x) ? -1 : (x1 == r.bounds.x + r.bounds.width - 1) ? 1 : 0;
+                    int yMode = (y1 == r.bounds.y) ? -1 : (y1 == r.bounds.y + r.bounds.height - 1) ? 1 : 0;
+					r.tiles.Add(new Vector2Int(x1, y1), new GenTile(Room.TileType.WALL, GenTile.GetPosition(xMode,yMode)));
                 }
             for ( int x1 = r.bounds.x + 1; x1 < r.bounds.x + r.bounds.width - 1; x1++ )
                 for ( int y1 = r.bounds.y + 1; y1 < r.bounds.y + r.bounds.height - 1; y1++ ) {
-                    r.tiles[new Vector2Int(x1, y1)] = Room.TileType.GROUND;
+					r.tiles[new Vector2Int(x1, y1)].type = Room.TileType.GROUND;
                 }
 			allDoors.UnionWith(r.AllDoors());
             foreach ( Vector2Int v in r.AllDoors() ) {
@@ -139,45 +138,78 @@ public class DungeonGenerator {
                 if ( !r.bounds.Contains(v) )
                     throw new NotSupportedException("This is a bug where doors land in the wrong room. It should have been fixed.");
                 else
-                    r.tiles[v] = Room.TileType.DOOR;
+					r.tiles[v].type = Room.TileType.DOOR;
             }
 		}
 
         path = new GenRoom();
         foreach (GenRoom r in rooms2)
-        {
+		{
             for (int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++)
                 for (int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++)
                 {
                     Vector2Int pos1 = new Vector2Int(x1, y1);
                     if (path.tiles.ContainsKey(pos1))
-                        path.tiles[pos1] = Room.TileType.GROUND;
+                        path.tiles[pos1].type = Room.TileType.GROUND;
                     else
-                        path.tiles.Add(pos1, Room.TileType.GROUND);
-                    for (int x2 = x1 - 1; x2 <= x1 + 1; x2++)
-                        for (int y2 = y1 - 1; y2 <= y1 + 1; y2++)
-    				{
-							Vector2Int pos2 = new Vector2Int(x2, y2);
-	        				if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
-                                path.tiles.Add(pos2, Room.TileType.WALL);
-                        }
+                        path.tiles.Add(pos1, new GenTile(Room.TileType.GROUND));
+
+                    Vector2Int pos2 = new Vector2Int(x1 + 1, y1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.RIGHT));
+                    pos2 = new Vector2Int(x1 - 1, y1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.LEFT));
+                    pos2 = new Vector2Int(x1, y1 + 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.TOP));
+                    pos2 = new Vector2Int(x1, y1 - 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.BOTTOM));
+			}
+            for (int x1 = r.bounds.x; x1 < r.bounds.x + r.bounds.width; x1++)
+                for (int y1 = r.bounds.y; y1 < r.bounds.y + r.bounds.height; y1++)
+                {
+                    Vector2Int pos2 = new Vector2Int(x1 + 1, y1 + 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.TOP_RIGHT));
+                    pos2 = new Vector2Int(x1 - 1, y1 + 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.TOP_LEFT));
+                    pos2 = new Vector2Int(x1 + 1, y1 - 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+					    path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.BOTTOM_RIGHT));
+                    pos2 = new Vector2Int(x1 - 1, y1 - 1);
+                    if (!path.tiles.ContainsKey(pos2) && !allDoors.Contains(pos2))
+                        path.tiles.Add(pos2, new GenTile(Room.TileType.WALL, GenTile.Position.BOTTOM_LEFT));
                 }
             if (r.AllDoors().Count > 0)
                 throw new NotSupportedException("Paths should not have any doors");
         }
 
-		//foreach (GenRoom r in rooms) {
-		//	generateInterior (r);
-		//}
-
         start = root.r;
-        end = null; foreach ( GenRoom r in rooms ) {
+        end = null; 
+		foreach ( GenRoom r in rooms ) {
             if ( end == null || r.bounds.x > end.bounds.x )
-                end = r;
+				end = r;
         }
 
         rooms.Remove(start);
-        rooms.Remove(end);
+		rooms.Remove(end);
+
+        foreach (GenRoom r in rooms)
+        {
+            GenerateInterior(r);
+        }
+
+		foreach (Vector2Int v in allDoors) {
+			foreach (GenRoom r in rooms) {
+				for (int x = -TUNNEL_THICKNESS; x < TUNNEL_THICKNESS; x++)
+					for (int y = -TUNNEL_THICKNESS; y < TUNNEL_THICKNESS; y++)
+						if (r.tiles.ContainsKey(v + new Vector2Int(x, y)) && r.tiles[v + new Vector2Int(x, y)].type == Room.TileType.ROCK)
+							r.tiles[v + new Vector2Int(x, y)].type = Room.TileType.GROUND;
+			}
+		}
 
         foreach ( GenRoom r in rooms )
             makeRoomRelative(r);
@@ -369,37 +401,40 @@ public class DungeonGenerator {
         }
     }
 
-    public static void generateInterior(GenRoom r) {
-        //int width = r.bounds.width;
-        //int height = r.bounds.height;
+    public void GenerateInterior(GenRoom r) {
+        Vector2Int root = new Vector2Int (1, 1);
 
-        //Vector2Int root = new Vector2Int (1, 1);
-        //Random rand = new Random (System.DateTime.Now);
-
-        //for(int x = 0; i != width; ++x)
-        //{
-        //	for(int y = 0; y != width; ++y)
-        //	{
-        //		Room.TileType tempTile;
-        //		r.tiles.TryGetValue (root + new Vector2Int (x, y), tempTile);
-
-        //		if(rand.NextDouble() <= percentageRocks && tempTile.Equals(Room.TileType.GROUND)
-        //		{
-        //			int clusterSize = rand.Next (1, maxRockCluster + 1);
-        //			r.tiles.Add (root + new Vector2Int (x, y), Room.TileType.ROCK);
-
-        //			for(int i = 0; i != clusterSize; ++i)
-        //			{
-        //				Vector2Int newRock = root + new Vector2Int(x + rand.Next(0, 2), y + rand.Next(0, 2));
-        //				r.tiles.TryGetValue (newRock, tempTile);
-        //				if(!tempTile.Equals(Room.TileType.GROUND))
-        //					break;
-
-
-
-
-
-
-
+		for (int x = r.bounds.x; x < r.bounds.x + r.bounds.width; x++)
+		{
+			for (int y = r.bounds.y; y < r.bounds.y + r.bounds.height; y++)
+			{
+				Vector2Int pos = new Vector2Int(x, y);
+				if (!r.tiles.ContainsKey(pos) || r.tiles[pos].type != Room.TileType.GROUND)
+					continue;
+				float prob = 0.0075f;
+				if (UnityEngine.Random.value > 1 - prob * 2)
+                {
+					int count = (int ) (UnityEngine.Random.value * UnityEngine.Random.value * 6);
+					for (int i = 0; i < count; i++) {
+						Vector2Int pos2 = pos + new Vector2Int(
+							(int)((UnityEngine.Random.value - 0.5) * 3), 
+							(int)((UnityEngine.Random.value - 0.5) * 3));
+						if (r.tiles.ContainsKey(pos2) && r.tiles[pos2].type == Room.TileType.GROUND)
+    						r.tiles[pos2].type = Room.TileType.ROCK;
+                    }
+					continue;
+				}
+                if (UnityEngine.Random.value > 1 - prob)
+                {
+                    r.tiles[pos].type = Room.TileType.ROCK;
+					continue;
+                }
+				float prob2 = 0.02f;
+				if (UnityEngine.Random.value > 1 - prob2)
+				{
+					r.spawnpoints.Add(pos);
+				}
+			}
+		}
     }
 }

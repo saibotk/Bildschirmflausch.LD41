@@ -8,6 +8,7 @@ TagManager:
   - door
   - DoorRoot
   - SpawnlistRoot
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Player
+  - Mobs
   - 
   - 
   - 

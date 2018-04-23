@@ -107,7 +107,6 @@ public class GameController : MonoBehaviour {
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLRD, RockLRD);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground, Ground);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.Door, Door);
-
     }
 
     // Update is called once per frame
@@ -177,7 +176,7 @@ public class GameController : MonoBehaviour {
         spawnpointRoot.transform.position = new Vector3(dg.start.roomPosition.x, dg.start.roomPosition.y, 0);
         GameObject spawn = new GameObject();
         spawn.transform.SetParent(spawnpointRoot.transform);
-        spawn.transform.position = new Vector3(3, 3, 0);
+        spawn.transform.position = new Vector3(dg.start.GetCenter().x, dg.start.GetCenter().y, 0);
         start.SetSpawnPointsRootObject(spawnpointRoot);
 
         start.Reload();
@@ -226,6 +225,7 @@ public class GameController : MonoBehaviour {
         player = goal.GetPlayer();
         if ( player != null ) {
             cam.GetComponent<CameraControl>().SetFollow(player.gameObject);
+            GetUI().InitHealthController(player);
         } else {
             Debug.Log("No Player spawned!");
         }
@@ -240,14 +240,22 @@ public class GameController : MonoBehaviour {
         //Time.timeScale = 0;
         if ( ui != null ) {
             Debug.Log("show Gameover UI");
+            cam.GetComponent<AudioControl>().SfxPlay(2);
             ui.GetComponent<UIController>().ShowGameOverUI();
         } else {
             Debug.Log("No UI specified");
         }
     }
 
+    public AudioControl GetAudioControl() {
+        return cam.GetComponent<AudioControl>();
+    }
 
     public UIController GetUI() {
         return ui.GetComponent<UIController>();
+    }
+
+    public bool GameEnded() {
+        return state == GameState.ENDED;
     }
 }
