@@ -14,10 +14,15 @@ public class PlayerMovement : MonoBehaviour {
     public float drift = 1f;
     [SerializeField]
     public float brake = 2f;
+	[SerializeField]
+	public float maxBrakeTime = 30f;
 
     // The time of the acceleration/deceleration sounds in seconds
 	public double accelerationTime;
 	public double decelerationTime;
+
+	public float brakeTime;
+	public float lastFrame;
 
 	public enum SpeedState
 	{
@@ -34,6 +39,8 @@ public class PlayerMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         messagePosted = false;
 		state = SpeedState.SLOW;
+		brakeTime = 0;
+		lastFrame = Time.time;
     }
 
     void Update() {
@@ -56,7 +63,12 @@ public class PlayerMovement : MonoBehaviour {
         float speed = speedVec.magnitude;
 
 		bool braking = Input.GetAxis("Vertical") < 0;
+		if (brakeTime > maxBrakeTime) {
+			brakeTime = maxBrakeTime;
+			braking = false;
+		}
 		if (braking) {
+			brakeTime += Time.time - lastFrame;
 			switch (state) {
 				case SpeedState.FASTER:
 					if (Time.time - changeTime > accelerationTime)
@@ -135,8 +147,14 @@ public class PlayerMovement : MonoBehaviour {
         Debug.DrawLine(transform.position, transform.position + speedVec, Color.magenta, 0.01f, false);
         Debug.DrawLine(transform.position, transform.position + transform.localRotation * Vector3.up, Color.yellow, 0.01f, false);
 
-        //Debug.Log(transform.localRotation.eulerAngles);
-        //Debug.Log(transform.localRotation * Vector3.up);
-        //Debug.Log(curspeed);
+		//Debug.Log(transform.localRotation.eulerAngles);
+		//Debug.Log(transform.localRotation * Vector3.up);
+		//Debug.Log(curspeed);
+		lastFrame = Time.time;
     }
+
+    /// <returns>The time in seconds the player was braking</returns>
+	public float GetBrakeTime() {
+		return brakeTime;
+	}
 }
