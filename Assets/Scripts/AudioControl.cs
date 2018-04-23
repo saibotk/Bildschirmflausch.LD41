@@ -49,7 +49,7 @@ public class AudioControl : MonoBehaviour
 
     public void LevelBgm()
     {
-        maintheme.time = lvlbgm;
+        maintheme.PlayDelayed(1.3f);
     }
 
     public void SfxPlay(int sound)
