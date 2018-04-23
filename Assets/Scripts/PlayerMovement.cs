@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour {
             return;
 
         Vector3 speedVec = new Vector3(rb.velocity.x, rb.velocity.y, 0);
-		Camera.main.orthographicSize = Camera.main.orthographicSize * 0.95f + (5 + 4f/6f * (speedVec.magnitude)) * 0.05f;
         float speed = speedVec.magnitude;
 
 		{ // Forward

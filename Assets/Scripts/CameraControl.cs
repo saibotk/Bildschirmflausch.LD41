@@ -5,10 +5,20 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour {
 
     [SerializeField]
-    private GameObject followThis;
+    private float followSpeed = 0.05f;
+    [SerializeField]
+    private float minZoom = 5;
+    [SerializeField]
+    private float zoomFactor = 4;
+    [SerializeField]
+    private float zoomSpeed = 0.05f;
+	[SerializeField]
+	private int startingDist = 5;
+	[SerializeField]
+	private GameObject followThis;
 
     void Start() {
-		Camera.main.orthographicSize = 5;
+		Camera.main.orthographicSize = minZoom;
         if ( followThis == null )
             return;
     }
@@ -18,14 +28,16 @@ public class CameraControl : MonoBehaviour {
             return;
         var target = followThis.transform.position;
         var targetVec = target - transform.position;
-		targetVec.Scale(new Vector3(0.05f, 0.05f, 0));
+		targetVec.Scale(new Vector3(followSpeed, followSpeed, 0));
         transform.position = transform.position + targetVec;
+
+		Camera.main.orthographicSize = Camera.main.orthographicSize * (1-zoomSpeed) + (minZoom + zoomFactor / 6f * (followThis.GetComponent<Rigidbody2D>().velocity.magnitude)) * zoomSpeed;
     }
 
     public void SetFollow(GameObject g) {
         followThis = g;
 		var diff = (transform.position - followThis.transform.position);
 		diff.Scale(new Vector3(1f, 1f, 0f));
-		transform.position = transform.position - diff + (Vector3) (Random.insideUnitCircle) * Random.value * 5f;
+		transform.position = transform.position - diff + (Vector3) (Random.insideUnitCircle) * Random.value * startingDist;
     }
 }
