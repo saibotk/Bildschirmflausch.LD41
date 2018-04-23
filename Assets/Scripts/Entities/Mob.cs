@@ -43,6 +43,15 @@ public abstract class Mob : Entity {
         if ( objective != null )
 			objective.RemoveEntity(this);
 		GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.explosion);
+        ParticleSystem[] pss = GetComponentsInChildren<ParticleSystem>(true);
+        foreach ( ParticleSystem ps in pss ) {
+            if ( ps.gameObject.name == "despawn" ) {
+                GameObject tmp = Instantiate(ps.gameObject);
+                tmp.transform.position = transform.position;
+                tmp.SetActive(true);
+            }
+        }
+  
         Destroy(gameObject);
     }
 
