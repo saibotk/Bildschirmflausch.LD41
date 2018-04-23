@@ -7,6 +7,7 @@ public class AudioControl : MonoBehaviour
 {
     public AudioMixer mixer;
     public AudioSource maintheme;
+    public AudioSource menutheme;
     public AudioSource gameovers;
     public AudioSource[] soundeffects;
 
@@ -21,6 +22,7 @@ public class AudioControl : MonoBehaviour
     void Start()
     {
         maintheme.loop = true;
+        menutheme.loop = true;
         gameovers.loop = true;
     }
 
@@ -42,7 +44,7 @@ public class AudioControl : MonoBehaviour
     {
         if (gameovers.isPlaying)
             gameovers.Stop();
-        maintheme.Play();
+        menutheme.Play();
     }
 
     public void LevelBgm()
