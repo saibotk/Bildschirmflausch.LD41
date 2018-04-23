@@ -42,7 +42,10 @@ namespace Assets.Scripts.Entities.Attack {
             bu.SetSpeed(speed);
             bu.SetOwner(owner);
             bu.StartBullet();
-            GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.shoot);
+			if (owner.name.Contains("Player"))
+				GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.shoot);
+			else
+				GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.mobattack);
         }
 
         public float GetCooldownTime() {

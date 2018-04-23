@@ -81,7 +81,10 @@ public class Player : Mob {
     /// </summary>
     protected override void Death() {
         Debug.Log("Player died...");
-        Destroy(this.gameObject);
+		Destroy(this.gameObject);
+		GameController.instance.GetAudioControl().SfxStop(AudioControl.Sfx.slowdriving);
+		GameController.instance.GetAudioControl().SfxStop(AudioControl.Sfx.driving);
+		GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.explosion);
 		GameController.instance.EndGame(GameController.EndedCause.DIED);
     }
 }
