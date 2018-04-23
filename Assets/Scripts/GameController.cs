@@ -233,6 +233,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Starting() {
+        
         StartObjective goal = new StartObjective(start, playerPrefab);
         start.SetObjective(goal);
         start.OnPlayerEnter(player);
@@ -244,6 +245,7 @@ public class GameController : MonoBehaviour {
             Debug.Log("No Player spawned!");
         }
         finish.SetObjective(new FinishObjective(finish));
+        cam.GetComponent<AudioControl>().LevelBgm();
     }
 
     private void Running() {
@@ -256,13 +258,12 @@ public class GameController : MonoBehaviour {
         if ( ui != null ) {
             Debug.Log("show end UI");
             if(endCause == EndedCause.DIED) {
-                cam.GetComponent<AudioControl>().SfxPlay(2);
+                cam.GetComponent<AudioControl>().GameOverBgm();
                 ui.GetComponent<UIController>().ShowGameOverUI();
             } else if(endCause == EndedCause.WIN) {
                 //cam.GetComponent<AudioControl>().SfxPlay(2);
                 ui.GetComponent<UIController>().ShowWinUI();
             }
-            
         } else {
             Debug.Log("No UI specified");
         }
