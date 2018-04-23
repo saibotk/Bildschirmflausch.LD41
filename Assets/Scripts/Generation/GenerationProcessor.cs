@@ -33,7 +33,7 @@ public class GenerationProcessor {
     				type = getCorrectRockType(tiles, v);
             break;
         }
-        CreateGOFromType(v, rotation, type, root);
+		CreateGOFromType(v, rotation, tiles[v].type, type, root);
       }
       return root;
     }
