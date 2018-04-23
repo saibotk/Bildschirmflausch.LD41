@@ -57,10 +57,17 @@ public class AudioControl : MonoBehaviour
         soundeffects[sound].Play();
     }
 
-    public void SfxStop(int sound)
+	public void SfxPlay(Sfx sound) {
+		Debug.Log("Playing " + sound + " " + (int)sound);
+		SfxPlay((int)sound);
+	}
+ 
+	public void SfxStop(int sound)
     {
         soundeffects[sound].Stop();
     }
+
+
     public bool SfxPlaying(int sound)
     {
         return soundeffects[sound].isPlaying;
