@@ -11,16 +11,17 @@ public class AudioControl : MonoBehaviour
     public AudioSource gameovers;
     public AudioSource[] soundeffects;
 
-    public enum Sfx { shoot, explosion, mobattack };
+    public enum Sfx { shoot, explosion, mobattack, door, faster, slower, driving, slowdriving };
 
-    private const float lvlbgm = 6.79f;
+    private const float lvlbgm = 5.725f;
     private const float gobgm = 14.406f;
-    private const float loopdelay = 0.05f;
+    private const float loopdelay = 0.025f;
     private bool menu;
 
     // Use this for initialization
     void Start()
     {
+        maintheme.time = maintheme.clip.length - 3.0f;
         maintheme.loop = true;
         menutheme.loop = true;
         gameovers.loop = true;
@@ -57,10 +58,17 @@ public class AudioControl : MonoBehaviour
         soundeffects[sound].Play();
     }
 
-    public void SfxStop(int sound)
+	public void SfxPlay(Sfx sound) {
+		Debug.Log("Playing " + sound + " " + (int)sound);
+		SfxPlay((int)sound);
+	}
+ 
+	public void SfxStop(int sound)
     {
         soundeffects[sound].Stop();
     }
+
+
     public bool SfxPlaying(int sound)
     {
         return soundeffects[sound].isPlaying;
