@@ -8,6 +8,8 @@ public class Room : MonoBehaviour {
         GROUND, WALL, DOOR, ROCK
     }
 
+    Vector2Int center;
+
     List<Door> doors;
     List<Transform> spawnpoints;
 
@@ -39,6 +41,23 @@ public class Room : MonoBehaviour {
             //Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
         }
         Unlock();
+    }
+
+    /// <summary>
+    /// Center point in Generation phase.
+    /// </summary>
+    /// <param name="v"></param>
+    public void SetCenter(Vector2Int v) {
+        center = v;
+    }
+
+    /// <summary>
+    /// Returns the Center as global from the generation.  TODO change this 
+    /// Is available after Generation and after Start Phase.
+    /// </summary>
+    /// <returns></returns>
+    public Vector2Int GetCenter() {
+        return center;
     }
 
     /// <summary>

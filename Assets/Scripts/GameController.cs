@@ -180,6 +180,7 @@ public class GameController : MonoBehaviour {
         doorRoot.name = "Doors";
         doorRoot.transform.SetParent(goStart.transform);
         start = goStart.AddComponent<Room>();
+        start.SetCenter(dg.start.GetCenter());
         lt = lt.FindAll(x => x.tag == "door");
         lt.ForEach(x => {
             x.SetParent(doorRoot.transform);
@@ -196,8 +197,9 @@ public class GameController : MonoBehaviour {
         spawn.transform.SetParent(spawnpointRoot.transform);
         spawn.transform.position = new Vector3(dg.start.GetCenter().x, dg.start.GetCenter().y, 0);
         start.SetSpawnPointsRootObject(spawnpointRoot);
-
+        
         start.Reload();
+        
         start.transform.SetParent(mapRoot.transform);
 
         // Finish room
@@ -209,6 +211,7 @@ public class GameController : MonoBehaviour {
         doorRootf.transform.SetParent(goFinish.transform);
         ltf = ltf.FindAll(x => x.tag == "door");
         finish = goFinish.AddComponent<Room>();
+        finish.SetCenter(dg.end.GetCenter());
         ltf.ForEach(x => {
             x.SetParent(doorRootf.transform);
             x.gameObject.GetComponent<Door>().SetParent(finish);
@@ -227,6 +230,7 @@ public class GameController : MonoBehaviour {
             doorRootg.name = "Doors";
             doorRootg.transform.SetParent(groom.transform);
             Room grom = groom.AddComponent<Room>();
+            grom.SetCenter(gr.GetCenter());
             ltg = ltg.FindAll(x => x.tag == "door");
             ltg.ForEach(x => {
                 x.SetParent(doorRootg.transform);
