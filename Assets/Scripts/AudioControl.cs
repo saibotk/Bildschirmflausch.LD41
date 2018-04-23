@@ -13,14 +13,15 @@ public class AudioControl : MonoBehaviour
 
     public enum Sfx { shoot, explosion, mobattack, door, faster, slower, driving, slowdriving };
 
-    private const float lvlbgm = 5.759f;
+    private const float lvlbgm = 5.725f;
     private const float gobgm = 14.406f;
-    private const float loopdelay = 0.05f;
+    private const float loopdelay = 0.025f;
     private bool menu;
 
     // Use this for initialization
     void Start()
     {
+        maintheme.time = maintheme.clip.length - 3.0f;
         maintheme.loop = true;
         menutheme.loop = true;
         gameovers.loop = true;
