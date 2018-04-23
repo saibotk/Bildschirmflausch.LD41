@@ -20,11 +20,11 @@ public class NotificationManager : MonoBehaviour {
             this.duration = duration;
         }
 
-        public string getText() {
+        public string GetText() {
             return text;
         }
 
-        public float getDuration() {
+        public float GetDuration() {
             return duration;
         }
     }
@@ -34,43 +34,44 @@ public class NotificationManager : MonoBehaviour {
         delay = 0;
         messages = new List<Notification>();
         text = GetComponent<Text>();
-        hide();
+        Hide();
     }
 
     void Update() {
         if ( showingMessage ) {
             if ( Time.time > delay ) {
-                if (messages.Count <= 1) {
+                Debug.Log(delay - Time.time);
+                Debug.Log(messages.Count);
+                if (messages.Count == 1) {
 					messages.Remove(messages[0]);
-                    hide();
-                } else {
+                    Hide();
+                } else if (messages.Count > 1) {
                     messages.Remove(messages[0]);
-                    text.text = messages[0].getText();
-                    delay = Time.time + messages[0].getDuration();
+                    text.text = messages[0].GetText();
+                    delay = Time.time + messages[0].GetDuration();
                 }
             }
         }
     }
 
-    public void showMessage(string text, float duration) {
-        if ( showingMessage ) {
-            messages.Add(new Notification(text, duration));
-        } else {
-            showingMessage = true;
+    public void ShowMessage(string text, float duration) {
+        messages.Add(new Notification(text, duration));
 
+        if (!showingMessage) {
+            showingMessage = true;
             GetComponent<Text>().text = text;
             delay = Time.time + duration;
-            show();
+            Show();
         }
     }
 
-    void show() {
+    void Show() {
         GetComponentInParent<Image>().enabled = true;
         text.enabled = true;
         showingMessage = true;
     }
 
-    void hide() {
+    void Hide() {
         GetComponentInParent<Image>().enabled = false;
         text.enabled = false;
         showingMessage = false;

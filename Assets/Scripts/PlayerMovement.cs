@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-    private bool firstKeyPressed;
+    bool firstKeyPressed;
+    bool messagePosted;
 
     [SerializeField]
     public float acceleration = 3;
@@ -19,9 +20,14 @@ public class PlayerMovement : MonoBehaviour {
     // Use this for initialization
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        messagePosted = false;
     }
 
     void Update() {
+        if (!firstKeyPressed && !messagePosted) {
+            messagePosted = true;
+            GameController.instance.GetUI().GetNotificationManager().ShowMessage("Press any key to start!", 2);
+        }
         if ( !firstKeyPressed && Input.anyKey ) {
             firstKeyPressed = true;
         }
