@@ -22,7 +22,13 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     GameObject BorderSingle;
     [SerializeField]
-    GameObject Ground;
+    GameObject Ground0;
+    [SerializeField]
+    GameObject Ground1;
+    [SerializeField]
+    GameObject Ground2;
+    [SerializeField]
+    GameObject Ground3;
     [SerializeField]
     GameObject DoorInner;
     [SerializeField]
@@ -111,7 +117,10 @@ public class GameController : MonoBehaviour {
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLUR, RockLUR);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockURD, RockURD);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLRD, RockLRD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground, Ground);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground0, Ground0);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground1, Ground1);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground2, Ground2);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground3, Ground3);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.DoorInner, DoorInner);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter);
     }
