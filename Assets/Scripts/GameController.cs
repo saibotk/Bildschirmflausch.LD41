@@ -176,7 +176,7 @@ public class GameController : MonoBehaviour {
         spawnpointRoot.transform.position = new Vector3(dg.start.roomPosition.x, dg.start.roomPosition.y, 0);
         GameObject spawn = new GameObject();
         spawn.transform.SetParent(spawnpointRoot.transform);
-        spawn.transform.position = new Vector3(3, 3, 0);
+        spawn.transform.position = new Vector3(dg.start.GetCenter().x, dg.start.GetCenter().y, 0);
         start.SetSpawnPointsRootObject(spawnpointRoot);
 
         start.Reload();

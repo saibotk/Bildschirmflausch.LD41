@@ -1,8 +1,10 @@
-﻿public abstract class Objective {
+﻿using UnityEngine;
+
+public abstract class Objective {
     protected Room room;
     protected Player player;
-    bool activated;
-    bool finished;
+    protected bool activated;
+    protected bool finished;
 
     /// <summary>
     /// Constructs a new Objective instance.
@@ -34,6 +36,7 @@
     protected virtual void ReachedGoal() {
         finished = true;
         room.Unlock();
+        Debug.Log("[ROOM] Goal reached. Doors will open.");
     }
 
     /// <summary>

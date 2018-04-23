@@ -24,6 +24,9 @@ public class EntityObjective : Objective {
     /// </summary>
     /// <param name="ply">Player</param>
     public override void ActivateGoal(Player ply) {
+        if ( activated )
+            return;
+        activated = true;
         base.ActivateGoal(ply);
         foreach ( GameObject i in prefabList ) {
             Debug.Log("[ROOMS] Spawning Entity...");

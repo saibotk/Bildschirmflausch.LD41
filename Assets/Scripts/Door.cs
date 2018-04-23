@@ -10,7 +10,7 @@ public class Door : MonoBehaviour {
     BoxCollider2D triggerBox;
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
         BoxCollider2D[] colliders = GetComponents<BoxCollider2D>();
         foreach ( BoxCollider2D collider in colliders ) {
             if ( collider.isTrigger ) {
@@ -21,7 +21,6 @@ public class Door : MonoBehaviour {
                 //Debug.Log("Found Door collider");
             }
         }
-        Unlock();
     }
 
     /// <summary>
