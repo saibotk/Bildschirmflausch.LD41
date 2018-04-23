@@ -28,6 +28,13 @@ public class EntityObjective : Objective {
         if ( activated )
             return;
         base.ActivateGoal(ply);
+
+		List<Transform> spawnPointList = room.GetSpawnpoints();
+        if (spawnPointList.Count == 0) {
+            ReachedGoal();
+            return;
+        }
+
         foreach ( GameObject i in prefabList ) {
             Debug.Log("[ROOMS] Spawning Entity...");
             if(i == null || player == null) {
@@ -35,8 +42,7 @@ public class EntityObjective : Objective {
                 return;
             }
 
-            GameObject tempObject = GameObject.Instantiate(i);
-            List<Transform> spawnPointList = room.GetSpawnpoints();
+            GameObject tempObject = UnityEngine.Object.Instantiate(i);
             tempObject.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].position;
             tempObject.GetComponent<Enemy>().SetVictim(player.gameObject);
             tempObject.GetComponent<Enemy>().SetObjective(this);

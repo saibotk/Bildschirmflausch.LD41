@@ -74,9 +74,8 @@ public class PlayerMovement : MonoBehaviour {
 			brakeTime = maxBrakeTime;
 			braking = false;
 		} else if (!braking) {
-			brakeTime -= (Time.time - lastFrame) * 0.1f;
+			//brakeTime -= (Time.time - lastFrame) * 0.1f;
 		}
-		Debug.Log(braking + " " + brakeTime);
 		if (braking) {
 			brakeTime += Time.time - lastFrame;
             GameController.instance.GetAudioControl().SfxStop(AudioControl.Sfx.driving);
