@@ -20,7 +20,7 @@ public class Room : MonoBehaviour {
     private Objective objective;
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
         doors = new List<Door>();
         if ( doorsRootObject != null ) {
             foreach ( Door d in doorsRootObject.GetComponentsInChildren<Door>() ) {
@@ -38,7 +38,7 @@ public class Room : MonoBehaviour {
             }
             //Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
         }
-        //Unlock();
+        Unlock();
     }
 
     /// <summary>
@@ -62,6 +62,7 @@ public class Room : MonoBehaviour {
             }
             //Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
         }
+        Unlock(); // Ok to do so?
     }
 
     /// <summary>
