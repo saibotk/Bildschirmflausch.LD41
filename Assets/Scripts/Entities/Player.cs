@@ -51,8 +51,11 @@ public class Player : Mob {
         }
         // scale particle emissions by speed
         float velocity = body.velocity.magnitude;
-        ParticleSystem.EmissionModule emission = GetComponentInChildren<ParticleSystem>().emission;
-        emission.rateOverTime = velocity * (velocity / 2) * 20 + 20;
+        ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
+        foreach (ParticleSystem particle in particles) {
+            ParticleSystem.EmissionModule emission = particle.emission;
+			emission.rateOverTime = velocity * (velocity / 4) * 20 + 10;
+        }
     }
 
 
