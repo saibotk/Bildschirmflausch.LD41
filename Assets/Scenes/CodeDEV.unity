@@ -750,7 +750,7 @@ MonoBehaviour:
   soundeffects:
   - {fileID: 1908750963}
   - {fileID: 368878861}
-  - {fileID: 801288609}
+  - {fileID: 1908750963}
 --- !u!1 &1028937042
 GameObject:
   m_ObjectHideFlags: 0

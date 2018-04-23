@@ -1001,7 +1001,10 @@ MonoBehaviour:
   maintheme: {fileID: 923869163}
   menutheme: {fileID: 52367875}
   gameovers: {fileID: 287217885}
-  soundeffects: []
+  soundeffects:
+  - {fileID: 1187801173}
+  - {fileID: 987581542}
+  - {fileID: 429380406}
 --- !u!1 &1039057777
 GameObject:
   m_ObjectHideFlags: 0
