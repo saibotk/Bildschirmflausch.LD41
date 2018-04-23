@@ -17,6 +17,10 @@ namespace Assets.Scripts.Entities.Attack {
             this.owner = owner;
         }
 
+        public void SetCooldown(float cd) {
+            cooldown = cd;
+        }
+
         public void SetSpawn(Transform t) {
             spawn = t;
         }

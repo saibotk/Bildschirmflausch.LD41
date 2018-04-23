@@ -9,9 +9,9 @@ namespace Assets.Scripts.Entities {
             
         }
 
-        private void Start() {
+        protected override void Start() {
+            base.Start();
             SetAttack(new MeleeAttack(this.gameObject));
-            GetComponentInChildren<ParticleSystem>().Play();
         }
     }
 }

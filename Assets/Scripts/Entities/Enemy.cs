@@ -24,6 +24,13 @@ namespace Assets.Scripts.Entities {
             
         }
 
+        protected virtual void Start() {
+            ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+            if(ps != null && ps.name == "spawn") {
+                ps.Play();
+            }
+        }
+
         void Update() {
             
             if ( victim == null || attack == null ) {
