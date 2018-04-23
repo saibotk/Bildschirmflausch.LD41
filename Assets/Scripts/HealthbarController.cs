@@ -9,17 +9,22 @@ public class HealthbarController : MonoBehaviour {
     private Player player;
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         // if player alive and spawned
-        if ( player != null ) {
+        if (player != null)
+        {
             UpdatePointer(player.GetHealth());
-        } else if (currentRotation != 0) {
+        }
+        else
+        {
             //if player dead or not spawned
             UpdatePointer(0);
+
         }
     }
 
-    private void UpdatePointer(float playerLife) {
+    void UpdatePointer(float playerLife) {
         float offset = playerLife - currentRotation;
         gameObject.transform.Rotate(Vector3.forward, offset);
         currentRotation += offset;
@@ -27,5 +32,7 @@ public class HealthbarController : MonoBehaviour {
 
     public void SetPlayer(Player ply) {
         player = ply;
+        maxRotation = player.GetMaxHealth();
+        currentRotation = player.GetHealth();
     }
 }
