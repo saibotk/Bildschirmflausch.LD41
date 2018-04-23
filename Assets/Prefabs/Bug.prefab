@@ -143,8 +143,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1887677565572348}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4193287044024648}
@@ -245,7 +245,7 @@ MonoBehaviour:
   victim: {fileID: 0}
   body: {fileID: 50033980456084712}
   bulletSpawn: {fileID: 4528190223728408}
-  bullet: {fileID: 1379543051791382, guid: c6c321ecc6516374781405a54c1fa6a7, type: 2}
+  bullet: {fileID: 1340970730445882, guid: 5b046158ce568b14285b9d75961bfcce, type: 2}
 --- !u!198 &198157182596764290
 ParticleSystem:
   m_ObjectHideFlags: 1
