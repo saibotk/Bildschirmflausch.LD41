@@ -451,7 +451,7 @@ public class DungeonGenerator {
             case 0: {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-                    int count = UnityEngine.Random.Range(1, r.GetSpawnpoints().Count);
+                    int count = UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count / 2));
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.SCORPION]);
                     }
@@ -462,7 +462,7 @@ public class DungeonGenerator {
             case 1: {
                     // Bug Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-                    int count = UnityEngine.Random.Range(1, r.GetSpawnpoints().Count);
+                    int count = UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count / 2));
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.BUG]);
                     }
