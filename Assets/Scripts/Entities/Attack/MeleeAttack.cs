@@ -8,7 +8,7 @@ namespace Assets.Scripts.Entities.Attack {
 
         int damage = 10;
         float cooldown = 1;
-        float range = 2f;
+        float range = 1f;
         GameObject owner;
 
         public MeleeAttack(GameObject owner) {

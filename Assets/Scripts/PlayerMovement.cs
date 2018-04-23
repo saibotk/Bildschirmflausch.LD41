@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-    private bool firstKeyPressed;
+    bool firstKeyPressed;
+    bool messagePosted;
 
     [SerializeField]
     public float acceleration = 3;
@@ -14,16 +15,36 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     public float brake = 2f;
 
+    // The time of the acceleration/deceleration sounds in seconds
+	public double accelerationTime;
+	public double decelerationTime;
+
+	public enum SpeedState
+	{
+		SLOW, FASTER, FAST, SLOWER
+	}
+
+	public SpeedState state;
+	public double changeTime;
+
     Rigidbody2D rb;
 
     // Use this for initialization
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        messagePosted = false;
+		state = SpeedState.SLOW;
     }
 
     void Update() {
+        if (!firstKeyPressed && !messagePosted) {
+            messagePosted = true;
+            GameController.instance.GetUI().GetNotificationManager().ShowMessage("Press any key to start!", 2);
+        }
         if ( !firstKeyPressed && Input.anyKey ) {
             firstKeyPressed = true;
+			state = SpeedState.FASTER;
+			changeTime = Time.time;
         }
     }
 
@@ -34,15 +55,53 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 speedVec = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         float speed = speedVec.magnitude;
 
+		bool braking = Input.GetAxis("Vertical") < 0;
+		if (braking) {
+			switch (state) {
+				case SpeedState.FASTER:
+					if (Time.time - changeTime > accelerationTime)
+						state = SpeedState.SLOWER;
+					break;
+				case SpeedState.FAST:
+					changeTime = Time.time;
+					state = SpeedState.SLOWER;
+					break;
+				case SpeedState.SLOWER:
+					if (Time.time - changeTime > decelerationTime)
+						state = SpeedState.SLOW;
+					break;
+				case SpeedState.SLOW:
+					break;
+			}
+		} else {
+            switch (state)
+            {
+                case SpeedState.FASTER:
+                    if (Time.time - changeTime > accelerationTime)
+                        state = SpeedState.FAST;
+                    break;
+                case SpeedState.FAST:
+                    break;
+                case SpeedState.SLOWER:
+                    if (Time.time - changeTime > decelerationTime)
+                        state = SpeedState.FASTER;
+                    break;
+				case SpeedState.SLOW:
+                    changeTime = Time.time;
+                    state = SpeedState.FASTER;
+					break;
+            }
+		}
+
 		{ // Forward
 			Vector3 acc = transform.up * acceleration;
-            if (Input.GetAxis("Vertical") < 0)
+            if (braking)
                 acc *= 0;
             rb.AddForce(acc);
         }
 		{// Drag
 			Vector3 drag = speedVec.normalized * speed * speed * friction * -1;
-            if (Input.GetAxis("Vertical") < 0) {
+			if (braking) {
 				drag *= brake;
 				drag *= speed;
      		}

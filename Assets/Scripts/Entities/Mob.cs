@@ -31,7 +31,9 @@ public abstract class Mob : Entity {
         if ( !isDead && currentHP <= 0 ) {
             isDead = true;
             Death();
-        }
+		} else if (! isDead) {
+			GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.mobattack);
+		}
     }
 
     /// <summary>
@@ -39,7 +41,8 @@ public abstract class Mob : Entity {
     /// </summary>
     protected virtual void Death() {
         if ( objective != null )
-            objective.RemoveEntity(this);
+			objective.RemoveEntity(this);
+		GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.explosion);
         Destroy(gameObject);
     }
 

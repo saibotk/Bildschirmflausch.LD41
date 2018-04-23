@@ -9,10 +9,16 @@ public class Bullet : MonoBehaviour {
     int damage = 0;
 
     GameObject owner;
+    Rigidbody2D body;
 	// Use this for initialization
 	void Start () {
-		
-	}
+        body = GetComponent<Rigidbody2D>();
+
+    }
+
+    public void SetSpeed(float spd) {
+        speed = spd;
+    }
 
     public void SetDamage(int dmg) {
         damage = dmg;
@@ -22,19 +28,18 @@ public class Bullet : MonoBehaviour {
         owner = ow;
     }
 
-	// Update is called once per frame
-	void Update () {
+    private void FixedUpdate() {
         if ( owner == null )
             return;
-        transform.position = transform.position + transform.localRotation * Vector3.up * speed * Time.deltaTime; // TODO do with physics (rigidbody)
-	}
+        body.MovePosition(transform.position + transform.localRotation * Vector3.up * speed * Time.fixedDeltaTime);
+    }
 
-    void OnCollisionEnter2D(Collision2D collision) {
+    void OnTriggerEnter2D(Collider2D collider) {
         if ( owner == null )
             return;
         
-        if ( collision.collider.gameObject.tag != owner.tag ) {
-            Mob m = collision.collider.gameObject.GetComponent(typeof(Mob)) as Mob;
+        if ( collider.gameObject.tag != owner.tag ) {
+            Mob m = collider.gameObject.GetComponent(typeof(Mob)) as Mob;
             if (m != null) {
                 m.InflictDamage(damage);
             }

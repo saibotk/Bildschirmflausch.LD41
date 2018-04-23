@@ -5,9 +5,10 @@ using UnityEngine;
 namespace Assets.Scripts.Entities.Attack {
     class SingleShot : IAttack {
 
-        int damage = 12;
-        float cooldown = 1;
-        int range = 4;
+        protected int damage = 12;
+        protected float cooldown = 1;
+        protected int range = 4;
+        protected float speed = 10;
         GameObject owner;
         GameObject bulletPrefab;
         Transform spawn;
@@ -25,15 +26,18 @@ namespace Assets.Scripts.Entities.Attack {
         }
 
         public void Attack() {
-            if ( bulletPrefab == null )
+            if ( bulletPrefab == null ) {
+                Debug.Log("SingleShot: No Prefab defined for Bullet!");
                 return;
-            GameObject b = GameObject.Instantiate(bulletPrefab);
+            }
+            GameObject b = UnityEngine.Object.Instantiate(bulletPrefab);
             b.transform.rotation = spawn.rotation;
             b.transform.position = spawn.position;
             Bullet bu = b.GetComponent<Bullet>();
             bu.SetDamage(damage);
+            bu.SetSpeed(speed);
             bu.SetOwner(owner);
-            GameController.instance.GetAudioControl().SfxPlay(0);
+			GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.shoot);
         }
 
         public float GetCooldownTime() {

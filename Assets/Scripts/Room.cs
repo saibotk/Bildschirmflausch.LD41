@@ -106,7 +106,8 @@ public class Room : MonoBehaviour {
     public void Lock() {
         foreach ( Door d in doors ) {
             d.Lock();
-        }
+		}
+		GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.door);
         Debug.Log("[ROOMS] Locked all doors...");
     }
 
@@ -116,7 +117,8 @@ public class Room : MonoBehaviour {
     public void Unlock() {
         foreach ( Door d in doors ) {
             d.Unlock();
-        }
+		}
+        GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.door);
         Debug.Log("[ROOMS] Unlocked all doors...");
     }
 
