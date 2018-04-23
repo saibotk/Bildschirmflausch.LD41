@@ -482,14 +482,10 @@ MonoBehaviour:
   turnSpeed: 2
   drift: 1
   brake: 2
-  maxBrakeTime: 30
-  accelerationTime: 0
-  decelerationTime: 0
-  brakeTime: 0
-  lastFrame: 0
-  state: 0
-  changeTime: 0
---- !u!198 &198051526896437106
+  maxBrakeTime: 5
+  accelerationTime: 2.115
+  decelerationTime: 1.2346
+--- !u!198 &198696209911726984
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

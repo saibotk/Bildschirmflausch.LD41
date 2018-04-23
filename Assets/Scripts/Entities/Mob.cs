@@ -32,7 +32,10 @@ public abstract class Mob : Entity {
             isDead = true;
             Death();
 		} else if (! isDead) {
-			GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.mobattack);
+			if (this is Player)
+				GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.hitplayer);
+			else
+    			GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.hitmob);
 		}
     }
 

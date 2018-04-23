@@ -23,7 +23,7 @@ public class BrakeBarController : MonoBehaviour {
     }
 
     private float CalculateOffset() {
-        return (maxRotation * (player.GetComponent<PlayerMovement>().brakeTime / player.GetComponent<PlayerMovement>().maxBrakeTime)) - currentRotation;
+		return (maxRotation * (player.GetComponent<PlayerMovement>().GetBrakeTime() / player.GetComponent<PlayerMovement>().maxBrakeTime)) - currentRotation;
     }
 
     public void SetPlayer(Player ply) {

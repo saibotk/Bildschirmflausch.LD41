@@ -14,13 +14,13 @@ public class AudioControl : MonoBehaviour
     public enum Sfx { shoot, explosion, mobattack, door, faster, slower, driving, slowdriving, hitmob, hitplayer };
 
     private const float lvlbgm = 5.725f;
-    private const float gobgm = 14.406f;
+    private const float gobgm = 14.157f;
     private const float loopdelay = 0.025f;
-    private bool menu;
 
     // Use this for initialization
     void Start()
     {
+        
         maintheme.loop = true;
         menutheme.loop = true;
         gameovers.loop = true;
@@ -67,12 +67,15 @@ public class AudioControl : MonoBehaviour
         soundeffects[sound].Stop();
     }
 
+	public void SfxStop(Sfx sound) {
+		SfxStop((int)sound);
+	}
 
     public bool SfxPlaying(int sound)
     {
         return soundeffects[sound].isPlaying;
     }
-
+   
     public void SetMasterVolume(float nvol)
     {
         mixer.SetFloat("masterVolume", Mathf.Clamp(nvol, -80f, 20f));
