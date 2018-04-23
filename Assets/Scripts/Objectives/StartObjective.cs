@@ -20,11 +20,14 @@ public class StartObjective : Objective {
     /// </summary>
     /// <param name="ply">Player is ignored </param>
     public override void ActivateGoal(Player player) {
+        if ( activated )
+            return;
         if ( room.GetSpawnpoints().Count > 0 ) {
             GameObject ply = GameObject.Instantiate(playerPrefab);
             ply.transform.position = room.GetSpawnpoints()[0].position;
             player = ply.GetComponent<Player>();
             base.ActivateGoal(player);
+            UpdateGoal();
         }
     }
 

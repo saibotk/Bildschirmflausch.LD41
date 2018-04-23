@@ -18,6 +18,7 @@ public class GenRoom {
 	public Vector2Int roomPosition;
     // All positions are in room space relative to the room's anchor
 	public Dictionary<Vector2Int, GenTile> tiles = new Dictionary<Vector2Int, GenTile>();
+	public HashSet<Vector2Int> spawnpoints = new HashSet<Vector2Int>();
 
     public float Distance(GenRoom r) {
         return Math.Abs(GetCenter().x - r.GetCenter().x) + Math.Abs(GetCenter().y - r.GetCenter().y);

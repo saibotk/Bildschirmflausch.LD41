@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Entities.Attack {
@@ -15,8 +16,14 @@ namespace Assets.Scripts.Entities.Attack {
         }
 
         public void Attack() {
-            RaycastHit2D hit = Physics2D.Raycast(owner.transform.position, owner.transform.localRotation * Vector3.up, range);
-            Mob m = hit.collider.gameObject.GetComponent(typeof(Mob)) as Mob;
+            RaycastHit2D[] hits = Physics2D.RaycastAll(owner.transform.position, owner.transform.localRotation * Vector3.up, range);
+            List<RaycastHit2D> rh = new List<RaycastHit2D>(hits);
+            RaycastHit2D hit = rh.Find(x => x.fraction != 0);
+            Mob m = null;
+            if (hit.collider != null && hit.collider.gameObject != null) {
+                m = hit.collider.gameObject.GetComponent(typeof(Mob)) as Mob;
+            }
+            Debug.Log(m.tag);
             if ( m != null && m.tag != owner.tag) {
                 m.InflictDamage(damage);
             }

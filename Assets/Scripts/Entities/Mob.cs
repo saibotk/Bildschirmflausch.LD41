@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Entities.Attack;
+using UnityEngine;
 
 public abstract class Mob : Entity {
     protected readonly int maxHP;
@@ -25,6 +26,7 @@ public abstract class Mob : Entity {
     /// </summary>
     /// <param name="damage"></param>
     public void InflictDamage(int damage) {
+        Debug.Log(tag + " received " + damage + " Damage");
         currentHP -= damage;
         if ( !isDead && currentHP <= 0 ) {
             isDead = true;

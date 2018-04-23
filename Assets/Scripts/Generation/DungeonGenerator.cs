@@ -404,7 +404,6 @@ public class DungeonGenerator {
     }
 
     public void GenerateInterior(GenRoom r) {
-
         Vector2Int root = new Vector2Int (1, 1);
 
 		for (int x = r.bounds.x; x < r.bounds.x + r.bounds.width; x++)
@@ -415,10 +414,6 @@ public class DungeonGenerator {
 				if (!r.tiles.ContainsKey(pos) || r.tiles[pos].type != Room.TileType.GROUND)
 					continue;
 				float prob = 0.0075f;
-				if (UnityEngine.Random.value > 1 - prob)
-                {
-                    r.tiles[pos].type = Room.TileType.ROCK;
-				}
 				if (UnityEngine.Random.value > 1 - prob * 2)
                 {
 					int count = (int ) (UnityEngine.Random.value * UnityEngine.Random.value * 6);
@@ -429,7 +424,18 @@ public class DungeonGenerator {
 						if (r.tiles.ContainsKey(pos2) && r.tiles[pos2].type == Room.TileType.GROUND)
     						r.tiles[pos2].type = Room.TileType.ROCK;
                     }
+					continue;
+				}
+                if (UnityEngine.Random.value > 1 - prob)
+                {
+                    r.tiles[pos].type = Room.TileType.ROCK;
+					continue;
                 }
+				float prob2 = 0.02f;
+				if (UnityEngine.Random.value > 1 - prob2)
+				{
+					r.spawnpoints.Add(pos);
+				}
 			}
 		}
     }
