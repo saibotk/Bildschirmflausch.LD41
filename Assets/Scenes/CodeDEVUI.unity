@@ -218,17 +218,17 @@ Prefab:
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
@@ -238,7 +238,7 @@ Prefab:
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 224035875368067210, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
@@ -387,6 +387,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9a051e822e2cf4ea3ca01c5a4df37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  followSpeed: 0.05
+  minZoom: 5
+  zoomFactor: 4
+  zoomSpeed: 0.05
+  startingDist: 5
   followThis: {fileID: 0}
 --- !u!1 &1624368723
 GameObject:
@@ -461,14 +466,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d25c2cd3eb97749b79f2cb5f7c5cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scorpion: {fileID: 0}
   BorderOuter: {fileID: 1062532744197412, guid: bc306521f11be424f9833117977b4319,
     type: 2}
   BorderInner: {fileID: 1893245914782828, guid: 7326753bf2b213d4e8c2ee93d78ba7d9,
     type: 2}
   BorderSingle: {fileID: 1277252496101342, guid: ed9537580662f6046a1514a4c5bfdd98,
     type: 2}
-  Ground: {fileID: 1487413182883822, guid: bc8a58beb0459094483211a5c7933959, type: 2}
-  Door: {fileID: 1065161683117842, guid: 06aa81f4fbf9a3a4a8f9fdadafcbf7fa, type: 2}
+  Ground0: {fileID: 0}
+  Ground1: {fileID: 0}
+  Ground2: {fileID: 0}
+  Ground3: {fileID: 0}
+  DoorInner: {fileID: 0}
+  DoorOuter: {fileID: 0}
   Rock: {fileID: 1373919933116942, guid: 5f26192f79d542e49ad24fadc39f5654, type: 2}
   RockL: {fileID: 1411303269485816, guid: 92068b1ee4568d045b60c249ba57c186, type: 2}
   RockU: {fileID: 1990883489100502, guid: c44f475306efef3438b85a84f91fcf81, type: 2}
@@ -485,6 +495,7 @@ MonoBehaviour:
   RockLUR: {fileID: 1938166751346222, guid: 6b83a6a46c57a634fa5085684bad0085, type: 2}
   RockURD: {fileID: 1437035058628240, guid: 30338afac8ce7054fbff8de89db815e8, type: 2}
   RockLRD: {fileID: 1251219893662246, guid: e37e0c5d4b013304cbcb32b223264452, type: 2}
+  Flag: {fileID: 0}
   playerPrefab: {fileID: 1679161327080020, guid: 3d1911457c1e44f53b6b4044334db52f,
     type: 2}
   ui: {fileID: 1723675411}
