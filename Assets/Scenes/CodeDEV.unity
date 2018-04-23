@@ -623,6 +623,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 60772848946696534, guid: 3d1911457c1e44f53b6b4044334db52f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
   m_IsPrefabParent: 0
@@ -721,6 +726,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9a051e822e2cf4ea3ca01c5a4df37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  followSpeed: 0.05
+  minZoom: 5
+  zoomFactor: 4
+  zoomSpeed: 0.05
+  startingDist: 5
   followThis: {fileID: 0}
 --- !u!114 &881384373
 MonoBehaviour:
@@ -741,6 +751,11 @@ MonoBehaviour:
   - {fileID: 1908750963}
   - {fileID: 368878861}
   - {fileID: 1908750963}
+--- !u!1 &979562542 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1303102899095328, guid: 4c5ecfd27b4038941a6e493a8117ea0a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1597985551}
 --- !u!1 &1028937042
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +981,7 @@ Prefab:
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 67.14285
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
@@ -1044,6 +1059,10 @@ Prefab:
     - target: {fileID: 4612758478389004, guid: 4c5ecfd27b4038941a6e493a8117ea0a, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1303102899095328, guid: 4c5ecfd27b4038941a6e493a8117ea0a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c5ecfd27b4038941a6e493a8117ea0a, type: 2}
@@ -1366,6 +1385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d25c2cd3eb97749b79f2cb5f7c5cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scorpion: {fileID: 979562542}
   BorderOuter: {fileID: 1062532744197412, guid: bc306521f11be424f9833117977b4319,
     type: 2}
   BorderInner: {fileID: 1893245914782828, guid: 7326753bf2b213d4e8c2ee93d78ba7d9,

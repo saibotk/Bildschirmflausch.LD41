@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Entities;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,13 +27,19 @@ public class EntityObjective : Objective {
     public override void ActivateGoal(Player ply) {
         if ( activated )
             return;
-        activated = true;
         base.ActivateGoal(ply);
         foreach ( GameObject i in prefabList ) {
             Debug.Log("[ROOMS] Spawning Entity...");
+            if(i == null || player == null) {
+                Debug.Log("[ROOMS] Failed.. Entity not set in GameController!");
+                return;
+            }
+
             GameObject tempObject = GameObject.Instantiate(i);
             List<Transform> spawnPointList = room.GetSpawnpoints();
             tempObject.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].position;
+            tempObject.GetComponent<Enemy>().SetVictim(player.gameObject);
+            tempObject.GetComponent<Enemy>().SetObjective(this);
             entityList.Add(tempObject);
         }
 

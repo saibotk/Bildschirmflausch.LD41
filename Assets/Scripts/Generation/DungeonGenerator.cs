@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Entities;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -214,13 +215,13 @@ public class DungeonGenerator {
 		}
 
         foreach ( GenRoom r in rooms )
-            makeRoomRelative(r);
-        makeRoomRelative(start);
-        makeRoomRelative(end);
-        makeRoomRelative(path);
+            MakeRoomRelative(r);
+        MakeRoomRelative(start);
+        MakeRoomRelative(end);
+        MakeRoomRelative(path);
     }
 
-    public void makeRoomRelative(GenRoom room) {
+    public void MakeRoomRelative(GenRoom room) {
         room.roomPosition = room.bounds.position;
         foreach ( Vector2Int v in room.tiles.Keys ) {
             v.Set(( v - room.roomPosition ).x, ( v - room.roomPosition ).y);
@@ -438,5 +439,21 @@ public class DungeonGenerator {
 				}
 			}
 		}
+    }
+
+    public static void GenerateObjective(Room r) {
+        Dictionary<Enemy.Enemys, GameObject> enemyPrefabs = GameController.instance.GetEnemyPrefabs(); // TODO not so cool
+        // TODO add more types
+        Objective o;
+
+        // ENTITYOBJECTIVE ENEMYS:
+        List<GameObject> lg = new List<GameObject>();
+        //GameObject scorp = enemyPrefabs[Enemy.Enemys.SCORPION];
+        lg.Add(enemyPrefabs[Enemy.Enemys.SCORPION]);
+        EntityObjective eo = new EntityObjective(r, lg);
+        o = eo;
+
+
+        r.SetObjective(o);
     }
 }
