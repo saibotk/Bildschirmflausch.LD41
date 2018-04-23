@@ -25,9 +25,11 @@ namespace Assets.Scripts.Entities {
         }
 
         protected virtual void Start() {
-            ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
-            if(ps != null && ps.name == "spawn") {
-                ps.Play();
+            ParticleSystem[] pss = GetComponentsInChildren<ParticleSystem>();
+            foreach(ParticleSystem ps in pss) {
+                if ( ps.gameObject.name == "spawn" ) {
+                    ps.Play();
+                }
             }
         }
 

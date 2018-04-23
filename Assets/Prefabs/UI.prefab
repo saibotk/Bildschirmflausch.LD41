@@ -148,7 +148,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1738841749900334
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,7 +906,7 @@ MonoBehaviour:
   notifications: {fileID: 114700265308343224}
   restartUIPanel: {fileID: 1604998495297016}
   healthcontroller: {fileID: 114617351635937986}
-  brakeBarController: {fileID: 0}
+  brakeBarController: {fileID: 114745107968250074}
   mainMenuSceneIndex: 0
 --- !u!114 &114930219842054174
 MonoBehaviour:
@@ -1223,7 +1223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 66.52695, y: 0}
+  m_AnchoredPosition: {x: 64.16286, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224218339018349506
