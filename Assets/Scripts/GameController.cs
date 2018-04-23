@@ -300,7 +300,8 @@ public class GameController : MonoBehaviour {
                 cam.GetComponent<AudioControl>().GameOverBgm();
                 ui.GetComponent<UIController>().ShowGameOverUI();
             } else if(endCause == EndedCause.WIN) {
-                //cam.GetComponent<AudioControl>().SfxPlay(2);
+				//cam.GetComponent<AudioControl>().SfxPlay(2);
+				player.InflictDamage(int.MaxValue/2);
                 ui.GetComponent<UIController>().ShowWinUI();
             }
         } else {
@@ -325,6 +326,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void EndGame(EndedCause cause) {
+		if (endCause != null && state == GameState.ENDED)
+			return; // Already ended game
         endCause = cause;
         ChangeState(GameState.ENDED);
     }
