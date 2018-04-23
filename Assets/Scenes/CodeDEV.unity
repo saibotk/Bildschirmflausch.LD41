@@ -976,7 +976,7 @@ Prefab:
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 65.89836
+      value: 63.233368
       objectReference: {fileID: 0}
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
@@ -1387,7 +1387,10 @@ MonoBehaviour:
     type: 2}
   BorderSingle: {fileID: 1277252496101342, guid: ed9537580662f6046a1514a4c5bfdd98,
     type: 2}
-  Ground: {fileID: 1487413182883822, guid: bc8a58beb0459094483211a5c7933959, type: 2}
+  Ground0: {fileID: 1487413182883822, guid: bc8a58beb0459094483211a5c7933959, type: 2}
+  Ground1: {fileID: 1772182943815902, guid: d5ac6ff96b8389a4f89e000bb512df0c, type: 2}
+  Ground2: {fileID: 1292387089709784, guid: ea403377dca91e246a37fc2101f23c5d, type: 2}
+  Ground3: {fileID: 1395236729573066, guid: 2b27ba92cf33a624ea670c46a3e569b0, type: 2}
   DoorInner: {fileID: 1065161683117842, guid: 06aa81f4fbf9a3a4a8f9fdadafcbf7fa, type: 2}
   DoorOuter: {fileID: 1575370008060226, guid: 70bf9bb227285e74383db2dc84cc6c50, type: 2}
   Rock: {fileID: 1373919933116942, guid: 5f26192f79d542e49ad24fadc39f5654, type: 2}
@@ -1406,6 +1409,7 @@ MonoBehaviour:
   RockLUR: {fileID: 1938166751346222, guid: 6b83a6a46c57a634fa5085684bad0085, type: 2}
   RockURD: {fileID: 1437035058628240, guid: 30338afac8ce7054fbff8de89db815e8, type: 2}
   RockLRD: {fileID: 1251219893662246, guid: e37e0c5d4b013304cbcb32b223264452, type: 2}
+  Flag: {fileID: 1971451785855062, guid: ff87b9de73979cd40a9853419833a91f, type: 2}
   playerPrefab: {fileID: 1679161327080020, guid: 3d1911457c1e44f53b6b4044334db52f,
     type: 2}
   ui: {fileID: 1379476069}

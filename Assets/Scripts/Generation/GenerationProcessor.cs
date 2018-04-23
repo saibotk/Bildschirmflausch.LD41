@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenerationProcessor {
   public enum ExtendedTileType {
-    BorderOuter, BorderInner, BorderSingle, Ground, DoorInner, DoorOuter, Rock, RockL, RockU, RockR, RockD, RockLU, RockLR, RockLD, RockUR, RockUD, RockRD, RockLURD, RockLUD, RockLUR, RockURD, RockLRD
+		BorderOuter, BorderInner, BorderSingle, Ground0, Ground1, Ground2, Ground3, DoorInner, DoorOuter, Rock, RockL, RockU, RockR, RockD, RockLU, RockLR, RockLD, RockUR, RockUD, RockRD, RockLURD, RockLUD, RockLUR, RockURD, RockLRD, Flag
   }
   Dictionary<ExtendedTileType, GameObject> prefabs;
   public GenerationProcessor(Dictionary<ExtendedTileType, GameObject> prefabs) {
@@ -16,7 +16,7 @@ public class GenerationProcessor {
       name = "Room"
     };
     foreach ( Vector2Int v in tiles.Keys ) {
-      ExtendedTileType type = ExtendedTileType.Ground;
+      ExtendedTileType type = GetRandomGroundType();
       int rotation = 0;
       switch ( tiles[v].type ) {
         case Room.TileType.WALL:
@@ -24,7 +24,7 @@ public class GenerationProcessor {
           rotation = GetCorrectWallRotation(type, tiles[v].position);
           break;
         case Room.TileType.GROUND:
-          type = ExtendedTileType.Ground;
+          type = GetRandomGroundType();
           break;
         case Room.TileType.DOOR:
           type = GetCorrectDoorType(tiles, v);
@@ -39,10 +39,10 @@ public class GenerationProcessor {
     return root;
   }
 
-  private GameObject CreateGOFromType(Vector2 v, int rotation, Room.TileType type, ExtendedTileType t, GameObject root) {
+  public GameObject CreateGOFromType(Vector2 v, int rotation, Room.TileType type, ExtendedTileType t, GameObject root) {
     GameObject tmp = null;
     if (type != Room.TileType.GROUND)
-      CreateGOFromType(v, 0, Room.TileType.GROUND, ExtendedTileType.Ground, root);
+      CreateGOFromType(v, 0, Room.TileType.GROUND, GetRandomGroundType(), root);
     if ( prefabs.ContainsKey(t) && root != null ) {
       tmp = Object.Instantiate(prefabs[t], root.transform);
       tmp.transform.position = v;
@@ -194,7 +194,6 @@ public class GenerationProcessor {
           return 90;
         toCheck = position + new Vector2Int(1, 0);
         return 0;
-        break;
       case ExtendedTileType.DoorInner:
         Vector2Int toCheckD = position + new Vector2Int(0, -1);
         if(tiles.ContainsKey(toCheckD) && tiles[toCheckD].type == Room.TileType.DOOR)
@@ -202,5 +201,19 @@ public class GenerationProcessor {
         return 0;
     }
     return 0;
+  }
+
+  private ExtendedTileType GetRandomGroundType() {
+    int num = (int) (UnityEngine.Random.value * 4);
+    switch(num) {
+      case 0:
+        return ExtendedTileType.Ground0;
+      case 1:
+        return ExtendedTileType.Ground1;
+      case 2:
+        return ExtendedTileType.Ground2;
+      default:
+        return ExtendedTileType.Ground3;
+    }
   }
 }

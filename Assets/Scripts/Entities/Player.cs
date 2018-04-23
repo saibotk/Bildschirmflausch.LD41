@@ -2,6 +2,8 @@
 using UnityEngine;
 
 public class Player : Mob {
+
+    Rigidbody2D body;
     
     [SerializeField]
     private GameObject bulletPrefab;
@@ -26,6 +28,7 @@ public class Player : Mob {
         g.SetPrefab(bulletPrefab);
         g.SetSpawn(bulletSpawn);
         ggun = g;
+        body = GetComponent<Rigidbody2D>();
         SetAttack(s);
     }
 
@@ -47,6 +50,10 @@ public class Player : Mob {
                 nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime();
             }
         }
+        // scale particle emissions by speed
+        float velocity = body.velocity.magnitude;
+        ParticleSystem.EmissionModule emission = GetComponentInChildren<ParticleSystem>().emission;
+        emission.rateOverTime = velocity * (velocity / 2) * 20 + 20;
     }
 
 
@@ -73,6 +80,6 @@ public class Player : Mob {
     protected override void Death() {
         Debug.Log("Player died...");
         Destroy(this.gameObject);
-        GameController.instance.ChangeState(GameController.GameState.ENDED);
+		GameController.instance.EndGame(GameController.EndedCause.DIED);
     }
 }
