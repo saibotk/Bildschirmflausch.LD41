@@ -13,6 +13,8 @@ public class AudioControl : MonoBehaviour
     public enum Sfx { shoot, explosion, mobattack };
 
     private const float lvlbgm = 37.879f;
+    private const float gobgm = 14.406f;
+    private const float loopdelay = 0.05f;
     private bool menu;
 
     // Use this for initialization
@@ -20,15 +22,14 @@ public class AudioControl : MonoBehaviour
     {
         maintheme.loop = true;
         gameovers.loop = true;
-        maintheme.Play();
     }
 
     private void Update()
     {
-        if (maintheme.time >= 99.0f)
+        if (maintheme.time >= maintheme.clip.length - loopdelay)
             maintheme.time = lvlbgm;
-        if (gameovers.time >= 22.85f)
-            gameovers.time = 3;
+        if (gameovers.time >= gameovers.clip.length - loopdelay)
+            gameovers.time = gobgm;
     }
 
     public void GameOverBgm()
