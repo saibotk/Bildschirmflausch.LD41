@@ -80,6 +80,6 @@ public class Player : Mob {
     protected override void Death() {
         Debug.Log("Player died...");
         Destroy(this.gameObject);
-        GameController.instance.ChangeState(GameController.GameState.ENDED);
+		GameController.instance.EndGame(GameController.EndedCause.DIED);
     }
 }
