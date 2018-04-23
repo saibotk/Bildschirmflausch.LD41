@@ -67,12 +67,15 @@ public class AudioControl : MonoBehaviour
         soundeffects[sound].Stop();
     }
 
+	public void SfxStop(Sfx sound) {
+		SfxStop((int)sound);
+	}
 
     public bool SfxPlaying(int sound)
     {
         return soundeffects[sound].isPlaying;
     }
-
+   
     public void SetMasterVolume(float nvol)
     {
         mixer.SetFloat("masterVolume", Mathf.Clamp(nvol, -80f, 20f));

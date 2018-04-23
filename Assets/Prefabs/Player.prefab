@@ -435,7 +435,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1379543051791382, guid: c6c321ecc6516374781405a54c1fa6a7,
     type: 2}
   bulletSpawn: {fileID: 4676354101874032}
-  carDamage: 5
 --- !u!114 &114874769993434856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -452,6 +451,9 @@ MonoBehaviour:
   turnSpeed: 2
   drift: 1
   brake: 2
+  maxBrakeTime: 30
+  accelerationTime: 2.115
+  decelerationTime: 1.2346
 --- !u!198 &198696209911726984
 ParticleSystem:
   m_ObjectHideFlags: 1
