@@ -50,10 +50,10 @@ public class Player : Mob {
                 nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime();
             }
         }
+        // scale particle emissions by speed
         float velocity = body.velocity.magnitude;
         ParticleSystem.EmissionModule emission = GetComponentInChildren<ParticleSystem>().emission;
         emission.rateOverTime = velocity * (velocity / 2) * 20 + 20;
-        Debug.Log(emission.rateOverTime.constant);
     }
 
 

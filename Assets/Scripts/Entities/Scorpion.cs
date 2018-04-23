@@ -11,6 +11,7 @@ namespace Assets.Scripts.Entities {
 
         private void Start() {
             SetAttack(new MeleeAttack(this.gameObject));
+            GetComponentInChildren<ParticleSystem>().Play();
         }
     }
 }
