@@ -13,7 +13,7 @@ public class HealthbarController : MonoBehaviour {
     {
         // if player alive and spawned
         if (player != null)
-        {         
+        {
             //Debug.Log(player.GetHealth());
             UpdatePointer(player.GetHealth());
         }
@@ -28,14 +28,13 @@ public class HealthbarController : MonoBehaviour {
         float offset;
 
         if (player == null) {
-            currentRotation = 0;
-            offset = 0;
+            offset = -currentRotation;
             Debug.Log("Player not found");
         } else {
             //Debug.Log("calculated offset");
             offset = ((playerLife / maxRotation) * 100) - currentRotation;
         }
-
+        offset /= 10;
         gameObject.transform.Rotate(Vector3.forward, offset);
         currentRotation += offset;
     }
