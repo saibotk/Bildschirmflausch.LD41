@@ -928,6 +928,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd625f75dbf83194392a299951cf04fb, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &974873814 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114745107968250074, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+    type: 2}
+  m_PrefabInternal: {fileID: 1379476068}
+  m_Script: {fileID: 11500000, guid: d819f21fefea9da4199b468cca99e711, type: 3}
 --- !u!1 &1028937042
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,6 +1195,46 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224351136746992674, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0.7771459
+      objectReference: {fileID: 0}
+    - target: {fileID: 224351136746992674, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.62932044
+      objectReference: {fileID: 0}
+    - target: {fileID: 224351136746992674, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 224351136746992674, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.7573471
+      objectReference: {fileID: 0}
+    - target: {fileID: 224351136746992674, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -4.5857997
+      objectReference: {fileID: 0}
+    - target: {fileID: 224351136746992674, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0.06394628
+      objectReference: {fileID: 0}
+    - target: {fileID: 224351136746992674, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0.06415958
+      objectReference: {fileID: 0}
+    - target: {fileID: 114917026543374048, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: brakeBarController
+      value: 
+      objectReference: {fileID: 974873814}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 460d856ea4eb14cedb5fecde1fe6d743, type: 2}
   m_IsPrefabParent: 0

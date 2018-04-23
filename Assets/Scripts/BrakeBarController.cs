@@ -4,28 +4,31 @@ using UnityEngine;
 
 public class BrakeBarController : MonoBehaviour {
 
-    float currentRotation;
-    float maxRotation;
+    float maxRotation = 129;
+    float currentRotation = 0;
     private Player player;
 
     // Update is called once per frame
     void Update() {
+        float offset = 0;
         // if player alive and spawned
-        if ( player != null ) {
-            UpdatePointer(maxRotation);
-        } else if (currentRotation != 0) {
-            //if player dead or not spawned
-            UpdatePointer(0);
+        if (player != null) {
+            offset = CalculateOffset();
         }
+        else {
+            offset = -currentRotation;
+        }
+        currentRotation += offset;
+        gameObject.transform.Rotate(Vector3.forward, -offset);
     }
 
-    private void UpdatePointer(float brakesLeft) {
-        float offset = brakesLeft - currentRotation;
-        gameObject.transform.Rotate(Vector3.forward, offset);
-        currentRotation += offset;
+    private float CalculateOffset() {
+        return (maxRotation * (player.GetComponent<PlayerMovement>().brakeTime / player.GetComponent<PlayerMovement>().maxBrakeTime)) - currentRotation;
     }
 
     public void SetPlayer(Player ply) {
         player = ply;
+        maxRotation = 129;
+        currentRotation = 0;
     }
 }
