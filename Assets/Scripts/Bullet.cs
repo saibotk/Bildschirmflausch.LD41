@@ -16,6 +16,10 @@ public class Bullet : MonoBehaviour {
 
     }
 
+    public void SetSpeed(float spd) {
+        speed = spd;
+    }
+
     public void SetDamage(int dmg) {
         damage = dmg;
     }

@@ -30,7 +30,7 @@ public class Door : MonoBehaviour {
     public void SetParent(Room room) {
         this.parent = room;
     }
-
+   
     /// <summary>
     /// Locks the door.
     /// </summary>
@@ -65,13 +65,15 @@ public class Door : MonoBehaviour {
     /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision) {
         if ( collision.tag == "Player") {
-            // TODO better checks
+			Player player = collision.gameObject.GetComponent<Player>();
+			if ((boundingBox.offset - parent.GetCenter()).sqrMagnitude < ((Vector2) player.transform.position - parent.GetCenter()).sqrMagnitude)
+				return;
             Debug.Log("Leaving Trigger");
             if(parent == null) {
                 Debug.Log("This door has no parent Room!");
                 return;
             }
-            parent.OnPlayerEnter(collision.gameObject.GetComponent<Player>());
+            parent.OnPlayerEnter(player);
         }
     }
 }

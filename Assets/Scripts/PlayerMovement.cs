@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-    private bool firstKeyPressed;
+    bool firstKeyPressed;
+    bool messagePosted;
 
     [SerializeField]
     public float acceleration = 3;
@@ -19,9 +20,14 @@ public class PlayerMovement : MonoBehaviour {
     // Use this for initialization
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        messagePosted = false;
     }
 
     void Update() {
+        if (!firstKeyPressed && !messagePosted) {
+            messagePosted = true;
+            GameController.instance.GetUI().GetNotificationManager().ShowMessage("Press any key to start!", 2);
+        }
         if ( !firstKeyPressed && Input.anyKey ) {
             firstKeyPressed = true;
         }
@@ -57,11 +63,20 @@ public class PlayerMovement : MonoBehaviour {
             //Debug.Log(br);
             Debug.DrawLine(transform.position, transform.position + br, Color.red, 0.01f, false);
         }
-        if ( Input.GetAxis("Horizontal") < 0 )
-            rb.MoveRotation(rb.rotation + turnSpeed);
         //transform.Rotate(Vector3.forward * turnSpeed);
-        if ( Input.GetAxis("Horizontal") > 0 )
-            rb.MoveRotation(rb.rotation - turnSpeed);
+        if (Input.GetAxis("Horizontal") < 0)
+        {
+			//rb.rotation += turnSpeed;
+            rb.MoveRotation(rb.rotation + turnSpeed);
+        } else
+        //transform.Rotate(Vector3.forward * turnSpeed);
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+			//rb.rotation -= turnSpeed;
+			rb.MoveRotation(rb.rotation - turnSpeed);
+		} else {
+			rb.MoveRotation(rb.rotation);
+		}
         //transform.Rotate(Vector3.forward * -turnSpeed);
         // Debug lines
         Debug.DrawLine(transform.position, transform.position + speedVec, Color.magenta, 0.01f, false);

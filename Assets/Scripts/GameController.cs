@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour {
     [Header("Enemys")]
     [SerializeField]
     GameObject scorpion;
+    [SerializeField]
+    GameObject bug;
 
     [Space(10)]
     // Generation Settings
@@ -27,7 +29,13 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     GameObject BorderSingle;
     [SerializeField]
-    GameObject Ground;
+    GameObject Ground0;
+    [SerializeField]
+    GameObject Ground1;
+    [SerializeField]
+    GameObject Ground2;
+    [SerializeField]
+    GameObject Ground3;
     [SerializeField]
     GameObject DoorInner;
     [SerializeField]
@@ -61,9 +69,11 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     GameObject RockLUR;
     [SerializeField]
-    GameObject RockURD;
+	GameObject RockURD;
     [SerializeField]
-    GameObject RockLRD;
+	GameObject RockLRD;
+    [SerializeField]
+    GameObject Flag;
 
     private Dictionary<GenerationProcessor.ExtendedTileType, GameObject> genPrefabs;
     private Dictionary<Enemy.Enemys, GameObject> enemyPrefabs;
@@ -116,13 +126,18 @@ public class GameController : MonoBehaviour {
             { GenerationProcessor.ExtendedTileType.RockLUD, RockLUD },
             { GenerationProcessor.ExtendedTileType.RockLUR, RockLUR },
             { GenerationProcessor.ExtendedTileType.RockURD, RockURD },
-            { GenerationProcessor.ExtendedTileType.RockLRD, RockLRD },
-            { GenerationProcessor.ExtendedTileType.Ground, Ground },
-            { GenerationProcessor.ExtendedTileType.DoorInner, DoorInner },
-            { GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter }
+			{ GenerationProcessor.ExtendedTileType.RockLRD, RockLRD },
+			{ GenerationProcessor.ExtendedTileType.Ground0, Ground0 },
+			{ GenerationProcessor.ExtendedTileType.Ground1, Ground1 },
+			{ GenerationProcessor.ExtendedTileType.Ground2, Ground2 },
+			{ GenerationProcessor.ExtendedTileType.Ground3, Ground3 },
+			{ GenerationProcessor.ExtendedTileType.DoorInner, DoorInner },
+			{ GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter },
+            { GenerationProcessor.ExtendedTileType.Flag, Flag }
         };
         enemyPrefabs = new Dictionary<Enemy.Enemys, GameObject> {
-            { Enemy.Enemys.SCORPION, scorpion }
+            { Enemy.Enemys.SCORPION, scorpion },
+            { Enemy.Enemys.BUG, bug }
         };
 
     }
@@ -219,9 +234,10 @@ public class GameController : MonoBehaviour {
         finish.SetDoorsRootObject(doorRootf);
         finish.Reload();
         finish.transform.SetParent(mapRoot.transform);
+		gp.CreateGOFromType(finish.GetCenter(), 0, Room.TileType.DOOR, GenerationProcessor.ExtendedTileType.Flag, goFinish);
 
-        // Other Rooms
-        foreach (GenRoom gr in dg.rooms) {
+		// Other Rooms
+		foreach (GenRoom gr in dg.rooms) {
             GameObject groom = gp.ProcessRoom(gr.tiles);
             List<Transform> ltg = new List<Transform>(groom.GetComponentsInChildren<Transform>());
 
@@ -291,7 +307,8 @@ public class GameController : MonoBehaviour {
                 cam.GetComponent<AudioControl>().GameOverBgm();
                 ui.GetComponent<UIController>().ShowGameOverUI();
             } else if(endCause == EndedCause.WIN) {
-                //cam.GetComponent<AudioControl>().SfxPlay(2);
+				//cam.GetComponent<AudioControl>().SfxPlay(2);
+				player.InflictDamage(int.MaxValue/2);
                 ui.GetComponent<UIController>().ShowWinUI();
             }
         } else {
@@ -316,6 +333,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void EndGame(EndedCause cause) {
+		if (endCause != null && state == GameState.ENDED)
+			return; // Already ended game
         endCause = cause;
         ChangeState(GameState.ENDED);
     }

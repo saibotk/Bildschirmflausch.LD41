@@ -135,7 +135,7 @@ public class DungeonGenerator {
                 }
 			allDoors.UnionWith(r.AllDoors());
             foreach ( Vector2Int v in r.AllDoors() ) {
-                Debug.Log("Door: " + v);
+                //Debug.Log("Door: " + v);
                 if ( !r.bounds.Contains(v) )
                     throw new NotSupportedException("This is a bug where doors land in the wrong room. It should have been fixed.");
                 else
@@ -432,7 +432,7 @@ public class DungeonGenerator {
                     r.tiles[pos].type = Room.TileType.ROCK;
 					continue;
                 }
-				float prob2 = 0.02f;
+				float prob2 = 0.04f;
 				if (UnityEngine.Random.value > 1 - prob2)
 				{
 					r.spawnpoints.Add(pos);
@@ -443,17 +443,35 @@ public class DungeonGenerator {
 
     public static void GenerateObjective(Room r) {
         Dictionary<Enemy.Enemys, GameObject> enemyPrefabs = GameController.instance.GetEnemyPrefabs(); // TODO not so cool
-        // TODO add more types
-        Objective o;
+        
+        Objective o = null;
 
-        // ENTITYOBJECTIVE ENEMYS:
-        List<GameObject> lg = new List<GameObject>();
-        //GameObject scorp = enemyPrefabs[Enemy.Enemys.SCORPION];
-        lg.Add(enemyPrefabs[Enemy.Enemys.SCORPION]);
-        EntityObjective eo = new EntityObjective(r, lg);
-        o = eo;
-
-
+        int rand = UnityEngine.Random.Range(0, 2);
+        switch (rand) {
+            case 0: {
+                    // Scorpion Attack!!!!:
+                    List<GameObject> lg = new List<GameObject>();
+                    int count = UnityEngine.Random.Range(1, r.GetSpawnpoints().Count);
+                    for ( int c = 0; c < count; c++ ) {
+                        lg.Add(enemyPrefabs[Enemy.Enemys.SCORPION]);
+                    }
+                    EntityObjective eo = new EntityObjective(r, lg);
+                    o = eo;
+                }
+                break;
+            case 1: {
+                    // Bug Attack!!!!:
+                    List<GameObject> lg = new List<GameObject>();
+                    int count = UnityEngine.Random.Range(1, r.GetSpawnpoints().Count);
+                    for ( int c = 0; c < count; c++ ) {
+                        lg.Add(enemyPrefabs[Enemy.Enemys.BUG]);
+                    }
+                    EntityObjective eo = new EntityObjective(r, lg);
+                    o = eo;
+                }
+                break;
+        }
+        
         r.SetObjective(o);
     }
 }
