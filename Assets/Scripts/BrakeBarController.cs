@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BrakeBarController : MonoBehaviour {
 
-    float currentRotation;
+
     int BrakeAmount = 100;
     private Player player;
     float firstTime;
@@ -22,16 +22,13 @@ public class BrakeBarController : MonoBehaviour {
         {
             UpdatePointer();
         }
-        else if (currentRotation != 0)
-        {
-            //if player dead or not spawned
-            UpdatePointer();
+        
         }
 
-    }
+    
     private void UpdatePointer()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             firstTime = Time.time;
         }
