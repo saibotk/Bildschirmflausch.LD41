@@ -497,6 +497,17 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114835806183609276, guid: 3d1911457c1e44f53b6b4044334db52f,
+        type: 2}
+      propertyPath: bulletSpawn
+      value: 
+      objectReference: {fileID: 2032758561}
+    - target: {fileID: 114835806183609276, guid: 3d1911457c1e44f53b6b4044334db52f,
+        type: 2}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 1379543051791382, guid: c6c321ecc6516374781405a54c1fa6a7,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d1911457c1e44f53b6b4044334db52f, type: 2}
   m_IsPrefabParent: 0
@@ -840,7 +851,7 @@ Prefab:
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 64.16286
+      value: 66.396866
       objectReference: {fileID: 0}
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
@@ -872,6 +883,15 @@ Prefab:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1604998495297016, guid: 460d856ea4eb14cedb5fecde1fe6d743, type: 2}
+      propertyPath: m_Name
+      value: RestartPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 114917026543374048, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: restartUIPanel
+      value: 
+      objectReference: {fileID: 1755791938}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 460d856ea4eb14cedb5fecde1fe6d743, type: 2}
   m_IsPrefabParent: 0
@@ -1074,6 +1094,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1755791938 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1604998495297016, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+    type: 2}
+  m_PrefabInternal: {fileID: 1379476068}
 --- !u!1 &1908750961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,6 +1224,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &2032758561 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4676354101874032, guid: 3d1911457c1e44f53b6b4044334db52f,
+    type: 2}
+  m_PrefabInternal: {fileID: 865504979}
 --- !u!1 &2063368131
 GameObject:
   m_ObjectHideFlags: 0

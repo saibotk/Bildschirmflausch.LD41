@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 222889581033239706}
   - component: {fileID: 114750232192698844}
   m_Layer: 5
-  m_Name: GameOverPanel
+  m_Name: RestartPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -760,8 +760,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notifications: {fileID: 114700265308343224}
-  gameOverPanel: {fileID: 1604998495297016}
+  restartUIPanel: {fileID: 1604998495297016}
   healthcontroller: {fileID: 114617351635937986}
+  mainMenuSceneIndex: 0
 --- !u!114 &114930219842054174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1058,7 +1059,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 64.16286, y: 0}
+  m_AnchoredPosition: {x: 66.396866, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224218339018349506

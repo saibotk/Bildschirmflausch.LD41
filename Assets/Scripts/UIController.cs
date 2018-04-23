@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class UIController : MonoBehaviour
     NotificationManager notifications;
 
     [SerializeField]
-    GameObject gameOverPanel;
+    GameObject restartUIPanel;
 
     [SerializeField]
     HealthbarController healthcontroller;
@@ -48,12 +49,20 @@ public class UIController : MonoBehaviour
     }
 
     public void ShowGameOverUI() {
-        if (gameOverPanel != null) {
-            Debug.Log("Loaded Canvas");
-            gameOverPanel.SetActive(true);
+        ShowRestartUI(false);
+    }
 
+    public void ShowWinUI() {
+        ShowRestartUI(true);
+    }
+
+    void ShowRestartUI(bool won) {
+        string headerText = won ? "You won!" : "Game Over";
+        if (restartUIPanel != null) {
+            restartUIPanel.SetActive(true);
+            restartUIPanel.GetComponent<Text>().text = headerText;
         } else {
-            Debug.Log("No game over panel assigned");
+            Debug.Log("No restart panel assigned");
         }
     }
 
