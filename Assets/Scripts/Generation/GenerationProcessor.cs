@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenerationProcessor {
   public enum ExtendedTileType {
-    BorderOuter, BorderInner, BorderSingle, Ground0, Ground1, Ground2, Ground3, DoorInner, DoorOuter, Rock, RockL, RockU, RockR, RockD, RockLU, RockLR, RockLD, RockUR, RockUD, RockRD, RockLURD, RockLUD, RockLUR, RockURD, RockLRD
+		BorderOuter, BorderInner, BorderSingle, Ground0, Ground1, Ground2, Ground3, DoorInner, DoorOuter, Rock, RockL, RockU, RockR, RockD, RockLU, RockLR, RockLD, RockUR, RockUD, RockRD, RockLURD, RockLUD, RockLUR, RockURD, RockLRD, Flag
   }
   Dictionary<ExtendedTileType, GameObject> prefabs;
   public GenerationProcessor(Dictionary<ExtendedTileType, GameObject> prefabs) {
@@ -39,7 +39,7 @@ public class GenerationProcessor {
     return root;
   }
 
-  private GameObject CreateGOFromType(Vector2 v, int rotation, Room.TileType type, ExtendedTileType t, GameObject root) {
+  public GameObject CreateGOFromType(Vector2 v, int rotation, Room.TileType type, ExtendedTileType t, GameObject root) {
     GameObject tmp = null;
     if (type != Room.TileType.GROUND)
       CreateGOFromType(v, 0, Room.TileType.GROUND, GetRandomGroundType(), root);
