@@ -23,7 +23,7 @@ public class Player : Mob {
 
     void Update() {
         if ( Time.timeSinceLevelLoad >= nextAttackTime && attack != null) {
-            if ( Input.GetKey(KeyCode.Space) ) {
+            if ( Input.GetAxis("Fire") > 0 ) {
                 Debug.Log("Attack pressed!");
                 attack.Attack();
                 nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime();

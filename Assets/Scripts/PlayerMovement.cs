@@ -36,13 +36,13 @@ public class PlayerMovement : MonoBehaviour {
 
 		{ // Forward
 			Vector3 acc = transform.up * acceleration;
-            if (Input.GetKey(KeyCode.S))
+            if (Input.GetAxis("Vertical") < 0)
                 acc *= 0;
             rb.AddForce(acc);
         }
 		{// Drag
 			Vector3 drag = speedVec.normalized * speed * speed * friction * -1;
-			if (Input.GetKey(KeyCode.S)) {
+            if (Input.GetAxis("Vertical") < 0) {
 				drag *= brake;
 				drag *= speed;
      		}
@@ -57,10 +57,10 @@ public class PlayerMovement : MonoBehaviour {
             //Debug.Log(br);
             Debug.DrawLine(transform.position, transform.position + br, Color.red, 0.01f, false);
         }
-        if ( Input.GetKey(KeyCode.A) )
+        if ( Input.GetAxis("Horizontal") < 0 )
             rb.MoveRotation(rb.rotation + turnSpeed);
         //transform.Rotate(Vector3.forward * turnSpeed);
-        if ( Input.GetKey(KeyCode.D) )
+        if ( Input.GetAxis("Horizontal") > 0 )
             rb.MoveRotation(rb.rotation - turnSpeed);
         //transform.Rotate(Vector3.forward * -turnSpeed);
         // Debug lines
