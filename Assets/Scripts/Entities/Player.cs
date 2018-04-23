@@ -45,9 +45,8 @@ public class Player : Mob {
         }
         if ( Time.timeSinceLevelLoad >= nextAttackTime && attack != null) {
             if ( Input.GetAxis("Fire") > 0 ) {
-                Debug.Log("Attack pressed!");
                 attack.Attack();
-                nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime();
+                nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime(); // Todo put in attack()
             }
         }
         // scale particle emissions by speed

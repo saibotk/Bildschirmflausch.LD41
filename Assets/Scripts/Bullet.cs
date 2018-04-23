@@ -7,13 +7,17 @@ public class Bullet : MonoBehaviour {
     protected float speed = 1;
     [SerializeField]
     int damage = 0;
-
-    GameObject owner;
+    [SerializeField]
+    bool start = false;
+    string ownertag;
     Rigidbody2D body;
 	// Use this for initialization
 	void Start () {
         body = GetComponent<Rigidbody2D>();
+    }
 
+    public void StartBullet() {
+        start = true;
     }
 
     public void SetSpeed(float spd) {
@@ -25,25 +29,25 @@ public class Bullet : MonoBehaviour {
     }
 
     public void SetOwner(GameObject ow) {
-        owner = ow;
+        ownertag = ow.tag;
     }
 
     private void FixedUpdate() {
-        if ( owner == null )
+        if ( start == false )
             return;
         body.MovePosition(transform.position + transform.localRotation * Vector3.up * speed * Time.fixedDeltaTime);
     }
 
     void OnTriggerEnter2D(Collider2D collider) {
-        if ( owner == null )
+        if ( ownertag == null )
             return;
         
-        if ( collider.gameObject.tag != owner.tag ) {
+        if ( collider.gameObject.tag != ownertag ) {
             Mob m = collider.gameObject.GetComponent(typeof(Mob)) as Mob;
             if (m != null) {
                 m.InflictDamage(damage);
             }
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         
     }

@@ -333,7 +333,7 @@ public class GameController : MonoBehaviour {
     }
 
     public void EndGame(EndedCause cause) {
-		if (endCause != null && state == GameState.ENDED)
+		if (state == GameState.ENDED)
 			return; // Already ended game
         endCause = cause;
         ChangeState(GameState.ENDED);

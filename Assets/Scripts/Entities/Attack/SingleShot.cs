@@ -41,7 +41,8 @@ namespace Assets.Scripts.Entities.Attack {
             bu.SetDamage(damage);
             bu.SetSpeed(speed);
             bu.SetOwner(owner);
-			GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.shoot);
+            bu.StartBullet();
+            GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.shoot);
         }
 
         public float GetCooldownTime() {
