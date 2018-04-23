@@ -1017,7 +1017,7 @@ Prefab:
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 63.233368
+      value: 65.89836
       objectReference: {fileID: 0}
     - target: {fileID: 224150154901314796, guid: 460d856ea4eb14cedb5fecde1fe6d743,
         type: 2}
@@ -1451,7 +1451,7 @@ MonoBehaviour:
   RockLUR: {fileID: 1938166751346222, guid: 6b83a6a46c57a634fa5085684bad0085, type: 2}
   RockURD: {fileID: 1437035058628240, guid: 30338afac8ce7054fbff8de89db815e8, type: 2}
   RockLRD: {fileID: 1251219893662246, guid: e37e0c5d4b013304cbcb32b223264452, type: 2}
-  Flag: {fileID: 1971451785855062, guid: ff87b9de73979cd40a9853419833a91f, type: 2}
+  Flag: {fileID: 1065161683117842, guid: 06aa81f4fbf9a3a4a8f9fdadafcbf7fa, type: 2}
   playerPrefab: {fileID: 1679161327080020, guid: 3d1911457c1e44f53b6b4044334db52f,
     type: 2}
   ui: {fileID: 1379476069}
