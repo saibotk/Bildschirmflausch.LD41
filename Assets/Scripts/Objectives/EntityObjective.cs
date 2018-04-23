@@ -38,8 +38,7 @@ public class EntityObjective : Objective {
             GameObject tempObject = GameObject.Instantiate(i);
             List<Transform> spawnPointList = room.GetSpawnpoints();
             tempObject.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].position;
-            tempObject.GetComponent<Enemy>().SetVictim(player.gameObject);
-            tempObject.GetComponent<Enemy>().SetObjective(this);
+            tempObject.GetComponent<Entity>().SetObjective(this);
             entityList.Add(tempObject);
         }
 

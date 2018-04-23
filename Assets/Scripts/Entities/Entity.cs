@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour {
+    public enum Entities {
+        SCORPION,
+        BUG,
+        COIN
+    }
+
     protected EntityObjective objective;
 
     /// <summary>

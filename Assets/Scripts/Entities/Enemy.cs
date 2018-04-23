@@ -5,10 +5,6 @@ using Assets.Scripts.Entities.Attack;
 
 namespace Assets.Scripts.Entities {
     public class Enemy : Mob {
-        public enum Enemys {
-            SCORPION,
-            BUG
-        }
 
         [SerializeField]
         private float speed = 1;
@@ -31,11 +27,23 @@ namespace Assets.Scripts.Entities {
                     ps.Play();
                 }
             }
+            if ( objective != null ) {
+                Player ply = objective.GetPlayer();
+                if ( ply != null )
+                    victim = ply.gameObject;
+            }
+                
+                
         }
 
         void Update() {
             
             if ( victim == null || attack == null ) {
+                if ( objective != null ) {
+                    Player ply = objective.GetPlayer();
+                    if ( ply != null )
+                        victim = ply.gameObject;
+                }
                 return;
             }
 
@@ -63,10 +71,6 @@ namespace Assets.Scripts.Entities {
             body.velocity = new Vector2(distanceToEnemy.normalized.x, distanceToEnemy.normalized.y) * speed;
 
             
-        }
-
-        public void SetVictim(GameObject g) {
-            victim = g;
         }
     }
 }

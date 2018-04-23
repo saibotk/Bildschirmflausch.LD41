@@ -12,7 +12,7 @@ namespace Assets.Scripts.Entities
 
         }
 
-        private void Start()
+        protected override void Start()
         {
             SetAttack(new SingleShot(this.gameObject));
         }

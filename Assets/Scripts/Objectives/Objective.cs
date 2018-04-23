@@ -47,5 +47,9 @@ public abstract class Objective {
         return finished;
     }
 
+    public Player GetPlayer() {
+        return player;
+    }
+
 
 }

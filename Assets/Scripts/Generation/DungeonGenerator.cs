@@ -442,18 +442,18 @@ public class DungeonGenerator {
     }
 
     public static void GenerateObjective(Room r) {
-        Dictionary<Enemy.Enemys, GameObject> enemyPrefabs = GameController.instance.GetEnemyPrefabs(); // TODO not so cool
+        Dictionary<Entity.Entities, GameObject> enemyPrefabs = GameController.instance.GetEntitiesPrefabs(); // TODO not so cool
         
         Objective o = null;
 
-        int rand = UnityEngine.Random.Range(0, 2);
+        int rand = UnityEngine.Random.Range(0, 3);
         switch (rand) {
             case 0: {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
                     int count = UnityEngine.Random.Range(1, r.GetSpawnpoints().Count);
                     for ( int c = 0; c < count; c++ ) {
-                        lg.Add(enemyPrefabs[Enemy.Enemys.SCORPION]);
+                        lg.Add(enemyPrefabs[Entity.Entities.SCORPION]);
                     }
                     EntityObjective eo = new EntityObjective(r, lg);
                     o = eo;
@@ -464,12 +464,23 @@ public class DungeonGenerator {
                     List<GameObject> lg = new List<GameObject>();
                     int count = UnityEngine.Random.Range(1, r.GetSpawnpoints().Count);
                     for ( int c = 0; c < count; c++ ) {
-                        lg.Add(enemyPrefabs[Enemy.Enemys.BUG]);
+                        lg.Add(enemyPrefabs[Entity.Entities.BUG]);
                     }
                     EntityObjective eo = new EntityObjective(r, lg);
                     o = eo;
                 }
                 break;
+            case 2: {
+                    // Coins!!!!:
+                    List<GameObject> lg = new List<GameObject>();
+                    int count = UnityEngine.Random.Range(1, (int) Mathf.Floor(r.GetSpawnpoints().Count / 2));
+                    for ( int c = 0; c < count; c++ ) {
+                        lg.Add(enemyPrefabs[Entity.Entities.COIN]);
+                    }
+                    EntityObjective eo = new EntityObjective(r, lg);
+                    o = eo;
+                }
+            break;
         }
         
         r.SetObjective(o);

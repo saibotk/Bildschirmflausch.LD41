@@ -13,11 +13,13 @@ public class GameController : MonoBehaviour {
     }
 
     // Enemy Prefabs
-    [Header("Enemys")]
+    [Header("Entities")]
     [SerializeField]
     GameObject scorpion;
     [SerializeField]
     GameObject bug;
+    [SerializeField]
+    GameObject coin;
 
     [Space(10)]
     // Generation Settings
@@ -76,7 +78,7 @@ public class GameController : MonoBehaviour {
     GameObject Flag;
 
     private Dictionary<GenerationProcessor.ExtendedTileType, GameObject> genPrefabs;
-    private Dictionary<Enemy.Enemys, GameObject> enemyPrefabs;
+    private Dictionary<Entity.Entities, GameObject> entitiesPrefabs;
 
     [Space(10)]
     [Header("References")]
@@ -135,9 +137,10 @@ public class GameController : MonoBehaviour {
 			{ GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter },
             { GenerationProcessor.ExtendedTileType.Flag, Flag }
         };
-        enemyPrefabs = new Dictionary<Enemy.Enemys, GameObject> {
-            { Enemy.Enemys.SCORPION, scorpion },
-            { Enemy.Enemys.BUG, bug }
+        entitiesPrefabs = new Dictionary<Entity.Entities, GameObject> {
+            { Entity.Entities.SCORPION, scorpion },
+            { Entity.Entities.BUG, bug },
+            { Entity.Entities.COIN, coin }
         };
 
     }
@@ -327,8 +330,8 @@ public class GameController : MonoBehaviour {
         return ui.GetComponent<UIController>();
     }
 
-    public Dictionary<Enemy.Enemys, GameObject> GetEnemyPrefabs() {
-        return enemyPrefabs;
+    public Dictionary<Entity.Entities, GameObject> GetEntitiesPrefabs() {
+        return entitiesPrefabs;
     }
 
     public bool GameEnded() {
