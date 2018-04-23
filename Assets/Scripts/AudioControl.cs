@@ -13,7 +13,7 @@ public class AudioControl : MonoBehaviour
 
     public enum Sfx { shoot, explosion, mobattack };
 
-    private const float lvlbgm = 37.879f;
+    private const float lvlbgm = 6.79f;
     private const float gobgm = 14.406f;
     private const float loopdelay = 0.05f;
     private bool menu;
@@ -49,7 +49,7 @@ public class AudioControl : MonoBehaviour
 
     public void LevelBgm()
     {
-        maintheme.PlayDelayed(1.3f);
+        maintheme.Play();
     }
 
     public void SfxPlay(int sound)
