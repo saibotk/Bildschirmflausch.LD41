@@ -1276,7 +1276,8 @@ MonoBehaviour:
   BorderSingle: {fileID: 1277252496101342, guid: ed9537580662f6046a1514a4c5bfdd98,
     type: 2}
   Ground: {fileID: 1487413182883822, guid: bc8a58beb0459094483211a5c7933959, type: 2}
-  Door: {fileID: 1065161683117842, guid: 06aa81f4fbf9a3a4a8f9fdadafcbf7fa, type: 2}
+  DoorInner: {fileID: 1065161683117842, guid: 06aa81f4fbf9a3a4a8f9fdadafcbf7fa, type: 2}
+  DoorOuter: {fileID: 1575370008060226, guid: 70bf9bb227285e74383db2dc84cc6c50, type: 2}
   Rock: {fileID: 1373919933116942, guid: 5f26192f79d542e49ad24fadc39f5654, type: 2}
   RockL: {fileID: 1411303269485816, guid: 92068b1ee4568d045b60c249ba57c186, type: 2}
   RockU: {fileID: 1990883489100502, guid: c44f475306efef3438b85a84f91fcf81, type: 2}

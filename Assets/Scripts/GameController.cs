@@ -20,7 +20,9 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     GameObject Ground;
     [SerializeField]
-    GameObject Door;
+    GameObject DoorInner;
+    [SerializeField]
+    GameObject DoorOuter;
     [SerializeField]
     GameObject Rock;
     [SerializeField]
@@ -106,7 +108,8 @@ public class GameController : MonoBehaviour {
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockURD, RockURD);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLRD, RockLRD);
         genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground, Ground);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Door, Door);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.DoorInner, DoorInner);
+        genPrefabs.Add(GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter);
     }
 
     // Update is called once per frame
@@ -154,7 +157,7 @@ public class GameController : MonoBehaviour {
         GenerationProcessor gp = new GenerationProcessor(genPrefabs);
         dg.Generate();
 
-        // Start room 
+        // Start room
         GameObject goStart = gp.ProcessRoom(dg.start.tiles);
         goStart.name = "Start";
         List<Transform> lt = new List<Transform>(goStart.GetComponentsInChildren<Transform>());
