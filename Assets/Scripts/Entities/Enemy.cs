@@ -4,7 +4,11 @@ using UnityEngine;
 using Assets.Scripts.Entities.Attack;
 
 namespace Assets.Scripts.Entities {
-    class Enemy : Mob {
+    public class Enemy : Mob {
+        public enum Enemys {
+            SCORPION,
+            BUG
+        }
 
         [SerializeField]
         private float speed = 1;

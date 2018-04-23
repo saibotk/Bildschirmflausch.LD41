@@ -1,10 +1,9 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Entities;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
-
-
 
     private Room start;
     private Room finish;
@@ -13,6 +12,12 @@ public class GameController : MonoBehaviour {
         WIN, DIED
     }
 
+    // Enemy Prefabs
+    [Header("Enemys")]
+    [SerializeField]
+    GameObject scorpion;
+
+    [Space(10)]
     // Generation Settings
     [Header("Tile Prefabs")]
     [SerializeField]
@@ -67,6 +72,7 @@ public class GameController : MonoBehaviour {
     GameObject RockLRD;
 
     private Dictionary<GenerationProcessor.ExtendedTileType, GameObject> genPrefabs;
+    private Dictionary<Enemy.Enemys, GameObject> enemyPrefabs;
 
     [Space(10)]
     [Header("References")]
@@ -97,32 +103,37 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        genPrefabs = new Dictionary<GenerationProcessor.ExtendedTileType, GameObject>();
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.BorderOuter, BorderOuter);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.BorderInner, BorderInner);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.BorderSingle, BorderSingle);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Rock, Rock);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockL, RockL);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockU, RockU);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockR, RockR);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockD, RockD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLU, RockLU);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLR, RockLR);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLD, RockLD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLURD, RockLURD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockRD, RockRD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockUR, RockUR);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockUD, RockUD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLUD, RockLUD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLUR, RockLUR);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockURD, RockURD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.RockLRD, RockLRD);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground0, Ground0);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground1, Ground1);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground2, Ground2);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.Ground3, Ground3);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.DoorInner, DoorInner);
-        genPrefabs.Add(GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter);
+        genPrefabs = new Dictionary<GenerationProcessor.ExtendedTileType, GameObject> {
+            { GenerationProcessor.ExtendedTileType.BorderOuter, BorderOuter },
+            { GenerationProcessor.ExtendedTileType.BorderInner, BorderInner },
+            { GenerationProcessor.ExtendedTileType.BorderSingle, BorderSingle },
+            { GenerationProcessor.ExtendedTileType.Rock, Rock },
+            { GenerationProcessor.ExtendedTileType.RockL, RockL },
+            { GenerationProcessor.ExtendedTileType.RockU, RockU },
+            { GenerationProcessor.ExtendedTileType.RockR, RockR },
+            { GenerationProcessor.ExtendedTileType.RockD, RockD },
+            { GenerationProcessor.ExtendedTileType.RockLU, RockLU },
+            { GenerationProcessor.ExtendedTileType.RockLR, RockLR },
+            { GenerationProcessor.ExtendedTileType.RockLD, RockLD },
+            { GenerationProcessor.ExtendedTileType.RockLURD, RockLURD },
+            { GenerationProcessor.ExtendedTileType.RockRD, RockRD },
+            { GenerationProcessor.ExtendedTileType.RockUR, RockUR },
+            { GenerationProcessor.ExtendedTileType.RockUD, RockUD },
+            { GenerationProcessor.ExtendedTileType.RockLUD, RockLUD },
+            { GenerationProcessor.ExtendedTileType.RockLUR, RockLUR },
+            { GenerationProcessor.ExtendedTileType.RockURD, RockURD },
+			{ GenerationProcessor.ExtendedTileType.RockLRD, RockLRD },
+			{ GenerationProcessor.ExtendedTileType.Ground0, Ground0 },
+			{ GenerationProcessor.ExtendedTileType.Ground1, Ground1 },
+			{ GenerationProcessor.ExtendedTileType.Ground2, Ground2 },
+			{ GenerationProcessor.ExtendedTileType.Ground3, Ground3 },
+            { GenerationProcessor.ExtendedTileType.DoorInner, DoorInner },
+            { GenerationProcessor.ExtendedTileType.DoorOuter, DoorOuter }
+        };
+        enemyPrefabs = new Dictionary<Enemy.Enemys, GameObject> {
+            { Enemy.Enemys.SCORPION, scorpion }
+        };
+
     }
 
     // Update is called once per frame
@@ -178,6 +189,7 @@ public class GameController : MonoBehaviour {
         doorRoot.name = "Doors";
         doorRoot.transform.SetParent(goStart.transform);
         start = goStart.AddComponent<Room>();
+        start.SetCenter(dg.start.GetCenter());
         lt = lt.FindAll(x => x.tag == "door");
         lt.ForEach(x => {
             x.SetParent(doorRoot.transform);
@@ -185,7 +197,7 @@ public class GameController : MonoBehaviour {
             });
         start.SetDoorsRootObject(doorRoot);
 
-        // WIP
+        // Spawnpoint
         GameObject spawnpointRoot = new GameObject();
         spawnpointRoot.name = "Spawnpoints";
         spawnpointRoot.transform.SetParent(goStart.transform);
@@ -194,8 +206,9 @@ public class GameController : MonoBehaviour {
         spawn.transform.SetParent(spawnpointRoot.transform);
         spawn.transform.position = new Vector3(dg.start.GetCenter().x, dg.start.GetCenter().y, 0);
         start.SetSpawnPointsRootObject(spawnpointRoot);
-
+        
         start.Reload();
+        
         start.transform.SetParent(mapRoot.transform);
 
         // Finish room
@@ -207,6 +220,7 @@ public class GameController : MonoBehaviour {
         doorRootf.transform.SetParent(goFinish.transform);
         ltf = ltf.FindAll(x => x.tag == "door");
         finish = goFinish.AddComponent<Room>();
+        finish.SetCenter(dg.end.GetCenter());
         ltf.ForEach(x => {
             x.SetParent(doorRootf.transform);
             x.gameObject.GetComponent<Door>().SetParent(finish);
@@ -219,18 +233,34 @@ public class GameController : MonoBehaviour {
         foreach (GenRoom gr in dg.rooms) {
             GameObject groom = gp.ProcessRoom(gr.tiles);
             List<Transform> ltg = new List<Transform>(groom.GetComponentsInChildren<Transform>());
+
+            // Doors
             GameObject doorRootg = new GameObject();
             doorRootg.name = "Doors";
             doorRootg.transform.SetParent(groom.transform);
             Room grom = groom.AddComponent<Room>();
+            grom.SetCenter(gr.GetCenter());
             ltg = ltg.FindAll(x => x.tag == "door");
             ltg.ForEach(x => {
                 x.SetParent(doorRootg.transform);
                 x.gameObject.GetComponent<Door>().SetParent(grom);
                 });
-            
+
+            // Spawnpoints
+            GameObject tSpawnpointRoot = new GameObject();
+            tSpawnpointRoot.name = "Spawnpoints";
+            tSpawnpointRoot.transform.SetParent(groom.transform);
+            tSpawnpointRoot.transform.position = new Vector3(gr.roomPosition.x, gr.roomPosition.y, 0);
+            foreach(Vector2Int v in gr.spawnpoints) {
+                GameObject tspawn = new GameObject();
+                tspawn.transform.SetParent(tSpawnpointRoot.transform);
+                tspawn.transform.position = new Vector3(v.x, v.y, 0); // is this the center or the top left corner of a block?
+            }
+
+            grom.SetSpawnPointsRootObject(tSpawnpointRoot);
             grom.SetDoorsRootObject(doorRootg);
             grom.Reload();
+            DungeonGenerator.GenerateObjective(grom);
             groom.transform.SetParent(mapRoot.transform);
         }
 
@@ -242,6 +272,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Starting() {
+        
         StartObjective goal = new StartObjective(start, playerPrefab);
         start.SetObjective(goal);
         start.OnPlayerEnter(player);
@@ -253,6 +284,7 @@ public class GameController : MonoBehaviour {
             Debug.Log("No Player spawned!");
         }
         finish.SetObjective(new FinishObjective(finish));
+        cam.GetComponent<AudioControl>().LevelBgm();
     }
 
     private void Running() {
@@ -265,13 +297,12 @@ public class GameController : MonoBehaviour {
         if ( ui != null ) {
             Debug.Log("show end UI");
             if(endCause == EndedCause.DIED) {
-                cam.GetComponent<AudioControl>().SfxPlay(2);
+                cam.GetComponent<AudioControl>().GameOverBgm();
                 ui.GetComponent<UIController>().ShowGameOverUI();
             } else if(endCause == EndedCause.WIN) {
                 //cam.GetComponent<AudioControl>().SfxPlay(2);
                 ui.GetComponent<UIController>().ShowWinUI();
             }
-            
         } else {
             Debug.Log("No UI specified");
         }
@@ -283,6 +314,10 @@ public class GameController : MonoBehaviour {
 
     public UIController GetUI() {
         return ui.GetComponent<UIController>();
+    }
+
+    public Dictionary<Enemy.Enemys, GameObject> GetEnemyPrefabs() {
+        return enemyPrefabs;
     }
 
     public bool GameEnded() {

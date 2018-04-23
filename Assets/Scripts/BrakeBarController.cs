@@ -28,16 +28,15 @@ public class BrakeBarController : MonoBehaviour {
     
     private void UpdatePointer()
     {
-        if (Input.GetKey(KeyCode.S))
+        while (Input.GetKey(KeyCode.S))
         {
-            firstTime = Time.time;
+            firstTime += 1;
         }
 
             if (Input.GetKeyUp(KeyCode.S))
             {
-                secondTime = Time.time;
-                float difference = secondTime - firstTime;
-                gameObject.transform.Rotate(Vector3.forward, difference);
+                
+                gameObject.transform.Rotate(Vector3.forward, firstTime);
             }
         
        

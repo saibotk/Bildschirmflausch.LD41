@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
 
 
 	void Update() {
-        if (Input.GetKey(KeyCode.R) && GameController.instance.GameEnded()) {
+        if (Input.GetAxis("Reset") > 0 && GameController.instance.GameEnded()) {
             LoadSceneByIndex(firstSceneIndex);
         }
 	}
