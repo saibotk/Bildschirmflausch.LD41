@@ -11,7 +11,7 @@ public class AudioControl : MonoBehaviour
     public AudioSource gameovers;
     public AudioSource[] soundeffects;
 
-    public enum Sfx { shoot, explosion, mobattack };
+    public enum Sfx { shoot, explosion, mobattack, door, faster, slower, driving, slowdriving };
 
     private const float lvlbgm = 6.79f;
     private const float gobgm = 14.406f;
