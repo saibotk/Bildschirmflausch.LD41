@@ -433,7 +433,7 @@ public class DungeonGenerator {
                     r.tiles[pos].type = Room.TileType.ROCK;
 					continue;
                 }
-				float prob2 = 0.004f;
+				float prob2 = 0.04f;
 				if (UnityEngine.Random.value > 1 - prob2)
 				{
 					r.spawnpoints.Add(pos);

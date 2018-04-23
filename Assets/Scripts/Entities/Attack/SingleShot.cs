@@ -13,9 +13,18 @@ namespace Assets.Scripts.Entities.Attack {
         GameObject bulletPrefab;
         Transform spawn;
 
-        public SingleShot(GameObject owner) {
+        public SingleShot(GameObject owner)
+        {
             this.owner = owner;
-        }
+		}
+
+        public SingleShot(GameObject owner, int damage, float cooldown, float speed)
+        {
+            this.owner = owner;
+			this.damage = damage;
+			this.cooldown = cooldown;
+			this.speed = speed;
+        }      
 
         public void SetCooldown(float cd) {
             cooldown = cd;

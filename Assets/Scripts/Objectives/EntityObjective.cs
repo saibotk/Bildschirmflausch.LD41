@@ -30,8 +30,8 @@ public class EntityObjective : Objective {
         base.ActivateGoal(ply);
 
 		List<Transform> spawnPointList = room.GetSpawnpoints();
-        if (spawnPointList.Count == 0) {
-            ReachedGoal();
+		if (spawnPointList.Count == 0) {
+            finished = true;
             return;
         }
 
@@ -43,7 +43,7 @@ public class EntityObjective : Objective {
             }
 
             GameObject tempObject = UnityEngine.Object.Instantiate(i);
-            tempObject.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].position;
+			tempObject.transform.position = spawnPointList[Random.Range(0, spawnPointList.Count)].position;
             tempObject.GetComponent<Entity>().SetObjective(this);
             entityList.Add(tempObject);
         }

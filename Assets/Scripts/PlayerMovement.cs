@@ -53,8 +53,9 @@ public class PlayerMovement : MonoBehaviour {
         }
         if ( !firstKeyPressed && Input.anyKey ) {
             firstKeyPressed = true;
-			if (Input.GetAxis("Vertical") >= 0) {            
-				state = SpeedState.FASTER;
+			lastFrame = Time.time;
+            if (Input.GetAxis("Vertical") >= 0) {            
+                state = SpeedState.FASTER;
 				changeTime = Time.time;
 				GameController.instance.GetAudioControl().SfxStop(AudioControl.Sfx.slowdriving);
 				GameController.instance.GetAudioControl().SfxPlay(AudioControl.Sfx.faster);
