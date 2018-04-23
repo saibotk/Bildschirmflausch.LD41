@@ -2,6 +2,7 @@
 [RequireComponent(typeof(SpriteRenderer))]
 public class Door : MonoBehaviour {
     private bool locked = false;
+    private Animator animator;
 
     [SerializeField]
     Room parent;
@@ -12,6 +13,7 @@ public class Door : MonoBehaviour {
     // Use this for initialization
     void Awake() {
         BoxCollider2D[] colliders = GetComponents<BoxCollider2D>();
+        animator = GetComponent<Animator>();
         foreach ( BoxCollider2D collider in colliders ) {
             if ( collider.isTrigger ) {
                 triggerBox = collider;
@@ -30,11 +32,12 @@ public class Door : MonoBehaviour {
     public void SetParent(Room room) {
         this.parent = room;
     }
-   
+
     /// <summary>
     /// Locks the door.
     /// </summary>
     public void Lock() {
+        animator.SetBool("open", false);
         locked = true;
         boundingBox.enabled = true;
         triggerBox.enabled = false;
@@ -45,6 +48,7 @@ public class Door : MonoBehaviour {
     /// Unlocks the door.
     /// </summary>
     public void Unlock() {
+        animator.SetBool("open", true);
         locked = false;
         boundingBox.enabled = false;
         triggerBox.enabled = true;
