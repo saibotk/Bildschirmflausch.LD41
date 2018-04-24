@@ -221,6 +221,14 @@ public class DungeonGenerator {
 					for (int y = -TUNNEL_THICKNESS; y < TUNNEL_THICKNESS; y++)
 						if (r.tiles.ContainsKey(v + new Vector2Int(x, y)) && r.tiles[v + new Vector2Int(x, y)].type == Room.TileType.ROCK)
 							r.tiles[v + new Vector2Int(x, y)].type = Room.TileType.GROUND;
+				if (r.tiles.ContainsKey(v + new Vector2Int(0, 1)) && r.tiles[v + new Vector2Int(0, 1)].type == Room.TileType.WALL)
+                    r.tiles.Remove(v + new Vector2Int(0, 1));
+				if (r.tiles.ContainsKey(v + new Vector2Int(0, -1)) && r.tiles[v + new Vector2Int(0, -1)].type == Room.TileType.WALL)
+                    r.tiles.Remove(v + new Vector2Int(0, -1));
+				if (r.tiles.ContainsKey(v + new Vector2Int(1, 0)) && r.tiles[v + new Vector2Int(1, 0)].type == Room.TileType.WALL)
+                    r.tiles.Remove(v + new Vector2Int(1, 0));
+				if (r.tiles.ContainsKey(v + new Vector2Int(-1, 0)) && r.tiles[v + new Vector2Int(-1, 0)].type == Room.TileType.WALL)
+                    r.tiles.Remove(v + new Vector2Int(-1, 0));
 			}
 		}
 
