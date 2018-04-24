@@ -32,12 +32,12 @@ namespace Assets.Scripts.Entities {
                 if ( ply != null )
                     victim = ply.gameObject;
             }
-                
-                
+            
+            if (attack != null)
+				nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime() * (UnityEngine.Random.value + 0.5f);
         }
 
         void Update() {
-            
             if ( victim == null || attack == null ) {
                 if ( objective != null ) {
                     Player ply = objective.GetPlayer();
@@ -53,8 +53,8 @@ namespace Assets.Scripts.Entities {
                 RaycastHit2D hit = rh.Find(x => x.fraction != 0);
                 if ( hit.collider != null && hit.collider.gameObject == victim ) {
                     Debug.Log("Attacking Player!!!");
-                    attack.Attack();
-                    nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime();
+					attack.Attack();
+                    nextAttackTime = Time.timeSinceLevelLoad + attack.GetCooldownTime() * (UnityEngine.Random.value + 0.25f);
                 }
             }
 

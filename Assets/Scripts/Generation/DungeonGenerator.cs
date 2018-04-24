@@ -461,9 +461,11 @@ public class DungeonGenerator {
         
         Objective o = null;
 
-        int rand = UnityEngine.Random.Range(0, 7);
+        int rand = UnityEngine.Random.Range(0, 8);
 		switch (rand) {
-			case 0: {
+            case 0:
+            case 7:
+                {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
 					int count = UnityEngine.Random.Range(1, ( int ) Math.Min(Mathf.Floor(r.GetSpawnpoints().Count), 4));
@@ -505,7 +507,7 @@ public class DungeonGenerator {
                 {
                     // Siders!!!!:
                     List<GameObject> lg = new List<GameObject>();
-                    int count = Math.Min(UnityEngine.Random.Range(1, (int)Mathf.Floor(r.GetSpawnpoints().Count)), 3);
+                    int count = Math.Min(UnityEngine.Random.Range(1, (int)Mathf.Floor(r.GetSpawnpoints().Count)), 5);
                     for (int c = 0; c < count; c++)
                     {
 						lg.Add(enemyPrefabs[Entity.Entities.SPIDER]);
