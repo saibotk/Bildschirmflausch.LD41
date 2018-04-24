@@ -73,7 +73,7 @@ public class GenerationProcessor {
     }
 
     private ExtendedTileType GetCorrectWallType(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position) {
-        int groundNumber = CountSpecificNeighbours(tiles, position, Room.TileType.GROUND) + CountSpecificNeighbours(tiles, position, Room.TileType.ROCK);
+        int groundNumber = CountSpecificNeighbours(tiles, position, Room.TileType.GROUND) + CountSpecificNeighbours(tiles, position, Room.TileType.ROCK) + CountSpecificNeighbours(tiles, position, Room.TileType.DOOR);
         switch ( groundNumber ) {
             case 0:
                 return ExtendedTileType.BorderInner;
@@ -117,17 +117,17 @@ public class GenerationProcessor {
             case ExtendedTileType.BorderOuter:
                 Vector2Int toCheck1 = v + new Vector2Int(0, -1);
                 Vector2Int toCheck2 = v + new Vector2Int(-1, 0);
-                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type == Room.TileType.WALL && tiles[toCheck2].type == Room.TileType.WALL)
-                  return 90;
-                toCheck1 = v + new Vector2Int(0, 1);
-                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type == Room.TileType.WALL && tiles[toCheck2].type == Room.TileType.WALL)
-                  return 0;
-                toCheck2 = v + new Vector2Int(1, 0);
-                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type == Room.TileType.WALL && tiles[toCheck2].type == Room.TileType.WALL)
+                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type != Room.TileType.WALL && tiles[toCheck2].type != Room.TileType.WALL)
                   return 270;
-                toCheck1 = v + new Vector2Int(0, -1);
-                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type == Room.TileType.WALL && tiles[toCheck2].type == Room.TileType.WALL)
+                toCheck1 = v + new Vector2Int(0, 1);
+                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type != Room.TileType.WALL && tiles[toCheck2].type != Room.TileType.WALL)
                   return 180;
+                toCheck2 = v + new Vector2Int(1, 0);
+                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type != Room.TileType.WALL && tiles[toCheck2].type != Room.TileType.WALL)
+                  return 90;
+                toCheck1 = v + new Vector2Int(0, -1);
+                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type != Room.TileType.WALL && tiles[toCheck2].type != Room.TileType.WALL)
+                  return 0;
                 break;
         }
         return 0;
