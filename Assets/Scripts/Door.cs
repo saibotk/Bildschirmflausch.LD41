@@ -69,6 +69,10 @@ public class Door : MonoBehaviour {
         return locked;
     }
 
+    private void Update() {
+        Debug.DrawLine(gameObject.transform.position, gameObject.transform.position + new Vector3(toOuter.x, toOuter.y, 0));
+    }
+
     /// <summary>
     /// Check if a player moved inside of a room and notify the room.
     /// </summary>
@@ -79,7 +83,8 @@ public class Door : MonoBehaviour {
 			Player player = collision.gameObject.GetComponent<Player>();
             Vector2 centerToCollider = (Vector2) gameObject.transform.position - parent.GetPosition() + parent.GetCenter();
             Vector2 centerToPlayer = (Vector2) player.gameObject.transform.position - parent.GetPosition() + parent.GetCenter();
-            float angle = Vector2.Angle(( centerToPlayer - centerToCollider ), toOuter);
+            float angle = Vector2.Angle(toOuter, ( centerToPlayer - centerToCollider ));
+            
             if ( (angle > 90 && angle < 270) ) {
                 Debug.Log("Player is on the outside! Angle: " + angle);
                 return;
