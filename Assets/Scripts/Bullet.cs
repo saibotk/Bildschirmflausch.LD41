@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collider) {
         if ( ownertag == null )
             return;
-        
+
         if ( collider.gameObject.tag != ownertag ) {
             Mob m = collider.gameObject.GetComponent(typeof(Mob)) as Mob;
             if (m != null) {
@@ -49,6 +49,6 @@ public class Bullet : MonoBehaviour {
             }
             Destroy(gameObject);
         }
-        
+
     }
 }

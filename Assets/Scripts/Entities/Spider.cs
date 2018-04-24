@@ -4,7 +4,7 @@ using UnityEngine;
 using Assets.Scripts.Entities.Attack;
 
 namespace Assets.Scripts.Entities
-{      
+{
     public class Spider : Enemy
     {
         [SerializeField]
@@ -12,7 +12,7 @@ namespace Assets.Scripts.Entities
         [SerializeField]
         private GameObject bullet;
 
-        public Spider() : base(45)
+        public Spider() : base(25)
         {
 
         }
