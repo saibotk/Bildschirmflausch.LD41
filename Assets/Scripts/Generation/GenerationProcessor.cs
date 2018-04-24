@@ -55,25 +55,21 @@ public class GenerationProcessor {
         return tmp;
     }
 
-    private int CountSpecificNeighbours(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position, Room.TileType type) {
-        int counter = 0;
-        Vector2Int toCheck = position + new Vector2Int(0, -1);
-        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type == type )
-            counter++;
-        toCheck = position + new Vector2Int(-1, 0);
-        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type == type )
-            counter++;
-        toCheck = position + new Vector2Int(0, 1);
-        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type == type )
-            counter++;
-        toCheck = position + new Vector2Int(1, 0);
-        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type == type )
-            counter++;
-        return counter;
-    }
-
     private ExtendedTileType GetCorrectWallType(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position) {
-        int groundNumber = CountSpecificNeighbours(tiles, position, Room.TileType.GROUND) + CountSpecificNeighbours(tiles, position, Room.TileType.ROCK) + CountSpecificNeighbours(tiles, position, Room.TileType.DOOR);
+        int groundNumber = 0;
+        Vector2Int toCheck = position + new Vector2Int(0, -1);
+        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type != Room.TileType.WALL )
+            groundNumber++;
+        toCheck = position + new Vector2Int(-1, 0);
+        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type != Room.TileType.WALL )
+            groundNumber++;
+        toCheck = position + new Vector2Int(0, 1);
+        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type != Room.TileType.WALL )
+            groundNumber++;
+        toCheck = position + new Vector2Int(1, 0);
+        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type != Room.TileType.WALL )
+            groundNumber++;
+
         switch ( groundNumber ) {
             case 0:
                 return ExtendedTileType.BorderInner;
@@ -185,7 +181,20 @@ public class GenerationProcessor {
     }
 
     private ExtendedTileType GetCorrectDoorType(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position) {
-        int neighbourDoors = CountSpecificNeighbours(tiles, position, Room.TileType.DOOR);
+        int neighbourDoors = 0;
+        Vector2Int toCheck = position + new Vector2Int(0, -1);
+        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.DOOR )
+            neighbourDoors++;
+        toCheck = position + new Vector2Int(-1, 0);
+        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.DOOR )
+            neighbourDoors++;
+        toCheck = position + new Vector2Int(0, 1);
+        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.DOOR )
+            neighbourDoors++;
+        toCheck = position + new Vector2Int(1, 0);
+        if ( tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.DOOR )
+            neighbourDoors++;
+
         switch ( neighbourDoors ) {
             case 1:
                 return ExtendedTileType.DoorOuter;
