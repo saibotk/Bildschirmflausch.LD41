@@ -453,7 +453,7 @@ public class DungeonGenerator {
 				}
 			}
 		}
-		Debug.Log(r.GetCenter() + " " + r.spawnpoints.Count + " spawn points.");
+		//Debug.Log(r.GetCenter() + " " + r.spawnpoints.Count + " spawn points.");
     }
 
     public static void GenerateObjective(Room r) {
