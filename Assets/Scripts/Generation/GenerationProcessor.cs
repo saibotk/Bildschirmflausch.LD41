@@ -21,7 +21,7 @@ public class GenerationProcessor {
             switch ( tiles[v].type ) {
                 case Room.TileType.WALL:
                     type = GetCorrectWallType(tiles, v);
-                    rotation = GetCorrectWallRotation(type, tiles[v].position);
+                    rotation = GetCorrectWallRotation(tiles, v, type);
                     break;
                 case Room.TileType.GROUND:
                     type = GetRandomGroundType();
@@ -84,43 +84,53 @@ public class GenerationProcessor {
         }
     }
 
-    private int GetCorrectWallRotation(ExtendedTileType type, GenTile.Position position) {
-        int rotation = 0;
+    private int GetCorrectWallRotation(Dictionary<Vector2Int, GenTile> tiles, Vector2Int v, ExtendedTileType type) {
         switch ( type ) {
             case ExtendedTileType.BorderSingle:
-                switch ( position ) {
-                    case GenTile.Position.BOTTOM:
-                        rotation = 180;
-                        break;
-                    case GenTile.Position.LEFT:
-                        rotation = 90;
-                        break;
-                    case GenTile.Position.TOP:
-                        rotation = 0;
-                        break;
-                    case GenTile.Position.RIGHT:
-                        rotation = 270;
-                        break;
-                }
+                Vector2Int toCheck = v + new Vector2Int(0, -1);
+                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type == Room.TileType.GROUND || tiles[toCheck].type == Room.TileType.GROUND))
+                  return 0;
+                toCheck = v + new Vector2Int(-1, 0);
+                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type == Room.TileType.GROUND || tiles[toCheck].type == Room.TileType.GROUND))
+                  return 270;
+                toCheck = v + new Vector2Int(0, 1);
+                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type == Room.TileType.GROUND || tiles[toCheck].type == Room.TileType.GROUND))
+                  return 180;
+                toCheck = v + new Vector2Int(1, 0);
+                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type == Room.TileType.GROUND || tiles[toCheck].type == Room.TileType.GROUND))
+                  return 90;
                 break;
             case ExtendedTileType.BorderInner:
-                switch ( position ) {
-                    case GenTile.Position.BOTTOM_LEFT:
-                        rotation = 90;
-                        break;
-                    case GenTile.Position.TOP_LEFT:
-                        rotation = 0;
-                        break;
-                    case GenTile.Position.TOP_RIGHT:
-                        rotation = 270;
-                        break;
-                    case GenTile.Position.BOTTOM_RIGHT:
-                        rotation = 180;
-                        break;
-                }
+                toCheck = v + new Vector2Int(1, -1);
+                if(tiles.ContainsKey(toCheck) && tiles[toCheck].type != Room.TileType.WALL)
+                  return 0;
+                toCheck = v + new Vector2Int(1, 1);
+                if(tiles.ContainsKey(toCheck) && tiles[toCheck].type != Room.TileType.WALL)
+                  return 90;
+                toCheck = v + new Vector2Int(-1, 1);
+                if(tiles.ContainsKey(toCheck) && tiles[toCheck].type != Room.TileType.WALL)
+                  return 180;
+                toCheck = v + new Vector2Int(-1, -1);
+                if(tiles.ContainsKey(toCheck) && tiles[toCheck].type != Room.TileType.WALL)
+                  return 270;
+                break;
+            case ExtendedTileType.BorderOuter:
+                Vector2Int toCheck1 = v + new Vector2Int(0, -1);
+                Vector2Int toCheck2 = v + new Vector2Int(-1, 0);
+                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type == Room.TileType.WALL && tiles[toCheck2].type == Room.TileType.WALL)
+                  return 90;
+                toCheck1 = v + new Vector2Int(0, 1);
+                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type == Room.TileType.WALL && tiles[toCheck2].type == Room.TileType.WALL)
+                  return 0;
+                toCheck2 = v + new Vector2Int(1, 0);
+                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type == Room.TileType.WALL && tiles[toCheck2].type == Room.TileType.WALL)
+                  return 270;
+                toCheck1 = v + new Vector2Int(0, -1);
+                if(tiles.ContainsKey(toCheck1) && tiles.ContainsKey(toCheck2) && tiles[toCheck1].type == Room.TileType.WALL && tiles[toCheck2].type == Room.TileType.WALL)
+                  return 180;
                 break;
         }
-        return rotation;
+        return 0;
     }
 
     private ExtendedTileType GetCorrectRockType(Dictionary<Vector2Int, GenTile> tiles, Vector2Int position) {
