@@ -32,14 +32,6 @@ public class StartObjective : Objective {
     }
 
     /// <summary>
-    /// Returns the created Player object. Call this after <see cref="ActivateGoal(Player)"/> !
-    /// </summary>
-    /// <returns>Player</returns>
-    public Player GetPlayer() {
-        return player;
-    }
-
-    /// <summary>
     /// Code executed if the goal is reached eg. opening doors.
     /// </summary>
     public override void UpdateGoal() {

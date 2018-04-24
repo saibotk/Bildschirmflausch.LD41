@@ -7,6 +7,8 @@ public class Door : MonoBehaviour {
     [SerializeField]
     Room parent;
 
+    Vector2Int toOuter;
+
     BoxCollider2D boundingBox;
     BoxCollider2D triggerBox;
 
@@ -31,6 +33,10 @@ public class Door : MonoBehaviour {
     /// <param name="room"></param>
     public void SetParent(Room room) {
         this.parent = room;
+    }
+
+    public void SetToOuter(Vector2Int v) {
+        toOuter = v;
     }
 
     /// <summary>
@@ -73,12 +79,13 @@ public class Door : MonoBehaviour {
 			Player player = collision.gameObject.GetComponent<Player>();
             Vector2 centerToCollider = (Vector2) gameObject.transform.position - parent.GetPosition() + parent.GetCenter();
             Vector2 centerToPlayer = (Vector2) player.gameObject.transform.position - parent.GetPosition() + parent.GetCenter();
-            if (centerToCollider.magnitude - 1 < centerToPlayer.magnitude) {
-                Debug.Log(centerToCollider.magnitude - 1);
+            if (centerToCollider.magnitude - 0.89 < centerToPlayer.magnitude) {
+                Debug.Log(centerToCollider.magnitude - 0.89);
                 Debug.Log(centerToPlayer.magnitude);
                 return;
             }
-
+            Debug.Log(centerToCollider.magnitude - 0.89);
+            Debug.Log(centerToPlayer.magnitude);
             Debug.Log("Leaving Trigger");
             if(parent == null) {
                 Debug.Log("This door has no parent Room!");

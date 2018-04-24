@@ -222,7 +222,7 @@ public class GameController : MonoBehaviour {
         lt.ForEach(x => {
             x.SetParent(doorRoot.transform);
             x.gameObject.GetComponent<Door>().SetParent(start);
-            });
+        });
         start.SetDoorsRootObject(doorRoot);
 
         // Spawnpoint
