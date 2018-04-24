@@ -20,7 +20,7 @@ public class AudioControl : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
+        Debug.Log(mixer.name);
         maintheme.loop = true;
         menutheme.loop = true;
         gameovers.loop = true;

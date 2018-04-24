@@ -1502,6 +1502,31 @@ Prefab:
       propertyPath: m_Color.b
       value: 0.2233001
       objectReference: {fileID: 0}
+    - target: {fileID: 114516921110256910, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 881384373}
+    - target: {fileID: 114516921110256910, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMasterVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516921110256910, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_MinValue
+      value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516921110256910, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_MaxValue
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114516921110256910, guid: 460d856ea4eb14cedb5fecde1fe6d743,
+        type: 2}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 460d856ea4eb14cedb5fecde1fe6d743, type: 2}
   m_IsPrefabParent: 0
