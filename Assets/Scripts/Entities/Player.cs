@@ -24,7 +24,11 @@ public class Player : Mob {
         SetAttack(s);
     }
 
-    void Update() {
+	void Update() {
+        if (Input.GetAxis("Reset") > 0)
+        {
+			GameController.instance.GetUI().Restart();
+        }
         if ( Time.timeSinceLevelLoad >= nextAttackTime && attack != null) {
             if ( Input.GetAxis("Fire") > 0 ) {
                 attack.Attack();
