@@ -144,7 +144,7 @@ public class GameController : MonoBehaviour {
             { Entity.Entities.BUG, bug },
             { Entity.Entities.COIN, coin }
         };
-
+        ChangeState(GameState.INIT);
     }
 
     // Update is called once per frame
@@ -152,7 +152,7 @@ public class GameController : MonoBehaviour {
         if ( !engineInitDone ) {
             engineInitDone = true;
             Debug.Log("First Frame");
-            ChangeState(GameState.INIT);
+            ChangeState(GameState.STARTING);
         }
         if (Input.GetAxis("Pause") > 0) {
             if (state == GameState.RUNNING && !pausedPressed) {
@@ -177,7 +177,7 @@ public class GameController : MonoBehaviour {
         switch ( nstate ) {
             case GameState.INIT:
                 Init();
-                ChangeState(GameState.STARTING);
+                //ChangeState(GameState.STARTING);
                 break;
             case GameState.STARTING:
                 Starting();
