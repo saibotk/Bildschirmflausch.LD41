@@ -50,7 +50,12 @@ public class Player : Mob {
         if ( collision.collider.tag == "wall" ) {
 			//InflictDamage(maxHP / 2);
 			Death();
-        } else if ( collision.collider.tag == "Enemy" ) {
+		} else if (collision.collider.tag == "rock")
+        {
+            InflictDamage(maxHP / 10);
+            //Death();
+        }
+        else if ( collision.collider.tag == "Enemy" ) {
             Mob m = collision.collider.GetComponent(typeof(Mob)) as Mob;
             if ( m != null ) {
                 //m.InflictDamage(carDamage);

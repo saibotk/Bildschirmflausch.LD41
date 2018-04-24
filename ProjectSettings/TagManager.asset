@@ -9,6 +9,7 @@ TagManager:
   - DoorRoot
   - SpawnlistRoot
   - Enemy
+  - rock
   layers:
   - Default
   - TransparentFX

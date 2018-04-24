@@ -11,13 +11,14 @@ namespace Assets.Scripts.Entities {
         [SerializeField]
         private GameObject bullet;
 
-        public Spider() : base(25) {
+        public Spider() : base(15) {
 
         }
 
         protected override void Start() {
             base.Start();
             SingleShot s = new SingleShot(this.gameObject, 25, 4, 2);
+			s.SetRange(10);
             s.SetPrefab(bullet);
             s.SetSpawn(bulletSpawn);
             SetAttack(s);

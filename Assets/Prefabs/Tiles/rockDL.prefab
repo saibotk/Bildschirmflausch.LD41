@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61362440249651478}
   m_Layer: 0
   m_Name: rockDL
-  m_TagString: wall
+  m_TagString: rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
