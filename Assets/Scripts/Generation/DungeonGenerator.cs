@@ -457,7 +457,7 @@ public class DungeonGenerator {
             case 0: {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-					int count = UnityEngine.Random.Range(1, ( int ) Math.Min(Mathf.Floor(r.GetSpawnpoints().Count), 5));
+					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 5);
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.SCORPION]);
                     }
@@ -468,7 +468,7 @@ public class DungeonGenerator {
             case 1: {
                     // Bug Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-					int count = UnityEngine.Random.Range(1, ( int ) Math.Min(Mathf.Floor(r.GetSpawnpoints().Count), 10));
+					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 10);
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.BUG]);
                     }
@@ -479,7 +479,7 @@ public class DungeonGenerator {
             case 2: {
                     // Coins!!!!:
                     List<GameObject> lg = new List<GameObject>();
-					int count = UnityEngine.Random.Range(1, (int) Math.Min(Mathf.Floor(r.GetSpawnpoints().Count), 20));
+					int count = Math.Min(UnityEngine.Random.Range(1, (int) Mathf.Floor(r.GetSpawnpoints().Count)), 20);
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.COIN]);
                     }
