@@ -6,8 +6,8 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     public float acceleration = 3;
-	[SerializeField]
-	public float boost = 2;
+  	[SerializeField]
+  	public float boost = 2;
     [SerializeField]
     public float friction = 0.1f;
     [SerializeField]
@@ -16,14 +16,19 @@ public class PlayerMovement : MonoBehaviour {
     public float drift = 1f;
     [SerializeField]
     public float brake = 2f;
-	[SerializeField]
-	public float maxBrakeTime = 5f;
+  	[SerializeField]
+  	public float maxBrakeTime = 5f;
 
     // The time of the acceleration/deceleration sounds in seconds
 	[SerializeField]
 	public float accelerationTime = 5;
 	[SerializeField]
 	public float decelerationTime = 5;
+
+  [SerializeField]
+  public GameObject leftFrontWheel;
+  [SerializeField]
+  public GameObject rightFrontWheel;
 
 	float brakeTime;
 	float lastFrame;
@@ -56,7 +61,7 @@ public class PlayerMovement : MonoBehaviour {
         if ( !firstKeyPressed && Input.anyKey ) {
             firstKeyPressed = true;
 			lastFrame = Time.time;
-            if (Input.GetAxis("Vertical") >= 0) {            
+            if (Input.GetAxis("Vertical") >= 0) {
                 state = SpeedState.FASTER;
 				changeTime = Time.time;
 				GameController.instance.GetAudioControl().SfxStop(AudioControl.Sfx.slowdriving);
@@ -71,7 +76,7 @@ public class PlayerMovement : MonoBehaviour {
 
         Vector3 speedVec = new Vector3(rb.velocity.x, rb.velocity.y, 0);
         float speed = speedVec.magnitude;
-  
+
 		bool braking = Input.GetAxis("Vertical") < 0;
 		if (braking && brakeTime >= maxBrakeTime) {
 			brakeTime = maxBrakeTime;
@@ -164,14 +169,27 @@ public class PlayerMovement : MonoBehaviour {
         if (Input.GetAxis("Horizontal") < 0)
         {
 			//rb.rotation += turnSpeed;
+            leftFrontWheel.GetComponent<Animator>().SetBool("left", true);
+            leftFrontWheel.GetComponent<Animator>().SetBool("right", false);
+            rightFrontWheel.GetComponent<Animator>().SetBool("left", true);
+            rightFrontWheel.GetComponent<Animator>().SetBool("right", false);
             rb.MoveRotation(rb.rotation + turnSpeed);
         } else
         //transform.Rotate(Vector3.forward * turnSpeed);
         if (Input.GetAxis("Horizontal") > 0)
         {
+            leftFrontWheel.GetComponent<Animator>().SetBool("left", false);
+            leftFrontWheel.GetComponent<Animator>().SetBool("right", true);
+            rightFrontWheel.GetComponent<Animator>().SetBool("left", false);
+            rightFrontWheel.GetComponent<Animator>().SetBool("right", true);
 			//rb.rotation -= turnSpeed;
 			rb.MoveRotation(rb.rotation - turnSpeed);
 		} else {
+
+      leftFrontWheel.GetComponent<Animator>().SetBool("left", false);
+      leftFrontWheel.GetComponent<Animator>().SetBool("right", false);
+      rightFrontWheel.GetComponent<Animator>().SetBool("left", false);
+      rightFrontWheel.GetComponent<Animator>().SetBool("right", false);
 			rb.MoveRotation(rb.rotation);
 		}
         //transform.Rotate(Vector3.forward * -turnSpeed);
