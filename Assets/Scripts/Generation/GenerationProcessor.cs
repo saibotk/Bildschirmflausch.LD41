@@ -84,16 +84,16 @@ public class GenerationProcessor {
         switch ( type ) {
             case ExtendedTileType.BorderSingle:
                 Vector2Int toCheck = v + new Vector2Int(0, -1);
-                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type == Room.TileType.GROUND || tiles[toCheck].type == Room.TileType.GROUND))
+                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type != Room.TileType.WALL)
                   return 0;
                 toCheck = v + new Vector2Int(-1, 0);
-                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type == Room.TileType.GROUND || tiles[toCheck].type == Room.TileType.GROUND))
+                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type != Room.TileType.WALL)
                   return 270;
                 toCheck = v + new Vector2Int(0, 1);
-                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type == Room.TileType.GROUND || tiles[toCheck].type == Room.TileType.GROUND))
+                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type != Room.TileType.WALL)
                   return 180;
                 toCheck = v + new Vector2Int(1, 0);
-                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type == Room.TileType.GROUND || tiles[toCheck].type == Room.TileType.GROUND))
+                if(tiles.ContainsKey(toCheck) && (tiles[toCheck].type != Room.TileType.WALL)
                   return 90;
                 break;
             case ExtendedTileType.BorderInner:
