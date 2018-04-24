@@ -85,7 +85,7 @@ public class Door : MonoBehaviour {
         // TODO only works correct for entering a room!
         if ( collision.tag == "Player") {
 			Player player = collision.gameObject.GetComponent<Player>();
-            Vector3 colliderToPlayer = player.gameObject.transform.position - ( gameObject.transform.position - (Vector3) (0.6f * (Vector2) toOuter));
+            Vector3 colliderToPlayer = player.gameObject.transform.position - ( gameObject.transform.position - (Vector3) (1f * (Vector2) toOuter));
             float angle = Vector2.Angle(toOuter, colliderToPlayer);
             
             if ( angle < 90) {
