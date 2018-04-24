@@ -453,7 +453,7 @@ public class DungeonGenerator {
         Objective o = null;
 
         int rand = UnityEngine.Random.Range(0, 7);
-		switch (rand) {
+		switch (6) {
 			case 0:
             case 1: {
                     // Scorpion Attack!!!!:

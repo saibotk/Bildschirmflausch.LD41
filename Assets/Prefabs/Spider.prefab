@@ -215,7 +215,7 @@ MonoBehaviour:
   victim: {fileID: 0}
   body: {fileID: 50694460188451534}
   bulletSpawn: {fileID: 4211621010230988}
-  bullet: {fileID: 1340970730445882, guid: 5b046158ce568b14285b9d75961bfcce, type: 2}
+  bullet: {fileID: 1263621144626828, guid: 034397877b290c9448b855c57cecc1ab, type: 2}
 --- !u!114 &114987943571538998
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -17,8 +17,7 @@ namespace Assets.Scripts.Entities {
 
         protected override void Start() {
             base.Start();
-            SingleShot s = new SingleShot(this.gameObject);
-            s.SetCooldown(5);
+            SingleShot s = new SingleShot(this.gameObject, 25, 4, 2);
             s.SetPrefab(bullet);
             s.SetSpawn(bulletSpawn);
             SetAttack(s);
