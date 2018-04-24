@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 212320174034956936}
   - component: {fileID: 95687212090133466}
   m_Layer: 0
-  m_Name: FrontWheelR
+  m_Name: FrontWheel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 212215143549797738}
   - component: {fileID: 95169228929848266}
   m_Layer: 0
-  m_Name: FrontWheelL
+  m_Name: FrontWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4003745050112744}
   - component: {fileID: 212490515716475022}
-  - component: {fileID: 95990386212065172}
   m_Layer: 0
   m_Name: BackWheelR
   m_TagString: Untagged
@@ -137,7 +136,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4419674733586242}
   - component: {fileID: 212405423396070976}
-  - component: {fileID: 95925817463806754}
   m_Layer: 0
   m_Name: BackWheelL
   m_TagString: Untagged
@@ -217,7 +215,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1558237419353188}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.76, y: 0.24, z: -0.07459692}
+  m_LocalPosition: {x: 0.77, y: 0.24, z: -0.07459692}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_Children: []
   m_Father: {fileID: 4079161515917916}
@@ -269,7 +267,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1617822722507322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.87, y: 0.24, z: -0.07459692}
+  m_LocalPosition: {x: -0.65, y: 0.24, z: -0.07459692}
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_Children: []
   m_Father: {fileID: 4079161515917916}
@@ -389,7 +387,7 @@ Animator:
   m_GameObject: {fileID: 1617822722507322}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7f2e5fc83474b1a49bf900f3e32076f3, type: 2}
+  m_Controller: {fileID: 9100000, guid: 504ffba6fe21b7e468ab1b703b73d1a1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -407,43 +405,7 @@ Animator:
   m_GameObject: {fileID: 1558237419353188}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7f2e5fc83474b1a49bf900f3e32076f3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &95925817463806754
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1758904900417062}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7f2e5fc83474b1a49bf900f3e32076f3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!95 &95990386212065172
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1709068619391894}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7f2e5fc83474b1a49bf900f3e32076f3, type: 2}
+  m_Controller: {fileID: 9100000, guid: 504ffba6fe21b7e468ab1b703b73d1a1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -478,6 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 4
+  boost: 2
   friction: 0.1
   turnSpeed: 2
   drift: 1
@@ -485,6 +448,8 @@ MonoBehaviour:
   maxBrakeTime: 20
   accelerationTime: 2.115
   decelerationTime: 1.2346
+  leftFrontWheel: {fileID: 1617822722507322}
+  rightFrontWheel: {fileID: 1558237419353188}
 --- !u!198 &198306026557504490
 ParticleSystem:
   m_ObjectHideFlags: 1
