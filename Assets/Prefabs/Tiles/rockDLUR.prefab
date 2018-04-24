@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4497297111922724}
   - component: {fileID: 212565438052521106}
-  - component: {fileID: 61031428949727204}
+  - component: {fileID: 60267034791810428}
   m_Layer: 0
   m_Name: rockDLUR
   m_TagString: wall
@@ -41,8 +41,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61031428949727204
-BoxCollider2D:
+--- !u!60 &60267034791810428
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -63,9 +63,12 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.5, y: 0.5}
+      - {x: -0.5, y: -0.5}
+      - {x: 0.5, y: -0.5}
+      - {x: 0.5, y: 0.5}
 --- !u!212 &212565438052521106
 SpriteRenderer:
   m_ObjectHideFlags: 1
