@@ -29,10 +29,13 @@ public class NotificationManager : MonoBehaviour {
         }
     }
 
+    public NotificationManager() {
+        messages = new List<Notification>();
+        delay = 0;
+    }
+
     // Use this for initialization
     void Start() {
-        delay = 0;
-        messages = new List<Notification>();
         text = GetComponent<Text>();
         Hide();
     }
