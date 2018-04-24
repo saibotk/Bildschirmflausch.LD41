@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour {
     GameObject bug;
     [SerializeField]
     GameObject coin;
+	[SerializeField]
+	GameObject spider;
 
     [Space(10)]
     // Generation Settings
@@ -142,7 +144,8 @@ public class GameController : MonoBehaviour {
         entitiesPrefabs = new Dictionary<Entity.Entities, GameObject> {
             { Entity.Entities.SCORPION, scorpion },
             { Entity.Entities.BUG, bug },
-            { Entity.Entities.COIN, coin }
+            { Entity.Entities.COIN, coin },
+			{ Entity.Entities.SPIDER, spider}
         };
         ChangeState(GameState.INIT);
     }

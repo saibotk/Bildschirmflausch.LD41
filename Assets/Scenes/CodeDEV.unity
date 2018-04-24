@@ -2643,6 +2643,7 @@ MonoBehaviour:
   scorpion: {fileID: 1303102899095328, guid: 4c5ecfd27b4038941a6e493a8117ea0a, type: 2}
   bug: {fileID: 1887677565572348, guid: dd625f75dbf83194392a299951cf04fb, type: 2}
   coin: {fileID: 1974526777167790, guid: 35e8b8e102a45a1489ef949961dca4a6, type: 2}
+  spider: {fileID: 1427119512090924, guid: 457ad7d6d7369467c8f6884c6e446680, type: 2}
   BorderOuter: {fileID: 1062532744197412, guid: bc306521f11be424f9833117977b4319,
     type: 2}
   BorderInner: {fileID: 1893245914782828, guid: 7326753bf2b213d4e8c2ee93d78ba7d9,

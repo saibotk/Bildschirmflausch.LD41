@@ -6,7 +6,8 @@ public abstract class Entity : MonoBehaviour {
     public enum Entities {
         SCORPION,
         BUG,
-        COIN
+        COIN,
+        SPIDER
     }
 
     protected EntityObjective objective;

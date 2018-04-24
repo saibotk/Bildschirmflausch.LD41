@@ -4,9 +4,14 @@ using UnityEngine;
 using Assets.Scripts.Entities.Attack;
 
 namespace Assets.Scripts.Entities
-{
-    class Spider : Enemy
+{      
+    public class Spider : Enemy
     {
+        [SerializeField]
+        private Transform bulletSpawn;
+        [SerializeField]
+        private GameObject bullet;
+
         public Spider() : base(45)
         {
 
@@ -14,7 +19,12 @@ namespace Assets.Scripts.Entities
 
         protected override void Start()
         {
-            SetAttack(new SingleShot(this.gameObject));
+            base.Start();
+            SingleShot s = new SingleShot(this.gameObject);
+            s.SetCooldown(5);
+            s.SetPrefab(bullet);
+            s.SetSpawn(bulletSpawn);
+            SetAttack(s);
         }
     }
 }

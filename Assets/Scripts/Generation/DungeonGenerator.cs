@@ -452,8 +452,8 @@ public class DungeonGenerator {
         
         Objective o = null;
 
-        int rand = UnityEngine.Random.Range(0, 3);
-        switch (rand) {
+        int rand = UnityEngine.Random.Range(0, 4);
+        switch (3) {
             case 0: {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
@@ -477,14 +477,27 @@ public class DungeonGenerator {
                     EntityObjective eo = new EntityObjective(r, lg);
                     o = eo;
                 }
-                break;
-            case 2: {
+				break;
+            case 2:
+                {
                     // Coins!!!!:
                     List<GameObject> lg = new List<GameObject>();
-					int count = Math.Min(UnityEngine.Random.Range(1, (int) Mathf.Floor(r.GetSpawnpoints().Count)), 20);
-					Debug.Log(count + " coins (of " + r.GetSpawnpoints().Count);
-                    for ( int c = 0; c < count; c++ ) {
+                    int count = Math.Min(UnityEngine.Random.Range(1, (int)Mathf.Floor(r.GetSpawnpoints().Count)), 20);
+                    for (int c = 0; c < count; c++)
+                    {
                         lg.Add(enemyPrefabs[Entity.Entities.COIN]);
+                    }
+                    EntityObjective eo = new EntityObjective(r, lg);
+                    o = eo;
+				}
+            case 3:
+                {
+                    // Coins!!!!:
+                    List<GameObject> lg = new List<GameObject>();
+                    int count = Math.Min(UnityEngine.Random.Range(1, (int)Mathf.Floor(r.GetSpawnpoints().Count)), 3);
+                    for (int c = 0; c < count; c++)
+                    {
+						lg.Add(enemyPrefabs[Entity.Entities.SPIDER]);
                     }
                     EntityObjective eo = new EntityObjective(r, lg);
                     o = eo;
