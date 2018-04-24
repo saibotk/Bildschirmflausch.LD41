@@ -136,7 +136,7 @@ public class DungeonGenerator {
 			allDoors.UnionWith(r.AllDoors());
 			foreach (Vector2Int v in r.doorsDown) {
                 r.tiles[v].type = Room.TileType.DOOR;
-				r.tiles[v].position = GenTile.Position.DOWN;
+				r.tiles[v].position = GenTile.Position.BOTTOM;
 			}
 			foreach (Vector2Int v in r.doorsUp) {
                 r.tiles[v].type = Room.TileType.DOOR;
