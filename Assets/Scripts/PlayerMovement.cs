@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour {
 
     [SerializeField]
     public float acceleration = 3;
+	[SerializeField]
+	public float boost = 2;
     [SerializeField]
     public float friction = 0.1f;
     [SerializeField]
@@ -137,6 +139,8 @@ public class PlayerMovement : MonoBehaviour {
 			Vector3 acc = transform.up * acceleration;
             if (braking)
                 acc *= 0;
+			if (Input.GetAxis("Vertical") > 0)
+				acc *= boost;
             rb.AddForce(acc);
         }
 		{// Drag
