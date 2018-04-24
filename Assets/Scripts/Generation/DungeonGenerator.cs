@@ -434,12 +434,17 @@ public class DungeonGenerator {
 					continue;
                 }
 				float prob2 = 0.04f;
-				if (UnityEngine.Random.value > 1 - prob2)
+				if (UnityEngine.Random.value > 1 - prob2 
+				    && x != r.bounds.x 
+				    && x != r.bounds.x + r.bounds.width
+				    && y != r.bounds.y
+				    && y != r.bounds.y + r.bounds.height)
 				{
 					r.spawnpoints.Add(pos);
 				}
 			}
 		}
+		Debug.Log(r.GetCenter() + " " + r.spawnpoints.Count + " spawn points.");
     }
 
     public static void GenerateObjective(Room r) {
@@ -452,7 +457,7 @@ public class DungeonGenerator {
             case 0: {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-                    int count = UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count / 2));
+					int count = UnityEngine.Random.Range(1, ( int ) Math.Min(Mathf.Floor(r.GetSpawnpoints().Count), 5));
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.SCORPION]);
                     }
@@ -463,7 +468,7 @@ public class DungeonGenerator {
             case 1: {
                     // Bug Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-                    int count = UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count / 2));
+					int count = UnityEngine.Random.Range(1, ( int ) Math.Min(Mathf.Floor(r.GetSpawnpoints().Count), 10));
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.BUG]);
                     }
@@ -474,7 +479,7 @@ public class DungeonGenerator {
             case 2: {
                     // Coins!!!!:
                     List<GameObject> lg = new List<GameObject>();
-                    int count = UnityEngine.Random.Range(1, (int) Mathf.Floor(r.GetSpawnpoints().Count / 2));
+					int count = UnityEngine.Random.Range(1, (int) Math.Min(Mathf.Floor(r.GetSpawnpoints().Count), 20));
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.COIN]);
                     }
