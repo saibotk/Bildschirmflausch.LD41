@@ -435,10 +435,10 @@ public class DungeonGenerator {
                 }
 				float prob2 = 0.04f;
 				if (UnityEngine.Random.value > 1 - prob2 
-				    && x != r.bounds.x 
-				    && x != r.bounds.x + r.bounds.width
-				    && y != r.bounds.y
-				    && y != r.bounds.y + r.bounds.height)
+				    && x > r.bounds.x +1
+				    && x < r.bounds.x + r.bounds.width-1
+				    && y > r.bounds.y+1
+				    && y < r.bounds.y + r.bounds.height-1)
 				{
 					r.spawnpoints.Add(pos);
 				}
