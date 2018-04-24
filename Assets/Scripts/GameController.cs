@@ -386,4 +386,8 @@ public class GameController : MonoBehaviour {
     public void Continue() {
         ChangeState(GameState.RUNNING);
     }
+
+    public Player GetPlayer() {
+        return player;
+    }
 }

@@ -70,8 +70,10 @@ public class Door : MonoBehaviour {
     }
 
     private void Update() {
+        Player player = GameController.instance.GetPlayer();
         Debug.DrawLine(gameObject.transform.position, gameObject.transform.position + new Vector3(toOuter.x, toOuter.y, 0));
-        Debug.DrawLine(new Vector3(), ( Vector2 ) ( parent.GetCenter() ));
+        //Debug.DrawLine(new Vector3(), ( Vector2 ) ( parent.GetCenter() ));
+        Debug.DrawLine(player.gameObject.transform.position, gameObject.transform.position);
         Debug.DrawLine((Vector2)parent.GetCenter(), ( gameObject.transform.position ));
     }
 
@@ -83,15 +85,15 @@ public class Door : MonoBehaviour {
         // TODO only works correct for entering a room!
         if ( collision.tag == "Player") {
 			Player player = collision.gameObject.GetComponent<Player>();
-            Vector2 centerToCollider = (Vector2) gameObject.transform.position - parent.GetCenter();
-            Vector2 centerToPlayer = (Vector2) player.gameObject.transform.position - parent.GetCenter();
-            float angle = Vector2.Angle(toOuter, ( centerToPlayer - centerToCollider ));
+            Vector3 colliderToPlayer = player.gameObject.transform.position - gameObject.transform.position;
+            float angle = Vector2.Angle(toOuter, player.gameObject.transform.position - gameObject.transform.position);
             
-            if ( (angle > 90 && angle < 270) && (centerToPlayer - centerToCollider).magnitude < 1) {
+            if ( (angle > 90) && colliderToPlayer.magnitude < 1) {
                 Debug.Log("Player is on the outside! Angle: " + angle);
                 return;
             }
-            Debug.Log("magn: " + ( centerToPlayer - centerToCollider ).magnitude);
+            Debug.Log("magn: " + colliderToPlayer.magnitude);
+            Debug.Log("angle: " + angle);
             Debug.Log("Leaving Trigger");
             if(parent == null) {
                 Debug.Log("This door has no parent Room!");
