@@ -215,20 +215,25 @@ public class DungeonGenerator {
 		start.spawnpoints.Add(start.GetCenter());
         end.spawnpoints.Add(end.GetCenter());
 
-		foreach (Vector2Int v in allDoors) {
-			foreach (GenRoom r in rooms) {
+		foreach (Vector2Int v in allDoors)
+		{
+			foreach (GenRoom r in rooms)
+			{
 				for (int x = -TUNNEL_THICKNESS; x < TUNNEL_THICKNESS; x++)
 					for (int y = -TUNNEL_THICKNESS; y < TUNNEL_THICKNESS; y++)
 						if (r.tiles.ContainsKey(v + new Vector2Int(x, y)) && r.tiles[v + new Vector2Int(x, y)].type == Room.TileType.ROCK)
 							r.tiles[v + new Vector2Int(x, y)].type = Room.TileType.GROUND;
+			}
+			{
+				GenRoom r = path;
 				if (r.tiles.ContainsKey(v + new Vector2Int(0, 1)) && r.tiles[v + new Vector2Int(0, 1)].type == Room.TileType.WALL)
-                    r.tiles.Remove(v + new Vector2Int(0, 1));
+					r.tiles.Remove(v + new Vector2Int(0, 1));
 				if (r.tiles.ContainsKey(v + new Vector2Int(0, -1)) && r.tiles[v + new Vector2Int(0, -1)].type == Room.TileType.WALL)
-                    r.tiles.Remove(v + new Vector2Int(0, -1));
+					r.tiles.Remove(v + new Vector2Int(0, -1));
 				if (r.tiles.ContainsKey(v + new Vector2Int(1, 0)) && r.tiles[v + new Vector2Int(1, 0)].type == Room.TileType.WALL)
-                    r.tiles.Remove(v + new Vector2Int(1, 0));
+					r.tiles.Remove(v + new Vector2Int(1, 0));
 				if (r.tiles.ContainsKey(v + new Vector2Int(-1, 0)) && r.tiles[v + new Vector2Int(-1, 0)].type == Room.TileType.WALL)
-                    r.tiles.Remove(v + new Vector2Int(-1, 0));
+					r.tiles.Remove(v + new Vector2Int(-1, 0));
 			}
 		}
 
