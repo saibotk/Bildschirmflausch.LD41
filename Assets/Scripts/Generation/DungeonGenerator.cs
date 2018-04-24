@@ -452,9 +452,10 @@ public class DungeonGenerator {
         
         Objective o = null;
 
-        int rand = UnityEngine.Random.Range(0, 4);
-        switch (3) {
-            case 0: {
+        int rand = UnityEngine.Random.Range(0, 7);
+		switch (rand) {
+			case 0:
+            case 1: {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
 					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 5);
@@ -465,8 +466,9 @@ public class DungeonGenerator {
                     EntityObjective eo = new EntityObjective(r, lg);
                     o = eo;
                 }
-                break;
-            case 1: {
+				break;
+			case 2:
+            case 3: {
                     // Bug Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
 					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 10);
@@ -478,7 +480,8 @@ public class DungeonGenerator {
                     o = eo;
                 }
 				break;
-            case 2:
+			case 4:
+            case 5:
                 {
                     // Coins!!!!:
                     List<GameObject> lg = new List<GameObject>();
@@ -490,7 +493,8 @@ public class DungeonGenerator {
                     EntityObjective eo = new EntityObjective(r, lg);
                     o = eo;
 				}
-            case 3:
+                break;
+            case 6:
                 {
                     // Coins!!!!:
                     List<GameObject> lg = new List<GameObject>();
