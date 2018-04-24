@@ -134,13 +134,13 @@ public class DungeonGenerator {
 					r.tiles[new Vector2Int(x1, y1)].type = Room.TileType.GROUND;
                 }
 			allDoors.UnionWith(r.AllDoors());
+			foreach (Vector2Int v in r.doorsDown) {
+                r.tiles[v].type = Room.TileType.DOOR;
+				r.tiles[v].position = GenTile.Position.DOWN;
+			}
 			foreach (Vector2Int v in r.doorsUp) {
                 r.tiles[v].type = Room.TileType.DOOR;
 				r.tiles[v].position = GenTile.Position.TOP;
-			}
-			foreach (Vector2Int v in r.doorsDown) {
-                r.tiles[v].type = Room.TileType.DOOR;
-				r.tiles[v].position = GenTile.Position.BOTTOM;
 			}
 			foreach (Vector2Int v in r.doorsLeft) {
                 r.tiles[v].type = Room.TileType.DOOR;
@@ -275,8 +275,8 @@ public class DungeonGenerator {
         rooms.Add(tunnel);
 
         for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
-            higher.doorsUp.Add(new Vector2Int(tunnel.bounds.x + i, tunnel.bounds.y + tunnel.bounds.height));
-            lower.doorsDown.Add(new Vector2Int(tunnel.bounds.x + i, tunnel.bounds.y - 1));
+            higher.doorsDown.Add(new Vector2Int(tunnel.bounds.x + i, tunnel.bounds.y + tunnel.bounds.height));
+            lower.doorsUp.Add(new Vector2Int(tunnel.bounds.x + i, tunnel.bounds.y - 1));
         }
     }
 
@@ -394,22 +394,22 @@ public class DungeonGenerator {
             rooms.Add(verticalLefter);
             if ( lower == lefter )
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
-                    lower.doorsDown.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y - 1));
+                    lower.doorsUp.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y - 1));
                 }
 			else
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
-                    higher.doorsUp.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y + verticalLefter.bounds.height));
+                    higher.doorsDown.Add(new Vector2Int(verticalLefter.bounds.x + i, verticalLefter.bounds.y + verticalLefter.bounds.height));
                 }
         }
         if ( addVertical2 ) {
             rooms.Add(verticalRighter);
             if ( lower == righter )
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
-                    lower.doorsDown.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y - 1));
+                    lower.doorsUp.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y - 1));
                 }
 			else
                 for ( int i = 0; i < TUNNEL_THICKNESS; i++ ) {
-                    higher.doorsUp.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y + verticalRighter.bounds.height));
+                    higher.doorsDown.Add(new Vector2Int(verticalRighter.bounds.x + i, verticalRighter.bounds.y + verticalRighter.bounds.height));
                 }
         }
     }

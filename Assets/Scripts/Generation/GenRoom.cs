@@ -7,8 +7,8 @@ public class GenRoom {
     // TODO make them package protected please
     
 	public RectInt bounds = new RectInt();
-	public HashSet<Vector2Int> doorsUp = new HashSet<Vector2Int>();
 	public HashSet<Vector2Int> doorsDown = new HashSet<Vector2Int>();
+	public HashSet<Vector2Int> doorsUp = new HashSet<Vector2Int>();
 	public HashSet<Vector2Int> doorsLeft = new HashSet<Vector2Int>();
 	public HashSet<Vector2Int> doorsRight = new HashSet<Vector2Int>();
 
@@ -38,8 +38,8 @@ public class GenRoom {
 
     public HashSet<Vector2Int> AllDoors() {
         HashSet<Vector2Int> ret = new HashSet<Vector2Int>();
-        ret.UnionWith(doorsUp);
         ret.UnionWith(doorsDown);
+        ret.UnionWith(doorsUp);
         ret.UnionWith(doorsLeft);
         ret.UnionWith(doorsRight);
         return ret;
