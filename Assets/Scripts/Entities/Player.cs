@@ -24,7 +24,11 @@ public class Player : Mob {
         SetAttack(s);
     }
 
-    void Update() {
+	void Update() {
+        if (Input.GetAxis("Reset") > 0)
+        {
+			GameController.instance.GetUI().Restart();
+        }
         if ( Time.timeSinceLevelLoad >= nextAttackTime && attack != null) {
             if ( Input.GetAxis("Fire") > 0 ) {
                 attack.Attack();
@@ -50,7 +54,12 @@ public class Player : Mob {
         if ( collision.collider.tag == "wall" ) {
 			//InflictDamage(maxHP / 2);
 			Death();
-        } else if ( collision.collider.tag == "Enemy" ) {
+		} else if (collision.collider.tag == "rock")
+        {
+            InflictDamage(maxHP / 10);
+            //Death();
+        }
+        else if ( collision.collider.tag == "Enemy" ) {
             Mob m = collision.collider.GetComponent(typeof(Mob)) as Mob;
             if ( m != null ) {
                 //m.InflictDamage(carDamage);

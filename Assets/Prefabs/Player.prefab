@@ -482,7 +482,7 @@ MonoBehaviour:
   turnSpeed: 2
   drift: 1
   brake: 2
-  maxBrakeTime: 15
+  maxBrakeTime: 20
   accelerationTime: 2.115
   decelerationTime: 1.2346
 --- !u!198 &198306026557504490

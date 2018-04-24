@@ -16,12 +16,12 @@ namespace Assets.Scripts.Entities {
         }
 
         protected override void Start() {
-            base.Start();
-            SingleShot s = new SingleShot(this.gameObject);
-            s.SetCooldown(3);
+            SingleShot s = new SingleShot(this.gameObject, 8, 3, 8 );
+			s.SetRange(3);
             s.SetPrefab(bullet);
             s.SetSpawn(bulletSpawn);
-            SetAttack(s);
+			SetAttack(s);
+            base.Start();
         }
     }
 }

@@ -457,9 +457,9 @@ public class DungeonGenerator {
                 }
 				float prob2 = 0.04f;
 				if (UnityEngine.Random.value > 1 - prob2 
-				    && x > r.bounds.x +2
+				    && x > r.bounds.x + 2
 				    && x < r.bounds.x + r.bounds.width-2
-				    && y > r.bounds.y+2
+				    && y > r.bounds.y+ 2
 				    && y < r.bounds.y + r.bounds.height-2)
 				{
 					r.spawnpoints.Add(pos);
@@ -474,12 +474,14 @@ public class DungeonGenerator {
         
         Objective o = null;
 
-        int rand = UnityEngine.Random.Range(0, 7);
+        int rand = UnityEngine.Random.Range(0, 8);
 		switch (rand) {
-            case 1: {
+            case 0:
+            case 7:
+                {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 4);
+					int count = UnityEngine.Random.Range(1, ( int ) Math.Min(Mathf.Floor(r.GetSpawnpoints().Count), 4));
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.SCORPION]);
                     }
@@ -514,11 +516,11 @@ public class DungeonGenerator {
 				}
                 break;
 			case 6:
-            case 0:
+            case 1:
                 {
-                    // Coins!!!!:
+                    // Siders!!!!:
                     List<GameObject> lg = new List<GameObject>();
-                    int count = Math.Min(UnityEngine.Random.Range(1, (int)Mathf.Floor(r.GetSpawnpoints().Count)), 3);
+                    int count = Math.Min(UnityEngine.Random.Range(1, (int)Mathf.Floor(r.GetSpawnpoints().Count)), 5);
                     for (int c = 0; c < count; c++)
                     {
 						lg.Add(enemyPrefabs[Entity.Entities.SPIDER]);

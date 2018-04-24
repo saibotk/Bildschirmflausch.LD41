@@ -38,6 +38,10 @@ namespace Assets.Scripts.Entities.Attack {
             this.bulletPrefab = bullet;
         }
 
+		public void SetRange(int range) {
+			this.range = range;
+		}
+
         public void Attack() {
             if ( bulletPrefab == null ) {
                 Debug.Log("SingleShot: No Prefab defined for Bullet!");

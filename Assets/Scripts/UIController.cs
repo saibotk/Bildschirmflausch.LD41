@@ -32,7 +32,7 @@ public class UIController : MonoBehaviour
 
 	void Update() {
         if (Input.GetAxis("Reset") > 0 && GameController.instance.GameEnded()) {
-            LoadSceneByIndex(firstSceneIndex);
+            Restart();
         }
 	}
 
@@ -43,6 +43,10 @@ public class UIController : MonoBehaviour
     public void ClosePauseMenu() {
         pauseMenu.SetActive(false);
     }
+
+	public void Restart() {
+		LoadSceneByIndex(firstSceneIndex);
+	}
 
     public void LoadSceneByIndex(int index) {
         Debug.Log("Loaded scene " + index);

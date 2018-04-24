@@ -16,6 +16,7 @@ public class AudioControl : MonoBehaviour
     private const float lvlbgm = 5.725f;
     private const float gobgm = 14.157f;
     private const float loopdelay = 0.025f;
+    private float prevVolume = -80f;
 
     // Use this for initialization
     void Start()
@@ -89,6 +90,13 @@ public class AudioControl : MonoBehaviour
     public void SetSfxVolume(float nvol)
     {
         mixer.SetFloat("sfxVolume", Mathf.Clamp(nvol, -80f, 20f));
+    }
+
+    public void ToggleMuteMaster() {
+        float t = 0f;
+        mixer.GetFloat("masterVolume", out t);
+        SetMasterVolume(prevVolume);
+        prevVolume = t;
     }
 }
 
