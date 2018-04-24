@@ -95,15 +95,17 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject mapRoot;
 
-    private bool engineInitDone;
-    private Player player;
+    bool engineInitDone;
+    Player player;
+
+    bool pausedPressed = false;
 
     public static GameController instance;
     public GameController() {
         instance = this;
     }
 
-    public enum GameState { UNSET, INIT, STARTING, RUNNING, ENDED };
+    public enum GameState { UNSET, INIT, STARTING, PAUSED, RUNNING, ENDED };
     private EndedCause endCause = EndedCause.DIED;
     private GameState state = GameState.UNSET;
 
@@ -152,6 +154,16 @@ public class GameController : MonoBehaviour {
             Debug.Log("First Frame");
             ChangeState(GameState.INIT);
         }
+        if (Input.GetAxis("Pause") > 0) {
+            if (state == GameState.RUNNING && !pausedPressed) {
+                ChangeState(GameState.PAUSED);
+            } else if (state == GameState.PAUSED && !pausedPressed) {
+                ChangeState(GameState.RUNNING);
+            }
+            pausedPressed = true;
+        } else {
+            pausedPressed = false;
+        }
     }
 
     public void ChangeState(GameState nextState) {
@@ -173,6 +185,9 @@ public class GameController : MonoBehaviour {
                 break;
             case GameState.RUNNING:
                 Running();
+                break;
+            case GameState.PAUSED:
+                Paused();
                 break;
             case GameState.ENDED:
                 Ended();
@@ -311,7 +326,9 @@ public class GameController : MonoBehaviour {
     }
 
     private void Running() {
-
+        Time.timeScale = 1;
+        player.GetComponent<PlayerMovement>().enabled = true;
+        GetUI().showPauseUI(false);
     }
 
     private void Ended() {
@@ -353,5 +370,15 @@ public class GameController : MonoBehaviour {
 			return; // Already ended game
         endCause = cause;
         ChangeState(GameState.ENDED);
+    }
+
+    void Paused() {
+        Time.timeScale = 0;
+        player.GetComponent<PlayerMovement>().enabled = false;
+        GetUI().showPauseUI(true);
+    }
+
+    public void Continue() {
+        ChangeState(GameState.RUNNING);
     }
 }

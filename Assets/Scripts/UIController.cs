@@ -23,6 +23,9 @@ public class UIController : MonoBehaviour
     BrakeBarController brakeBarController;
 
     [SerializeField]
+    GameObject pausedUIPanel;
+
+    [SerializeField]
     int mainMenuSceneIndex = 0;
     int firstSceneIndex = 1;
 
@@ -79,5 +82,13 @@ public class UIController : MonoBehaviour
 
     public NotificationManager GetNotificationManager() {
         return notifications;
+    }
+
+    public void showPauseUI(bool show) {
+        if (pausedUIPanel != null) {
+            pausedUIPanel.SetActive(show);
+        } else {
+            Debug.Log("Paused UI not assigned");
+        }
     }
 }
