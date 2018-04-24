@@ -285,7 +285,7 @@ public class GameController : MonoBehaviour {
             ltg.ForEach(x => {
                 x.SetParent(doorRootg.transform);
                 x.gameObject.GetComponent<Door>().SetParent(grom);
-                });
+            });
 
             // Spawnpoints
             GameObject tSpawnpointRoot = new GameObject();

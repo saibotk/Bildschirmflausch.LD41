@@ -134,12 +134,21 @@ public class DungeonGenerator {
 					r.tiles[new Vector2Int(x1, y1)].type = Room.TileType.GROUND;
                 }
 			allDoors.UnionWith(r.AllDoors());
-            foreach ( Vector2Int v in r.AllDoors() ) {
-                //Debug.Log("Door: " + v);
-                if ( !r.bounds.Contains(v) )
-                    throw new NotSupportedException("This is a bug where doors land in the wrong room. It should have been fixed.");
-                else
-					r.tiles[v].type = Room.TileType.DOOR;
+			foreach (Vector2Int v in r.doorsUp) {
+                r.tiles[v].type = Room.TileType.DOOR;
+				r.tiles[v].position = GenTile.Position.TOP;
+			}
+			foreach (Vector2Int v in r.doorsDown) {
+                r.tiles[v].type = Room.TileType.DOOR;
+				r.tiles[v].position = GenTile.Position.BOTTOM;
+			}
+			foreach (Vector2Int v in r.doorsLeft) {
+                r.tiles[v].type = Room.TileType.DOOR;
+				r.tiles[v].position = GenTile.Position.LEFT;
+			}
+			foreach (Vector2Int v in r.doorsRight) {
+                r.tiles[v].type = Room.TileType.DOOR;
+				r.tiles[v].position = GenTile.Position.RIGHT;
             }
 		}
 
@@ -458,8 +467,7 @@ public class DungeonGenerator {
             case 1: {
                     // Scorpion Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 5);
-					Debug.Log(count + " scorpions (of " + r.GetSpawnpoints().Count);
+					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 4);
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.SCORPION]);
                     }
@@ -471,8 +479,7 @@ public class DungeonGenerator {
             case 3: {
                     // Bug Attack!!!!:
                     List<GameObject> lg = new List<GameObject>();
-					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 10);
-					Debug.Log(count + " bugs (of " + r.GetSpawnpoints().Count);
+					int count = Math.Min(UnityEngine.Random.Range(1, ( int ) Mathf.Floor(r.GetSpawnpoints().Count)), 7);
                     for ( int c = 0; c < count; c++ ) {
                         lg.Add(enemyPrefabs[Entity.Entities.BUG]);
                     }
