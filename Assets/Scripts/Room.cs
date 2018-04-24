@@ -9,6 +9,7 @@ public class Room : MonoBehaviour {
     }
 
     Vector2Int center;
+    Vector2Int position;
 
     List<Door> doors;
     List<Transform> spawnpoints;
@@ -49,6 +50,14 @@ public class Room : MonoBehaviour {
     /// <param name="v"></param>
     public void SetCenter(Vector2Int v) {
         center = v;
+    }
+
+    public void SetPosition(Vector2Int v) {
+        position = v;
+    }
+
+    public Vector2Int GetPosition() {
+        return position;
     }
 
     /// <summary>

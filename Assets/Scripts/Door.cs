@@ -68,10 +68,17 @@ public class Door : MonoBehaviour {
     /// </summary>
     /// <param name="collision"></param>
     private void OnTriggerExit2D(Collider2D collision) {
+        // TODO only works correct for entering a room!
         if ( collision.tag == "Player") {
 			Player player = collision.gameObject.GetComponent<Player>();
-			if ((boundingBox.offset - parent.GetCenter()).sqrMagnitude < ((Vector2) player.transform.position - parent.GetCenter()).sqrMagnitude)
-				return;
+            Vector2 centerToCollider = (Vector2) gameObject.transform.position - parent.GetPosition() + parent.GetCenter();
+            Vector2 centerToPlayer = (Vector2) player.gameObject.transform.position - parent.GetPosition() + parent.GetCenter();
+            if (centerToCollider.magnitude - 1 < centerToPlayer.magnitude) {
+                Debug.Log(centerToCollider.magnitude - 1);
+                Debug.Log(centerToPlayer.magnitude);
+                return;
+            }
+
             Debug.Log("Leaving Trigger");
             if(parent == null) {
                 Debug.Log("This door has no parent Room!");
