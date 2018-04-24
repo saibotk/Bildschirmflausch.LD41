@@ -101,3 +101,7 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/macos,linux,windows
+
+Assets/graphics/textures/car\.meta
+
+Assets/graphics/textures/tmp\.meta

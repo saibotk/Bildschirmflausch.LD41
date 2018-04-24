@@ -77,8 +77,6 @@ public class Room : MonoBehaviour {
             foreach ( Transform t in spawnpointRootObject.GetComponentsInChildren<Transform>() ) {
                 if ( t.gameObject != spawnpointRootObject ) {
                     spawnpoints.Add(t);
-					if (spawnpoints.Count >= 5)
-						break; // TODO make this depend on the objective
                 }
             }
             //Debug.Log("[ROOMS] Spawnpoints: " + spawnpoints.Count);
