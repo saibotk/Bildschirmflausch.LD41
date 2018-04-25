@@ -41,9 +41,12 @@ public class BuildSrcipt
 	}
 
 	public static void BuildPlatform(String platformName, BuildTarget target) {
+		if (!Directory.Exists("./Build"))
+			Directory.CreateDirectory("./Build");
 		if (Directory.Exists("./" + name + "_" + platformName))
 		    Directory.Delete("./" + name + "_" + platformName, true);
-		File.Delete("./Build/DungeonDrifter_" + platformName + ".zip");
+		if (File.Exists("./Build/DungeonDrifter_" + platformName + ".zip"))
+    		File.Delete("./Build/DungeonDrifter_" + platformName + ".zip");
 		BuildPipeline.BuildPlayer(scenes, "./" + name + "_" + platformName + "/" + name, target, BuildOptions.None);
 		//System.Diagnostics.Process.Start("zip -r Build/DungeonDrifter_" + platformName + ".zip " + platformName + "_" + platformName);
 	}
