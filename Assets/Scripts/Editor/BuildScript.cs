@@ -9,7 +9,7 @@ using System.Text;
 
 public class BuildSrcipt
 {
-    static string[] scenes = { "Assets/Scenes/CodeDEV.unity", "Assets/Scenes/TitleScene.unity" };
+    static string[] scenes = { "Assets/Scenes/TitleScene.unity", "Assets/Scenes/CodeDEV.unity" };
 	static string name = "DungeonDrifter";
 
     [MenuItem("Build/Build WebGL")]
