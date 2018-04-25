@@ -21,7 +21,7 @@ public class GenerationProcessor {
       int rotation = 0;
       switch ( tiles[v].type ) {
         case Room.TileType.WALL:
-          type = GetCorrectRockType(tiles, v);
+          type = GetCorrectWallType(tiles, v);
           rotation = GetCorrectWallRotation(tiles, v, type);
           break;
         case Room.TileType.GROUND:
@@ -193,8 +193,9 @@ public class GenerationProcessor {
   }
 
   private int GetCorrectDoorRotation(ExtendedTileType type, Dictionary<Vector2Int, GenTile> tiles, Vector2Int position) {
+    Vector2Int toCheck;
     if(type == ExtendedTileType.DoorOuter) {
-        Vector2Int toCheck = position + new Vector2Int(0, -1);
+        toCheck = position + new Vector2Int(0, -1);
         if (tiles.ContainsKey(toCheck) && tiles[toCheck].type == Room.TileType.DOOR)
           return 270;
         toCheck = position + new Vector2Int(-1, 0);
