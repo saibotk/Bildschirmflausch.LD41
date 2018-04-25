@@ -1,0 +1,23 @@
+Desktop is 1920 x 1080 @ 60 Hz
+GLX Extensions: GLX_ARB_create_context GLX_ARB_create_context_profile GLX_ARB_create_context_robustness GLX_ARB_fbconfig_float GLX_ARB_framebuffer_sRGB GLX_ARB_get_proc_address GLX_ARB_multisample GLX_EXT_buffer_age GLX_EXT_create_context_es2_profile GLX_EXT_create_context_es_profile GLX_EXT_fbconfig_packed_float GLX_EXT_framebuffer_sRGB GLX_EXT_import_context GLX_EXT_texture_from_pixmap GLX_EXT_visual_info GLX_EXT_visual_rating GLX_INTEL_swap_event GLX_MESA_copy_sub_buffer GLX_MESA_multithread_makecurrent GLX_MESA_query_renderer GLX_MESA_swap_control GLX_OML_swap_method GLX_OML_sync_control GLX_SGIS_multisample GLX_SGIX_fbconfig GLX_SGIX_pbuffer GLX_SGIX_visual_select_group GLX_SGI_make_current_read GLX_SGI_swap_control GLX_SGI_video_sync 
+[Package Manager] Server::Start -- Port 54942 was selected
+
+LICENSE SYSTEM [2018425 1:52:11] Next license update check is after 2018-04-25T15:47:16
+
+
+ COMMAND LINE ARGUMENTS:
+/opt/UnityBeta/Editor/Unity
+-quit
+-logfile
+build.log
+-buildTarget
+./WebGL
+/home/piegames/Documents/GitHub/Bildschirmflausch.LD41
+Loading GUID <-> Path mappings...0.000068 seconds
+Loading Asset Database...0.006397 seconds
+Audio: FMOD Profiler initialized on port 54900
+AssetDatabase consistency checks...0.022087 seconds
+Build target platform name './WebGL' is not valid.  Supported targets: Android, Linux, Linux64, LinuxUniversal, N3DS, OSXUniversal, PS4, PSM, PSP2, Switch, Tizen, Web, WebGL, WebStreamed, WiiU, Win, Win64, WindowsStoreApps, XboxOne, iOS, tvOS
+ 
+(Filename: /home/builduser/buildslave/unity/build/Editor/Src/Application/Application.cpp Line: 813)
+
